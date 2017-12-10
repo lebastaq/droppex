@@ -1,4 +1,4 @@
-package pt.fcup;
+package com.fcup;
 
 import org.jgroups.Message;
 import org.jgroups.ReceiverAdapter;
@@ -15,4 +15,3 @@ public class MessageReceiver extends ReceiverAdapter {
         System.out.println("received view " + view);
     }
 }
-
