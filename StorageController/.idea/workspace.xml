@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8e5f758d-a827-4174-b3c2-73d36543e8af" name="Default" comment="Fixed">
+    <list default="true" id="8e5f758d-a827-4174-b3c2-73d36543e8af" name="Default" comment="Fixed message not sending (JSON -&gt; String)">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -40,8 +38,8 @@
       <file leaf-file-name="StorageContainer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="57" column="25" lean-forward="false" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
+            <state relative-caret-position="403">
+              <caret line="73" column="78" lean-forward="true" selection-start-line="73" selection-start-column="78" selection-end-line="73" selection-end-column="78" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#951#981#0" expanded="true" />
@@ -93,6 +91,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="master" />
+      </map>
+    </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -378,7 +381,14 @@
       <option name="project" value="LOCAL" />
       <updated>1512944619419</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Fixed message not sending (JSON -&gt; String)">
+      <created>1512945248585</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1512945248585</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView">
@@ -431,7 +441,8 @@
     <MESSAGE value="Messages now embedd JSON data" />
     <MESSAGE value="Storage containers now send and receive operations between each other" />
     <MESSAGE value="Shifted operation to factory" />
-    <option name="LAST_COMMIT_MESSAGE" value="Shifted operation to factory" />
+    <MESSAGE value="Fixed message not sending (JSON -&gt; String)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed message not sending (JSON -&gt; String)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -798,8 +809,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="57" column="25" lean-forward="false" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
+        <state relative-caret-position="403">
+          <caret line="73" column="78" lean-forward="true" selection-start-line="73" selection-start-column="78" selection-end-line="73" selection-end-column="78" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#951#981#0" expanded="true" />
