@@ -2,11 +2,12 @@ package com.fcup;
 
 import org.json.*;
 
+// used as a data structure - no methods
 public class Operation {
     public String type;
     public String blockID;
     public int destination;
-    public JSONObject jsonRepresentation;
+    public String jsonRepresentation;
 //    Source
 //    Dest
 //    Identifier
@@ -22,7 +23,7 @@ public class Operation {
 
         operation.type = operationJSON.getString("type");
         operation.blockID = operationJSON.getString("blockID");
-        operation.jsonRepresentation =  new JSONObject("{\"type\": \"" + operation.type + "\"" +
+        operation.jsonRepresentation =  new String("{\"type\": \"" + operation.type + "\"" +
                 ", \"blockID\": \"" + operation.blockID + "\"}");
 
         return operation;
@@ -33,7 +34,7 @@ public class Operation {
 
         operation.type = type;
         operation.blockID = blockId;
-        operation.jsonRepresentation =  new JSONObject("{\"type\": \"" + operation.type + "\"" +
+        operation.jsonRepresentation =  new String("{\"type\": \"" + operation.type + "\"" +
                 ", \"blockID\": \"" + operation.blockID + "\"}");
 
         return operation;

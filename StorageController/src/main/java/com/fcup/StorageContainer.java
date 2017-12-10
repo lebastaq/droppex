@@ -33,6 +33,7 @@ public class StorageContainer extends ReceiverAdapter {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void setState(InputStream input) throws Exception {
         List<String> list = Util.objectFromStream(new DataInputStream(input));
         synchronized(operations) {
