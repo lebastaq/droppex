@@ -56,6 +56,7 @@ func ListMatching(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(output)
 		return
 	}
+
 	json.NewEncoder(w).Encode(&File{})
 }
 
