@@ -12,11 +12,14 @@ public class StorageContainer {
     private JChannel channel;
 
     private StorageContainer() throws Exception {
-        channel = new JChannel("config.xml");
+        channel = new JChannel();
+        MessageReceiver messageReceiver = new MessageReceiver();
+        channel.setReceiver(messageReceiver);
     }
 
     private void run() throws Exception {
         channel.connect("ChatCluster");
+        System.out.println("Connected!");
         eventLoop();
         channel.disconnect();
     }
@@ -40,9 +43,8 @@ public class StorageContainer {
     }
 
     public static void main(String[] args) {
-        StorageContainer storageContainer = null;
         try {
-            storageContainer = new StorageContainer();
+            StorageContainer storageContainer = new StorageContainer();
             storageContainer.run();
         } catch (Exception e) {
             e.printStackTrace();
