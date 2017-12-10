@@ -4,7 +4,7 @@ import org.json.*;
 
 public class Operation {
     private String type;
-    private int blockID;
+    private String blockID;
     private int destination;
 //    Source
 //    Dest
@@ -14,7 +14,14 @@ public class Operation {
     public Operation() {
     }
 
-    public String toJSON() {
+    public Operation(String operationString) {
+        System.out.println(">>>> " + operationString);
+        JSONObject operationJSON = new JSONObject(operationString);
+        type = operationJSON.getString("type");
+        blockID = operationJSON.getString("blockID");
+    }
+
+    public String toJSONInString() {
         JSONObject operationAsJson = new JSONObject("{\"type\": \"" + type + "\"" +
                 ", \"blockID\": \"" + blockID + "\"}");
         return operationAsJson.toString();

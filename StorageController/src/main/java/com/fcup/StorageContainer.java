@@ -12,36 +12,43 @@ import java.util.LinkedList;
 
 public class StorageContainer extends ReceiverAdapter {
     JChannel channel;
-    String user_name=System.getProperty("user.name", "n/a");
-    final List<String> state=new LinkedList<>();
+    String user_name = System.getProperty("user.name", "n/a");
+    final List<String> operations = new LinkedList<>();
 
     public void viewAccepted(View new_view) {
         System.out.println("** view: " + new_view);
     }
 
     public void receive(Message msg) {
-        String line=msg.getSrc() + ": " + msg.getObject();
+        String line = msg.getObject();
         System.out.println(line);
-        synchronized(state) {
-            state.add(line);
+        synchronized(operations) {
+            operations.add(line);
         }
     }
 
     public void getState(OutputStream output) throws Exception {
-        synchronized(state) {
-            Util.objectToStream(state, new DataOutputStream(output));
+        synchronized(operations) {
+            Util.objectToStream(operations, new DataOutputStream(output));
         }
     }
 
     @SuppressWarnings("unchecked")
     public void setState(InputStream input) throws Exception {
-        List<String> list=Util.objectFromStream(new DataInputStream(input));
-        synchronized(state) {
-            state.clear();
-            state.addAll(list);
+        List<String> list = Util.objectFromStream(new DataInputStream(input));
+        synchronized(operations) {
+//            operations.clear();
+//            operations.addAll(list);
+            syncOperations(list);
         }
-        System.out.println("received state (" + list.size() + " messages in chat history):");
-        list.forEach(System.out::println);
+        System.out.println("received operations (" + list.size() + ")");
+    }
+
+    private void syncOperations(List<String> list) {
+        for(String operationString : list) {
+            Operation operation = new Operation(operationString);
+            System.out.println("Got operation: " + operation.toJSONInString());
+        }
     }
 
 
@@ -64,7 +71,7 @@ public class StorageContainer extends ReceiverAdapter {
                 }
                 line="[" + user_name + "] " + line;
                 Operation operation = new Operation();
-                Message msg=new Message(null, operation.toJSON());
+                Message msg=new Message(null, operation.toJSONInString());
                 channel.send(msg);
             }
             catch(Exception e) {
