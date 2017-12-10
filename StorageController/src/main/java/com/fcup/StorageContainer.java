@@ -63,7 +63,8 @@ public class StorageContainer extends ReceiverAdapter {
                     break;
                 }
                 line="[" + user_name + "] " + line;
-                Message msg=new Message(null, line);
+                Operation operation = new Operation();
+                Message msg=new Message(null, operation.toJSON());
                 channel.send(msg);
             }
             catch(Exception e) {

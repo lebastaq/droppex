@@ -87,6 +87,13 @@
             <artifactId>jgroups</artifactId>
             <version>4.0.0.Final</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20171018</version>
+        </dependency>
+
     </dependencies>
 
     <repositories>
