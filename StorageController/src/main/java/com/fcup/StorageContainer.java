@@ -1,27 +1,56 @@
 package com.fcup;
 
-
 import org.jgroups.JChannel;
 import org.jgroups.Message;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import org.jgroups.ReceiverAdapter;
+import org.jgroups.View;
+import org.jgroups.util.Util;
 
+import java.io.*;
+import java.util.List;
+import java.util.LinkedList;
 
-public class StorageContainer {
-    private String user_name = System.getProperty("user.name", "n/a");
-    private JChannel channel;
+public class StorageContainer extends ReceiverAdapter {
+    JChannel channel;
+    String user_name=System.getProperty("user.name", "n/a");
+    final List<String> state=new LinkedList<>();
 
-    private StorageContainer() throws Exception {
-        channel = new JChannel();
-        MessageReceiver messageReceiver = new MessageReceiver();
-        channel.setReceiver(messageReceiver);
+    public void viewAccepted(View new_view) {
+        System.out.println("** view: " + new_view);
     }
 
-    private void run() throws Exception {
+    public void receive(Message msg) {
+        String line=msg.getSrc() + ": " + msg.getObject();
+        System.out.println(line);
+        synchronized(state) {
+            state.add(line);
+        }
+    }
+
+    public void getState(OutputStream output) throws Exception {
+        synchronized(state) {
+            Util.objectToStream(state, new DataOutputStream(output));
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void setState(InputStream input) throws Exception {
+        List<String> list=Util.objectFromStream(new DataInputStream(input));
+        synchronized(state) {
+            state.clear();
+            state.addAll(list);
+        }
+        System.out.println("received state (" + list.size() + " messages in chat history):");
+        list.forEach(System.out::println);
+    }
+
+
+    private void start() throws Exception {
+        channel=new JChannel().setReceiver(this);
         channel.connect("ChatCluster");
-        System.out.println("Connected!");
+        channel.getState(null, 10000);
         eventLoop();
-        channel.disconnect();
+        channel.close();
     }
 
     private void eventLoop() {
@@ -33,21 +62,17 @@ public class StorageContainer {
                 if(line.startsWith("quit") || line.startsWith("exit")) {
                     break;
                 }
+                line="[" + user_name + "] " + line;
                 Message msg=new Message(null, line);
                 channel.send(msg);
             }
             catch(Exception e) {
-                e.printStackTrace();
             }
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            StorageContainer storageContainer = new StorageContainer();
-            storageContainer.run();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+    public static void main(String[] args) throws Exception {
+        new StorageContainer().start();
     }
 }
