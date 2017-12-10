@@ -3,27 +3,40 @@ package com.fcup;
 import org.json.*;
 
 public class Operation {
-    private String type;
-    private String blockID;
-    private int destination;
+    public String type;
+    public String blockID;
+    public int destination;
+    public JSONObject jsonRepresentation;
 //    Source
 //    Dest
 //    Identifier
 //    Data ?
 
-    public Operation() {
+    private Operation() {
+
     }
 
-    public Operation(String operationString) {
-        System.out.println(">>>> " + operationString);
-        JSONObject operationJSON = new JSONObject(operationString);
-        type = operationJSON.getString("type");
-        blockID = operationJSON.getString("blockID");
+    public static Operation fromJSON(String inputData) {
+        Operation operation = new Operation();
+        JSONObject operationJSON = new JSONObject(inputData);
+
+        operation.type = operationJSON.getString("type");
+        operation.blockID = operationJSON.getString("blockID");
+        operation.jsonRepresentation =  new JSONObject("{\"type\": \"" + operation.type + "\"" +
+                ", \"blockID\": \"" + operation.blockID + "\"}");
+
+        return operation;
     }
 
-    public String toJSONInString() {
-        JSONObject operationAsJson = new JSONObject("{\"type\": \"" + type + "\"" +
-                ", \"blockID\": \"" + blockID + "\"}");
-        return operationAsJson.toString();
+    public static Operation fromData(String type, String blockId) {
+        Operation operation = new Operation();
+
+        operation.type = type;
+        operation.blockID = blockId;
+        operation.jsonRepresentation =  new JSONObject("{\"type\": \"" + operation.type + "\"" +
+                ", \"blockID\": \"" + operation.blockID + "\"}");
+
+        return operation;
     }
+
 }

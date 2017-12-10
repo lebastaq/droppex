@@ -21,7 +21,7 @@ public class StorageContainer extends ReceiverAdapter {
 
     public void receive(Message msg) {
         String line = msg.getObject();
-        System.out.println(line);
+        System.out.println("Received: " + line);
         synchronized(operations) {
             operations.add(line);
         }
@@ -33,7 +33,6 @@ public class StorageContainer extends ReceiverAdapter {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void setState(InputStream input) throws Exception {
         List<String> list = Util.objectFromStream(new DataInputStream(input));
         synchronized(operations) {
@@ -46,8 +45,8 @@ public class StorageContainer extends ReceiverAdapter {
 
     private void syncOperations(List<String> list) {
         for(String operationString : list) {
-            Operation operation = new Operation(operationString);
-            System.out.println("Got operation: " + operation.toJSONInString());
+            Operation operation = Operation.fromJSON(operationString);
+            System.out.println("Got operation: " + operation.jsonRepresentation);
         }
     }
 
@@ -69,9 +68,9 @@ public class StorageContainer extends ReceiverAdapter {
                 if(line.startsWith("quit") || line.startsWith("exit")) {
                     break;
                 }
-                line="[" + user_name + "] " + line;
-                Operation operation = new Operation();
-                Message msg=new Message(null, operation.toJSONInString());
+                Operation operation = Operation.fromData("test", "block id");
+                System.out.println("Sending " + operation.jsonRepresentation);
+                Message msg = new Message(null, operation.jsonRepresentation);
                 channel.send(msg);
             }
             catch(Exception e) {
