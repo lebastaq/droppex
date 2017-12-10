@@ -23,6 +23,7 @@ func main() {
 	router.HandleFunc(Version+"/list/{pattern}", ListMatching).Methods("GET")
 	router.HandleFunc(Version+"/files_put", UploadFile).Methods("PUT")
 	router.HandleFunc(Version+"/files", DownloadFile).Methods("GET")
+	router.HandleFunc(Version+"/delete", DeleteFile).Methods("DELETE")
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
@@ -75,5 +76,10 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 
 // DownloadFile downloads a file with a given filename
 func DownloadFile(w http.ResponseWriter, r *http.Request) {
+
+}
+
+// DeleteFile deletes the file associated with the input
+func DeleteFile(w http.ResponseWriter, r *http.Request) {
 
 }
