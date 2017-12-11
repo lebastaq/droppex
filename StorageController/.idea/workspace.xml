@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e5f758d-a827-4174-b3c2-73d36543e8af" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/DbManager.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/dbManager.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/DbManager.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/DbManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/fcup/dbManagerTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/fcup/dbManagerTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -54,10 +55,12 @@
       <file leaf-file-name="Operation.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/Operation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="35" column="9" lean-forward="true" selection-start-line="32" selection-start-column="8" selection-end-line="35" selection-end-column="9" />
+            <state relative-caret-position="346">
+              <caret line="55" column="53" lean-forward="true" selection-start-line="55" selection-start-column="53" selection-end-line="55" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#243#244#0" expanded="true" />
+                <element signature="e#281#282#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -66,12 +69,13 @@
       <file leaf-file-name="StorageContainer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="23" lean-forward="false" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
+            <state relative-caret-position="583">
+              <caret line="48" column="59" lean-forward="false" selection-start-line="48" selection-start-column="59" selection-end-line="48" selection-end-column="59" />
               <folding>
-                <element signature="e#2167#2168#0" expanded="true" />
-                <element signature="e#2229#2230#0" expanded="true" />
-                <element signature="e#2449#2479#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2189#2190#0" expanded="true" />
+                <element signature="e#2251#2252#0" expanded="true" />
+                <element signature="e#2471#2501#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -80,8 +84,8 @@
       <file leaf-file-name="DbManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/DbManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="39">
-              <caret line="66" column="40" lean-forward="false" selection-start-line="66" selection-start-column="40" selection-end-line="66" selection-end-column="40" />
+            <state relative-caret-position="193">
+              <caret line="74" column="30" lean-forward="false" selection-start-line="74" selection-start-column="30" selection-end-line="74" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#337#338#0" expanded="true" />
@@ -94,12 +98,12 @@
       <file leaf-file-name="dbManagerTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/dbManagerTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="64" column="116" lean-forward="false" selection-start-line="64" selection-start-column="116" selection-end-line="64" selection-end-column="116" />
+            <state relative-caret-position="227">
+              <caret line="50" column="32" lean-forward="true" selection-start-line="50" selection-start-column="32" selection-end-line="50" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#488#489#0" expanded="true" />
-                <element signature="e#533#534#0" expanded="true" />
+                <element signature="e#460#461#0" expanded="true" />
+                <element signature="e#505#506#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -141,6 +145,7 @@
       <find>sync</find>
       <find>junit</find>
       <find>hashmap</find>
+      <find>Operation</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -168,12 +173,12 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/Receiver.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/StorageContainerTest.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/dbManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/DbManager.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/dbManagerTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" />
       </list>
     </option>
   </component>
@@ -612,38 +617,45 @@
       <option name="project" value="LOCAL" />
       <updated>1513007406224</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Database read and write">
+      <created>1513013373368</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1513013373368</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="dbManagerTest_getAllEntriesFromTable - 2017.12.11 at 17h 12m 34s.xml">
-      <configuration name="dbManagerTest.getAllEntriesFromTable" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 11m 23s.xml">
+    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 49m 46s.xml">
       <configuration name="dbManagerTest.insertAndReadEntry" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 12m 15s.xml">
+    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 50m 08s.xml">
       <configuration name="dbManagerTest.insertAndReadEntry" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 17m 48s.xml">
+    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 50m 59s.xml">
       <configuration name="dbManagerTest.insertAndReadEntry" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 18m 15s.xml">
+    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 51m 49s.xml">
       <configuration name="dbManagerTest.insertAndReadEntry" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 19m 10s.xml">
+    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 55m 22s.xml">
       <configuration name="dbManagerTest.insertAndReadEntry" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 19m 41s.xml">
+    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 55m 53s.xml">
       <configuration name="dbManagerTest.insertAndReadEntry" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 27m 12s.xml">
+    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 56m 38s.xml">
       <configuration name="dbManagerTest.insertAndReadEntry" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 28m 21s.xml">
+    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 58m 23s.xml">
       <configuration name="dbManagerTest.insertAndReadEntry" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 29m 18s.xml">
+    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 58m 26s.xml">
+      <configuration name="dbManagerTest.insertAndReadEntry" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="dbManagerTest_insertAndReadEntry - 2017.12.11 at 17h 59m 12s.xml">
       <configuration name="dbManagerTest.insertAndReadEntry" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -703,11 +715,12 @@
     <MESSAGE value="Code restructuring" />
     <MESSAGE value="Code restructuring to manipulate operations&#10;Cleanup" />
     <MESSAGE value="Added local sqlite connection" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added local sqlite connection" />
+    <MESSAGE value="Database read and write" />
+    <option name="LAST_COMMIT_MESSAGE" value="Database read and write" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="8" />
+      <option name="time" value="9" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -726,6 +739,8 @@
           <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#243#244#0" expanded="true" />
+            <element signature="e#281#282#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -751,9 +766,10 @@
         <state relative-caret-position="442">
           <caret line="29" column="54" lean-forward="false" selection-start-line="29" selection-start-column="54" selection-end-line="29" selection-end-column="54" />
           <folding>
-            <element signature="e#2167#2168#0" expanded="true" />
-            <element signature="e#2229#2230#0" expanded="true" />
-            <element signature="e#2449#2479#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2189#2190#0" expanded="true" />
+            <element signature="e#2251#2252#0" expanded="true" />
+            <element signature="e#2471#2501#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -787,9 +803,10 @@
         <state relative-caret-position="493">
           <caret line="29" column="54" lean-forward="true" selection-start-line="29" selection-start-column="54" selection-end-line="29" selection-end-column="54" />
           <folding>
-            <element signature="e#2167#2168#0" expanded="true" />
-            <element signature="e#2229#2230#0" expanded="true" />
-            <element signature="e#2449#2479#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2189#2190#0" expanded="true" />
+            <element signature="e#2251#2252#0" expanded="true" />
+            <element signature="e#2471#2501#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -839,9 +856,10 @@
         <state relative-caret-position="170">
           <caret line="13" column="27" lean-forward="false" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
           <folding>
-            <element signature="e#2167#2168#0" expanded="true" />
-            <element signature="e#2229#2230#0" expanded="true" />
-            <element signature="e#2449#2479#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2189#2190#0" expanded="true" />
+            <element signature="e#2251#2252#0" expanded="true" />
+            <element signature="e#2471#2501#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -859,9 +877,10 @@
         <state relative-caret-position="221">
           <caret line="13" column="24" lean-forward="false" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
           <folding>
-            <element signature="e#2167#2168#0" expanded="true" />
-            <element signature="e#2229#2230#0" expanded="true" />
-            <element signature="e#2449#2479#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2189#2190#0" expanded="true" />
+            <element signature="e#2251#2252#0" expanded="true" />
+            <element signature="e#2471#2501#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -904,9 +923,10 @@
         <state relative-caret-position="221">
           <caret line="13" column="24" lean-forward="false" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
           <folding>
-            <element signature="e#2167#2168#0" expanded="true" />
-            <element signature="e#2229#2230#0" expanded="true" />
-            <element signature="e#2449#2479#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2189#2190#0" expanded="true" />
+            <element signature="e#2251#2252#0" expanded="true" />
+            <element signature="e#2471#2501#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1085,30 +1105,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/Operation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="35" column="9" lean-forward="true" selection-start-line="32" selection-start-column="8" selection-end-line="35" selection-end-column="9" />
+        <state relative-caret-position="346">
+          <caret line="55" column="53" lean-forward="true" selection-start-line="55" selection-start-column="53" selection-end-line="55" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#243#244#0" expanded="true" />
+            <element signature="e#281#282#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="23" lean-forward="false" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
+        <state relative-caret-position="583">
+          <caret line="48" column="59" lean-forward="false" selection-start-line="48" selection-start-column="59" selection-end-line="48" selection-end-column="59" />
           <folding>
-            <element signature="e#2167#2168#0" expanded="true" />
-            <element signature="e#2229#2230#0" expanded="true" />
-            <element signature="e#2449#2479#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2189#2190#0" expanded="true" />
+            <element signature="e#2251#2252#0" expanded="true" />
+            <element signature="e#2471#2501#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/DbManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="39">
-          <caret line="66" column="40" lean-forward="false" selection-start-line="66" selection-start-column="40" selection-end-line="66" selection-end-column="40" />
+        <state relative-caret-position="193">
+          <caret line="74" column="30" lean-forward="false" selection-start-line="74" selection-start-column="30" selection-end-line="74" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#337#338#0" expanded="true" />
@@ -1119,12 +1142,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/dbManagerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="64" column="116" lean-forward="false" selection-start-line="64" selection-start-column="116" selection-end-line="64" selection-end-column="116" />
+        <state relative-caret-position="227">
+          <caret line="50" column="32" lean-forward="true" selection-start-line="50" selection-start-column="32" selection-end-line="50" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#488#489#0" expanded="true" />
-            <element signature="e#533#534#0" expanded="true" />
+            <element signature="e#460#461#0" expanded="true" />
+            <element signature="e#505#506#0" expanded="true" />
           </folding>
         </state>
       </provider>

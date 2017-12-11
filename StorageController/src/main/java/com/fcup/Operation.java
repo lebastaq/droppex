@@ -1,33 +1,45 @@
 package com.fcup;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Operation {
-    public String type;
-    public String chunkID;
-    public String blockID;
-    public String destination;
-    public String source;
-    public String ID;
+
+    private Map<String, String> params;
+
+    public void changeKeyValue(String key, String value) {
+        params.put(key, value);
+    }
 
     public Operation() {
-
+        params = new HashMap<>();
+        String dummy = "dummy";
+        params.put("type", dummy);
+        params.put("chunkID", dummy);
+        params.put("blockID", dummy);
+        params.put("destination", dummy);
+        params.put("source", dummy);
     }
 
-    public static String asJSON(Operation operation) {
-        Map<String, String> params = new HashMap<>();
-        params.put("type", operation.type);
-        params.put("chunkID", operation.chunkID);
-        params.put("blockID", operation.blockID);
-        params.put("destination", operation.destination);
-        params.put("source", operation.source);
-        params.put("ID", operation.ID);
-
-        return asJSON(params);
+    public List<String> getKeys() {
+        List<String> values = new ArrayList<>();
+        for(Map.Entry<String, String> param :params.entrySet()){
+            values.add(param.getKey());
+        }
+        return values;
     }
 
-    private static String asJSON(Map<String, String> params) {
+    public List<String> getValues() {
+        List<String> values = new ArrayList<>();
+        for(Map.Entry<String, String> param :params.entrySet()){
+            values.add(param.getValue());
+        }
+        return values;
+    }
+
+    public String asJSON() {
         String json =  "{";
 
         for(Map.Entry<String, String> param :params.entrySet()){
@@ -38,5 +50,10 @@ public class Operation {
         json += "}";
 
         return json;
+    }
+
+    public boolean hasChunkIDAndBlockID(String chunkID, String blockID) {
+        return (params.get("chunkID").equals(chunkID)
+                && params.get("blockID").equals(blockID));
     }
 }

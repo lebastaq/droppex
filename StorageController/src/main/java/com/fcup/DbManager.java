@@ -72,30 +72,40 @@ public class DbManager {
             query += separator;
             query += param.getKey() + "=";
             query += "'" + param.getValue() + "'";
-            separator = " AND ";
+            separator = " AND ";
         }
         query += ";";
+        System.out.println("Executing query " + query);
         Statement statement = dbConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int columnCount = rsmd.getColumnCount();
 
         while (rs.next()) {
             Operation operation = new Operation();
-            operation.type = rs.getString("type");
-            operation.chunkID = rs.getString("chunkID");
-            operation.blockID = rs.getString("blockID");
-            operation.destination = rs.getString("destination");
-            operation.source = rs.getString("source");
+            for(int i = 1; i < columnCount; i++) {
+                String colName = rsmd.getColumnName(i);
+                operation.changeKeyValue(colName, rs.getString(colName));
+            }
             results.add(operation);
         }
 
         return results;
     }
 
-    public void insertEntry(List<String> values) throws Exception {
-        String request = "INSERT INTO " + table + " (type, chunkID, blockID, destination, source) VALUES(";
+    public void insertOperation(Operation operation) throws Exception {
+        String request = "INSERT INTO " + table + " (";
 
         String separator = "";
-        for (String value : values) {
+        for (String key : operation.getKeys()) {
+            request += separator;
+            request += "'" + key + "'";
+            separator = ",";
+        }
+        request += ") VALUES(";
+
+        separator = "";
+        for (String value : operation.getValues()) {
             request += separator;
             request += "'" + value + "'";
             separator = ",";

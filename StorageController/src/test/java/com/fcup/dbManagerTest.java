@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,25 +43,23 @@ public class dbManagerTest {
     public void insertAndReadEntry() {
         try{
             dbManager.connect();
-            List<String> values = new ArrayList<>();
-            values.add("testType");
-            values.add("testchunkID");
-            values.add("testblockID");
-            values.add("testdestination");
-            values.add("testsource");
-            dbManager.insertEntry(values);
+            Operation operation = new Operation();
+            operation.changeKeyValue("chunkID", "testchunkID");
+            operation.changeKeyValue("blockID", "testblockID");
+            dbManager.insertOperation(operation);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Could not insert values into database");
         }
 
         try {
-            Map<String, String> values = new HashMap<>();
-            values.put("chunkID", "testchunkID");
-            List<Operation> operationsRead = dbManager.readEntry(values);
+            Map<String, String> queryParams = new HashMap<>();
+            queryParams.put("chunkID", "testchunkID");
+            queryParams.put("blockID", "testblockID");
+            List<Operation> operationsRead = dbManager.readEntry(queryParams);
 
-            if(!operationsRead.get(0).chunkID.equals("testchunkID"))
-                fail("Read bad value from database:" + operationsRead.get(0).chunkID + " instead of " + "testchunkID");
+            if(!operationsRead.get(0).hasChunkIDAndBlockID("testchunkID", "testblockID"))
+                fail("Read bad value from database: " + "should have read " + "testchunkID");
 
         } catch (SQLException e) {
             e.printStackTrace();

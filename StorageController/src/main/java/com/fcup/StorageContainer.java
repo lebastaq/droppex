@@ -39,17 +39,17 @@ public class StorageContainer extends ReceiverAdapter {
      */
     private void eventLoop() throws Exception {
         Operation operation = new Operation();
-        operation.type = "Test";
-        operation.blockID = "Test block ID";
-        operation.chunkID = "Test chunk ID";
-        operation.destination = "dest src";
-        operation.source = "test source";
-        operation.ID = "test ID";
-        updateOperation(Operation.asJSON(operation));
-        System.out.println("Sent operation: " + Operation.asJSON(operation));
-        while (true) {
-
-        }
+//        operation.type = "Test";
+//        operation.blockID = "Test block ID";
+//        operation.chunkID = "Test chunk ID";
+//        operation.destination = "dest src";
+//        operation.source = "test source";
+//        operation.ID = "test ID";
+//        updateOperation(Operation.asJSON(operation));
+//        System.out.println("Sent operation: " + Operation.asJSON(operation));
+//        while (true) {
+//
+//        }
     }
 
     public StorageContainer() throws Exception {
