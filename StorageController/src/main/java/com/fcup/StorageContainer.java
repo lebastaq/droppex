@@ -13,7 +13,8 @@ import java.util.LinkedList;
 public class StorageContainer extends ReceiverAdapter {
     JChannel channel;
     String user_name = System.getProperty("user.name", "n/a");
-    final List<String> operations = new LinkedList<>();
+    List<String> operations = new LinkedList<>();
+    List<String> newOperationsFromNetwork = new LinkedList<>();
 
     public void viewAccepted(View new_view) {
         System.out.println("** view: " + new_view);
@@ -37,25 +38,27 @@ public class StorageContainer extends ReceiverAdapter {
     public void setState(InputStream input) throws Exception {
         List<String> list = Util.objectFromStream(new DataInputStream(input));
         synchronized(operations) {
-//            operations.clear();
-//            operations.addAll(list);
-            syncOperations(list);
+            newOperationsFromNetwork.addAll(operations);
         }
         System.out.println("received operations (" + list.size() + ")");
     }
 
-    private void syncOperations(List<String> list) {
-        for(String operationString : list) {
-            Operation operation = Operation.fromJSON(operationString);
-            System.out.println("Got operation: " + operation.jsonRepresentation);
-        }
+    /*
+    TODO compare against local stack of operations
+    TODO for each new operation, execute it...
+     */
+    public void syncOperations() {
+        channel.getState();
     }
 
 
-    private void start() throws Exception {
-        channel=new JChannel().setReceiver(this);
+
+
+    public void connectToChannel() throws Exception {
         channel.connect("ChatCluster");
-        channel.getState(null, 10000);
+    }
+
+    public void start() {
         eventLoop();
         channel.close();
     }
@@ -70,7 +73,6 @@ public class StorageContainer extends ReceiverAdapter {
                     break;
                 }
                 Operation operation = Operation.fromData("test", "block id");
-                System.out.println("Sending " + operation.jsonRepresentation);
                 Message msg = new Message(null, operation.jsonRepresentation);
                 channel.send(msg);
             }
@@ -79,8 +81,15 @@ public class StorageContainer extends ReceiverAdapter {
         }
     }
 
+    public StorageContainer() throws Exception {
+        channel = new JChannel("config.xml");
+        channel.setReceiver(this);
+    }
 
     public static void main(String[] args) throws Exception {
-        new StorageContainer().start();
+        StorageContainer storageContainer = new StorageContainer();
+        storageContainer.connectToChannel();
+        storageContainer.syncOperations();
+        storageContainer.start();
     }
 }
