@@ -8,21 +8,23 @@ import org.jgroups.util.Util;
 
 import java.io.DataInputStream;
 import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class StorageContainer extends ReceiverAdapter {
+public class StorageController extends ReceiverAdapter {
     JChannel channel;
+    DbManager dbManager;
     String user_name = System.getProperty("user.name", "n/a");
     final List<String> operations = new LinkedList<>();
 
     public static void main(String[] args) {
         try {
-            StorageContainer storageContainer = null;
-            storageContainer = new StorageContainer();
-            storageContainer.connectToChannel();
-            storageContainer.sync();
-            storageContainer.start();
+            StorageController storageController = new StorageController();
+            storageController.connectToChannel();
+            storageController.sync();
+            storageController.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,14 +47,16 @@ public class StorageContainer extends ReceiverAdapter {
 //        operation.destination = "dest src";
 //        operation.source = "test source";
 //        operation.ID = "test ID";
-//        updateOperation(Operation.asJSON(operation));
-//        System.out.println("Sent operation: " + Operation.asJSON(operation));
-//        while (true) {
-//
-//        }
+        doOperation(operation);
+        System.out.println("Sent operation: " + operation.asJSONString());
+        while (true) {
+
+        }
     }
 
-    public StorageContainer() throws Exception {
+    public StorageController() throws Exception {
+        dbManager = new DbManager();
+        dbManager.connect();
         channel = new JChannel("config.xml");
         channel.setReceiver(this);
     }
@@ -63,11 +67,11 @@ public class StorageContainer extends ReceiverAdapter {
 
     public void sync() throws Exception {
         loadLocalOperationsFromDB();
-        channel.getState(null, 1000); // will callback local setState
+        channel.getState(null, 10000); // will callback local setState
     }
 
-    public void updateOperation(String operation) throws Exception {
-        channel.send(null, operation);
+    public void doOperation(Operation operation) throws Exception {
+        channel.send(null, /*operation.asJSONString()*/ "test");
         writeOperationIntoDB(operation);
     }
 
@@ -80,24 +84,30 @@ public class StorageContainer extends ReceiverAdapter {
         System.out.println("Received: " + line);
         synchronized(operations) {
             operations.add(line);
+            // TODO update database
         }
     }
 
     @SuppressWarnings("unchecked")
     public void setState(InputStream input) throws Exception {
         List<String> newOperations = Util.objectFromStream(new DataInputStream(input));
-        synchronized(operations) {
-            syncOperations(newOperations);
-        }
+//        syncOperations(newOperations);
     }
 
-    public void syncOperations(final List<String> newOperations) {
+    public void syncOperations(final List<String> newOperations) throws SQLException {
         for (String op : newOperations)
         {
             if(!operations.contains(op)) {
-                operations.add(op);
-                writeOperationIntoDB(op);
+                synchronized(operations) {
+                    operations.add(op);
+                }
+                writeOperationIntoDB(Operation.fromJSON(op));
             }
+        }
+
+        System.out.println("Operations:");
+        for (String op : operations) {
+            System.out.println(op);
         }
     }
 
@@ -105,8 +115,14 @@ public class StorageContainer extends ReceiverAdapter {
 
     }
 
-    public void writeOperationIntoDB(String operation) {
-
+    public void writeOperationIntoDB(Operation operation) throws SQLException {
+        try {
+            dbManager.insertOperation(operation);
+        } catch (Exception e) {
+            System.err.println("Could not insert operation: ");
+            e.printStackTrace();
+            throw new SQLException();
+        }
     }
 
 

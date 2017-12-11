@@ -14,7 +14,7 @@ public class DbManager {
     private String dbUrl;
 
     public DbManager() {
-        this("src/main/operations");
+        this("src/main/resources/operations-db");
     }
 
     public DbManager(String dbName) {
@@ -68,6 +68,7 @@ public class DbManager {
         List<Operation> results = new ArrayList<>();
         String query = "SELECT * FROM " + table + " WHERE ";
         String separator = "";
+        // TODO tidy this up
         for(Map.Entry<String, String> param :params.entrySet()){
             query += separator;
             query += param.getKey() + "=";
@@ -96,6 +97,7 @@ public class DbManager {
     public void insertOperation(Operation operation) throws Exception {
         String request = "INSERT INTO " + table + " (";
 
+        // TODO tidy this up
         String separator = "";
         for (String key : operation.getKeys()) {
             request += separator;
@@ -111,12 +113,12 @@ public class DbManager {
             separator = ",";
         }
         request += ")";
+        System.out.println("Request = "+ request);
         Statement statement = dbConnection.createStatement();
         statement.executeUpdate( request );
     }
 
     public void createOperationsTableIfNotExists() throws SQLException {
-        System.out.println("Creating new database file...");
         String sql = "CREATE TABLE IF NOT EXISTS " + table + "(\n"
                 + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
                 + "	type text,\n"

@@ -1,9 +1,8 @@
 package com.fcup;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.json.JSONObject;
+
+import java.util.*;
 
 public class Operation {
 
@@ -39,12 +38,15 @@ public class Operation {
         return values;
     }
 
-    public String asJSON() {
+    public String asJSONString() {
         String json =  "{";
 
+        String separator = "";
         for(Map.Entry<String, String> param :params.entrySet()){
+            json += separator;
             json += "\"" + param.getKey() + "\":";
-            json += "\"" + param.getValue() + "\",";
+            json += "\"" + param.getValue() + "\"";
+            separator = ",";
         }
 
         json += "}";
@@ -55,5 +57,19 @@ public class Operation {
     public boolean hasChunkIDAndBlockID(String chunkID, String blockID) {
         return (params.get("chunkID").equals(chunkID)
                 && params.get("blockID").equals(blockID));
+    }
+
+    public static Operation fromJSON(String operationJSONString) {
+        Operation operation = new Operation();
+        JSONObject operationJSON = new JSONObject(operationJSONString);
+
+        for (String key : operationJSON.keySet()) {
+            String value = (String)operationJSON.get(key);
+
+            System.out.println("key: "+ key + " value: " + value);
+            operation.changeKeyValue(key, value);
+        }
+
+        return operation;
     }
 }
