@@ -7,7 +7,9 @@ import org.jgroups.View;
 import org.jgroups.util.Util;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -41,6 +43,7 @@ public class StorageController extends ReceiverAdapter {
      */
     private void eventLoop() throws Exception {
         Operation operation = new Operation();
+        operation.changeKeyValue("type", Integer.toString((int)(Math.random()*20)));
 //        operation.type = "Test";
 //        operation.blockID = "Test block ID";
 //        operation.chunkID = "Test chunk ID";
@@ -71,7 +74,7 @@ public class StorageController extends ReceiverAdapter {
     }
 
     public void doOperation(Operation operation) throws Exception {
-        channel.send(null, /*operation.asJSONString()*/ "test");
+        channel.send(null, operation.asJSONString());
         writeOperationIntoDB(operation);
     }
 
@@ -88,19 +91,24 @@ public class StorageController extends ReceiverAdapter {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void setState(InputStream input) throws Exception {
         List<String> newOperations = Util.objectFromStream(new DataInputStream(input));
-//        syncOperations(newOperations);
+        synchronized(operations) {
+            syncOperations(newOperations);
+        }
+    }
+
+    public void getState(OutputStream output) throws Exception {
+        synchronized(operations) {
+            Util.objectToStream(operations, new DataOutputStream(output));
+        }
     }
 
     public void syncOperations(final List<String> newOperations) throws SQLException {
         for (String op : newOperations)
         {
             if(!operations.contains(op)) {
-                synchronized(operations) {
                     operations.add(op);
-                }
                 writeOperationIntoDB(Operation.fromJSON(op));
             }
         }
@@ -112,7 +120,7 @@ public class StorageController extends ReceiverAdapter {
     }
 
     public void loadLocalOperationsFromDB() {
-
+        // TODO
     }
 
     public void writeOperationIntoDB(Operation operation) throws SQLException {

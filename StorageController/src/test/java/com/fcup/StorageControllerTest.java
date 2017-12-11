@@ -54,6 +54,9 @@ public class StorageControllerTest {
         try {
             storageController.connectToChannel();
             storageController.sync();
+            StorageController storageController2 = new StorageController();
+            storageController2.connectToChannel();
+            storageController2.sync();
         } catch (Exception e) {
             e.printStackTrace();
             fail("Could not sync state");
