@@ -9,21 +9,21 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var files []File
+var files = make(map[string]File)
 
 func main() {
 	const Version = "/1"
 	router := mux.NewRouter()
 
-	// Dummy data
-	files = append(files, File{Filename: "homework1.pdf", SizeInBytes: 10})
-	files = append(files, File{Filename: "photo1.jpeg", SizeInBytes: 5})
+	// TODO: Remove this dummy data
+	files["homework1.pdf"] = File{Filename: "homework1.pdf", SizeInBytes: 2048}
+	files["photo1.jpeg"] = File{Filename: "photo1.jpeg", SizeInBytes: 1024}
 
 	router.HandleFunc(Version+"/list", ListFiles).Methods("GET")
 	router.HandleFunc(Version+"/list/{pattern}", ListMatching).Methods("GET")
-	router.HandleFunc(Version+"/files_put", UploadFile).Methods("PUT")
-	router.HandleFunc(Version+"/files", DownloadFile).Methods("GET")
-	router.HandleFunc(Version+"/delete", DeleteFile).Methods("DELETE")
+	router.HandleFunc(Version+"/files/{filename}", DownloadFile).Methods("GET")
+	router.HandleFunc(Version+"/files_post", UploadFile).Methods("POST")
+	router.HandleFunc(Version+"/delete/{filename}", DeleteFile).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
@@ -37,49 +37,54 @@ type File struct {
 // ListFiles lists all files or files matching a pattern
 // curl test: curl localhost:8080/1/list
 func ListFiles(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(200)
 	json.NewEncoder(w).Encode(files)
 }
 
 // ListMatching lists all files matching a pattern
 // curl test: curl localhost:8080/1/list/photo
 func ListMatching(w http.ResponseWriter, r *http.Request) {
-	output := make([]File, 0)
+	w.WriteHeader(200)
 	params := mux.Vars(r)
+	output := make(map[string]File)
 
-	for _, item := range files {
-		if strings.Contains(item.Filename, params["pattern"]) {
-			output = append(output, item)
+	for key, value := range files {
+		if strings.Contains(key, params["pattern"]) {
+			output[key] = value
 		}
 	}
 
-	if len(output) > 0 {
-		json.NewEncoder(w).Encode(output)
-		return
-	}
-	json.NewEncoder(w).Encode(&File{})
-}
-
-// UploadFile uploads a file to the servers
-// Temporarily just uploading metadata
-// curl test: curl -d '{"filename":"blergh.jpeg","size":5}' -X PUT localhost:8080/1/files_put
-func UploadFile(w http.ResponseWriter, r *http.Request) {
-	var file File
-	json.NewDecoder(r.Body).Decode(&file)
-
-	if file.Filename != "" {
-		files = append(files, file)
-
-	}
-
-	json.NewEncoder(w).Encode(files)
+	json.NewEncoder(w).Encode(output)
 }
 
 // DownloadFile downloads a file with a given filename
 func DownloadFile(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(200)
+	params := mux.Vars(r)
 
+	if _, ok := files[params["filename"]]; ok {
+		w.Write([]byte("Found."))
+	} else {
+		w.Write([]byte("File not found."))
+	}
+}
+
+// UploadFile uploads a file to the servers
+// TODO: Verify file doesn't already exist
+func UploadFile(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(200)
+	w.Write([]byte("File upload success."))
 }
 
 // DeleteFile deletes the file associated with the input
 func DeleteFile(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(200)
+	params := mux.Vars(r)
+
+	if _, ok := files[params["filename"]]; ok {
+		w.Write([]byte("Found."))
+	} else {
+		w.Write([]byte("File not found."))
+	}
 
 }
