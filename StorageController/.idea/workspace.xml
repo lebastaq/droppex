@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e5f758d-a827-4174-b3c2-73d36543e8af" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/dbManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/fcup/dbManagerTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/droppexmaven.iml" afterPath="$PROJECT_DIR$/droppexmaven.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -22,8 +20,8 @@
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="102" column="0" lean-forward="false" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+            <state relative-caret-position="190">
+              <caret line="95" column="53" lean-forward="false" selection-start-line="95" selection-start-column="48" selection-end-line="95" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -32,11 +30,11 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="44" lean-forward="false" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+            <state relative-caret-position="340">
+              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding>
-                <element signature="e#1293#1294#0" expanded="true" />
-                <element signature="e#1325#1326#0" expanded="true" />
+                <element signature="e#963#964#0" expanded="true" />
+                <element signature="e#995#996#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -64,16 +62,40 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StorageContainer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StorageContainer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-10">
-              <caret line="82" column="9" lean-forward="true" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
+            <state relative-caret-position="449">
+              <caret line="103" column="24" lean-forward="false" selection-start-line="103" selection-start-column="24" selection-end-line="103" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2167#2168#0" expanded="true" />
                 <element signature="e#2229#2230#0" expanded="true" />
                 <element signature="e#2449#2479#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dbManager.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/dbManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="91">
+              <caret line="18" column="21" lean-forward="false" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dbManagerTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/dbManagerTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -95,8 +117,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
-        <option value="JUnit4 Test Class" />
         <option value="Class" />
+        <option value="JUnit4 Test Class" />
       </list>
     </option>
   </component>
@@ -108,12 +130,12 @@
       <find>setState</find>
       <find>JSON</find>
       <find>receiver</find>
-      <find>junit</find>
       <find>message</find>
       <find>setRec</find>
       <find>syncOperations</find>
       <find>sendOperation</find>
       <find>sync</find>
+      <find>junit</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -141,9 +163,11 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/Receiver.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/StorageContainerTest.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fcup/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/fcup/dbManagerTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/dbManager.java" />
       </list>
     </option>
   </component>
@@ -224,6 +248,21 @@
               <item name="StorageController" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="StorageController" type="b2602c69:ProjectViewProjectNode" />
+              <item name="StorageController" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="fcup" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="StorageController" type="b2602c69:ProjectViewProjectNode" />
+              <item name="StorageController" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -238,6 +277,14 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="StorageController" type="b2602c69:ProjectViewProjectNode" />
+              <item name="StorageController" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="fcup" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="StorageController" type="b2602c69:ProjectViewProjectNode" />
@@ -258,6 +305,7 @@
     <property name="project.structure.proportion" value="0.09803921" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
+    <property name="extract.method.default.visibility" value="private" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -279,7 +327,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.StorageContainer">
+  <component name="RunManager" selected="JUnit.dbManagerTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -423,16 +471,43 @@
       <properties />
       <listeners />
     </configuration>
-    <list size="3">
+    <configuration name="dbManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.fcup.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="droppexmaven" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.fcup" />
+      <option name="MAIN_CLASS_NAME" value="com.fcup.dbManagerTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Application.StorageContainer" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.StorageContainerTest" />
       <item index="2" class="java.lang.String" itemvalue="Application.Main" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.dbManagerTest" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Application.StorageContainer" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.dbManagerTest" />
         <item index="1" class="java.lang.String" itemvalue="Application.Main" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.StorageContainerTest" />
+        <item index="2" class="java.lang.String" itemvalue="Application.StorageContainer" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.StorageContainerTest" />
       </list>
     </recent_temporary>
   </component>
@@ -503,24 +578,46 @@
       <option name="project" value="LOCAL" />
       <updated>1513002184127</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Code restructuring to manipulate operations&#10;Cleanup">
+      <created>1513005915582</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1513005915582</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="StorageContainerTest - 2017.12.11 at 13h 39m 22s.xml">
-      <configuration name="StorageContainerTest" configurationId="JUnit" />
+    <history-entry file="dbManagerTest - 2017.12.11 at 15h 42m 43s.xml">
+      <configuration name="dbManagerTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StorageContainerTest - 2017.12.11 at 13h 40m 11s.xml">
-      <configuration name="StorageContainerTest" configurationId="JUnit" />
+    <history-entry file="dbManagerTest - 2017.12.11 at 15h 44m 04s.xml">
+      <configuration name="dbManagerTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StorageContainerTest - 2017.12.11 at 13h 42m 41s.xml">
-      <configuration name="StorageContainerTest" configurationId="JUnit" />
+    <history-entry file="dbManagerTest - 2017.12.11 at 15h 44m 25s.xml">
+      <configuration name="dbManagerTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StorageContainerTest - 2017.12.11 at 13h 53m 42s.xml">
-      <configuration name="StorageContainerTest" configurationId="JUnit" />
+    <history-entry file="dbManagerTest - 2017.12.11 at 15h 44m 49s.xml">
+      <configuration name="dbManagerTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StorageContainerTest - 2017.12.11 at 13h 58m 43s.xml">
-      <configuration name="StorageContainerTest" configurationId="JUnit" />
+    <history-entry file="dbManagerTest - 2017.12.11 at 15h 46m 57s.xml">
+      <configuration name="dbManagerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="dbManagerTest - 2017.12.11 at 15h 47m 06s.xml">
+      <configuration name="dbManagerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="dbManagerTest - 2017.12.11 at 15h 47m 32s.xml">
+      <configuration name="dbManagerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="dbManagerTest - 2017.12.11 at 15h 48m 02s.xml">
+      <configuration name="dbManagerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="dbManagerTest - 2017.12.11 at 15h 48m 29s.xml">
+      <configuration name="dbManagerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="dbManagerTest - 2017.12.11 at 15h 49m 49s.xml">
+      <configuration name="dbManagerTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -544,8 +641,8 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21393643" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24550898" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3398533" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24449877" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17021276" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Google Cloud Storage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -577,11 +674,12 @@
     <MESSAGE value="New dev branch" />
     <MESSAGE value="Clean up code&#10;Added tests" />
     <MESSAGE value="Code restructuring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Code restructuring" />
+    <MESSAGE value="Code restructuring to manipulate operations&#10;Cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code restructuring to manipulate operations&#10;Cleanup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -919,14 +1017,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StorageContainerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="15" column="44" lean-forward="false" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/test.db">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -935,10 +1025,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StorageContainerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="15" column="44" lean-forward="false" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="102" column="0" lean-forward="false" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+        <state relative-caret-position="190">
+          <caret line="95" column="53" lean-forward="false" selection-start-line="95" selection-start-column="48" selection-end-line="95" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <element signature="e#963#964#0" expanded="true" />
+            <element signature="e#995#996#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="33" column="17" lean-forward="false" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -953,34 +1070,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="33" column="17" lean-forward="false" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="44" lean-forward="false" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
-          <folding>
-            <element signature="e#1293#1294#0" expanded="true" />
-            <element signature="e#1325#1326#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StorageContainer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-10">
-          <caret line="82" column="9" lean-forward="true" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
+        <state relative-caret-position="449">
+          <caret line="103" column="24" lean-forward="false" selection-start-line="103" selection-start-column="24" selection-end-line="103" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2167#2168#0" expanded="true" />
             <element signature="e#2229#2230#0" expanded="true" />
             <element signature="e#2449#2479#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/dbManagerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/dbManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="18" column="21" lean-forward="false" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
