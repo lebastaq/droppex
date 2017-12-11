@@ -14,9 +14,8 @@ public class StorageContainerTest {
         StorageContainer storageContainer = new StorageContainer();
 
         storageContainer.connectToChannel();
-        storageContainer.syncOperations();
 
-        assertEquals(storageContainer.newOperationsFromNetwork, expectedNewOperations);
+        assertEquals(storageContainer.operations, expectedNewOperations);
     }
 
     @Test

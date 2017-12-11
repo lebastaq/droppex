@@ -23,8 +23,7 @@ public class Operation {
 
         operation.type = operationJSON.getString("type");
         operation.blockID = operationJSON.getString("blockID");
-        operation.jsonRepresentation =  new String("{\"type\": \"" + operation.type + "\"" +
-                ", \"blockID\": \"" + operation.blockID + "\"}");
+        operation.jsonRepresentation = buildJSON(operation.type, operation.blockID);
 
         return operation;
     }
@@ -34,10 +33,15 @@ public class Operation {
 
         operation.type = type;
         operation.blockID = blockId;
-        operation.jsonRepresentation =  new String("{\"type\": \"" + operation.type + "\"" +
-                ", \"blockID\": \"" + operation.blockID + "\"}");
+        operation.jsonRepresentation = buildJSON(operation.type, operation.blockID);
 
         return operation;
     }
 
+    private static String buildJSON(String type, String blockID) {
+        String json =  new String("{\"type\": \"" + type + "\"" +
+                ", \"blockID\": \"" + blockID + "\"}");
+
+        return json;
+    }
 }

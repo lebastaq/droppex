@@ -6,18 +6,63 @@ import org.jgroups.ReceiverAdapter;
 import org.jgroups.View;
 import org.jgroups.util.Util;
 
-import java.io.*;
-import java.util.List;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.LinkedList;
+import java.util.List;
 
 public class StorageContainer extends ReceiverAdapter {
     JChannel channel;
     String user_name = System.getProperty("user.name", "n/a");
-    List<String> operations = new LinkedList<>();
-    List<String> newOperationsFromNetwork = new LinkedList<>();
+    final List<String> operations = new LinkedList<>();
+
+    public static void main(String[] args) {
+        try {
+            StorageContainer storageContainer = null;
+            storageContainer = new StorageContainer();
+            storageContainer.connectToChannel();
+            storageContainer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void start() throws Exception {
+        eventLoop();
+        channel.close();
+    }
+
+    /*
+    TODO compare against local stack of operations
+    TODO for each new operation, execute it...
+     */
+    private void eventLoop() throws Exception {
+        Operation operation = Operation.fromData("test", "block id");
+        sendOperation(operation);
+        System.out.println("Sent operation: " + operation.jsonRepresentation);
+        while (true) {
+
+        }
+    }
+
+    public StorageContainer() throws Exception {
+        channel = new JChannel("config.xml");
+        channel.setReceiver(this);
+    }
+
+    public void connectToChannel() throws Exception {
+        channel.connect("ChatCluster");
+        channel.getState(null, 1000);
+    }
+
+    public void sendOperation(Operation operation) throws Exception {
+        channel.send(null, operation.jsonRepresentation);
+    }
 
     public void viewAccepted(View new_view) {
-        System.out.println("** view: " + new_view);
+        System.out.println("Joined View: " + new_view);
     }
 
     public void receive(Message msg) {
@@ -28,68 +73,19 @@ public class StorageContainer extends ReceiverAdapter {
         }
     }
 
-    public void getState(OutputStream output) throws Exception {
-        synchronized(operations) {
-            Util.objectToStream(operations, new DataOutputStream(output));
-        }
-    }
-
     @SuppressWarnings("unchecked")
     public void setState(InputStream input) throws Exception {
-        List<String> list = Util.objectFromStream(new DataInputStream(input));
+        List<String> newOperations = Util.objectFromStream(new DataInputStream(input));
         synchronized(operations) {
-            newOperationsFromNetwork.addAll(operations);
-        }
-        System.out.println("received operations (" + list.size() + ")");
-    }
-
-    /*
-    TODO compare against local stack of operations
-    TODO for each new operation, execute it...
-     */
-    public void syncOperations() {
-        channel.getState();
-    }
-
-
-
-
-    public void connectToChannel() throws Exception {
-        channel.connect("ChatCluster");
-    }
-
-    public void start() {
-        eventLoop();
-        channel.close();
-    }
-
-    private void eventLoop() {
-        BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
-        while(true) {
-            try {
-                System.out.print("> "); System.out.flush();
-                String line=in.readLine().toLowerCase();
-                if(line.startsWith("quit") || line.startsWith("exit")) {
-                    break;
-                }
-                Operation operation = Operation.fromData("test", "block id");
-                Message msg = new Message(null, operation.jsonRepresentation);
-                channel.send(msg);
-            }
-            catch(Exception e) {
-            }
+            syncOperations(newOperations);
         }
     }
 
-    public StorageContainer() throws Exception {
-        channel = new JChannel("config.xml");
-        channel.setReceiver(this);
+    public void syncOperations(final List<String> newOperations) {
+        for (String op : newOperations) {
+            System.out.println(op);
+        }
     }
 
-    public static void main(String[] args) throws Exception {
-        StorageContainer storageContainer = new StorageContainer();
-        storageContainer.connectToChannel();
-        storageContainer.syncOperations();
-        storageContainer.start();
-    }
+
 }
