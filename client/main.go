@@ -2,16 +2,22 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"net/http/httputil"
 	"os"
 	"strings"
 )
 
 // URL for app-server
 const URL string = "http://localhost:8000/1/"
+
+// DEBUGGING mode shows HTTP req details
+const DEBUGGING bool = true
 
 // File struct holds file name and size
 type File struct {
@@ -63,39 +69,43 @@ func main() {
 }
 
 func listFiles() {
-	fmt.Println("Listing all files")
+	if DEBUGGING {
+		fmt.Println("Listing all files")
+	}
 	queryFiles("")
 
 }
 
 func searchFiles(pattern string) {
-	fmt.Println("Searching for:", pattern)
+	if DEBUGGING {
+		fmt.Println("Searching for:", pattern)
+	}
 	queryFiles(pattern)
 }
 
 func queryFiles(pattern string) {
-	target := URL + "/list"
+	target := URL + "list"
 	if pattern != "" {
 		target = target + "/" + pattern
 	}
 
 	// Grabbing response from URL (raw JSON)
-	res, err := http.Get(target)
+	resp, err := http.Get(target)
+	defer resp.Body.Close()
 	if err != nil {
 		// TODO: Handle
 		panic(err)
 	}
-	defer res.Body.Close()
 
 	// Read body of HTTP response (JSON)
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		// TODO: Handle
 		panic(err)
 	}
 
 	// Unmarshals JSON body into the payload struct by passing in the pointer
-	payload := make([]File, 0)
+	payload := make(map[string]File)
 	err = json.Unmarshal(body, &payload)
 	if err != nil {
 		// TODO: Handle
@@ -103,25 +113,83 @@ func queryFiles(pattern string) {
 	}
 
 	printJSON(payload)
-
-}
-
-func uploadFile(filepath string) {
-	fmt.Println("Upload request for file:", filepath)
 }
 
 func downloadFile(filename string) {
-	fmt.Println("Download request for file:", filename)
+	target := URL + "files/" + filename
+
+	resp, err := http.Get(target)
+	defer resp.Body.Close()
+	if err != nil {
+		// TODO: Handle
+		panic(err)
+	}
+
+	if DEBUGGING {
+		fmt.Println("Download request for file:", filename)
+		debug(httputil.DumpResponse(resp, true))
+	}
+}
+
+func uploadFile(filepath string) {
+	target := URL + "files_post"
+
+	values := map[string]string{"filepath": filepath}
+	jsonValue, _ := json.Marshal(values)
+
+	resp, err := http.Post(target, "application/json", bytes.NewBuffer(jsonValue))
+	defer resp.Body.Close()
+	if err != nil {
+		// TODO: Handle
+		panic(err)
+	}
+
+	// TODO: Put into use?
+	// if 200 != resp.StatusCode {
+	// 	return nil, fmt.Errorf("%s", body)
+	// }
+
+	if DEBUGGING {
+		fmt.Println("Upload request for file:", filepath)
+		debug(httputil.DumpResponse(resp, true))
+	}
 }
 
 func deleteFile(filename string) {
-	fmt.Println("Deletion request for file:", filename)
+	target := URL + "delete/" + filename
+
+	resp, err := http.Post(target, "", nil)
+	defer resp.Body.Close()
+	if err != nil {
+		// TODO: Handle
+		panic(err)
+	}
+
+	if DEBUGGING {
+		fmt.Println("Deletion request for file:", filename)
+		debug(httputil.DumpResponse(resp, true))
+	}
 }
 
-func printJSON(payload []File) {
-	for i, item := range payload {
-		size := float64(item.SizeInBytes) / float64(1024)
-		fmt.Printf("%d: %s (%f KB) \n", i+1, item.Filename, size)
+func printJSON(payload map[string]File) {
+	i := 1
+	for _, value := range payload {
+		size := float64(value.SizeInBytes) / float64(1024)
+		fmt.Printf("%d: %s (%d KB) \n", i, value.Filename, int(size))
+		i++
+	}
+
+	if i == 1 {
+		fmt.Println("Your search did not match any files.")
+	}
+}
+
+// TODO: Remove
+func debug(data []byte, err error) {
+	if err != nil {
+		log.Fatalf("%s", err)
+	} else {
+		fmt.Printf("%s", data)
 	}
 }
 
