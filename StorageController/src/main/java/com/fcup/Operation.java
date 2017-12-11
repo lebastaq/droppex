@@ -1,46 +1,41 @@
 package com.fcup;
 
-import org.json.*;
+import java.util.HashMap;
+import java.util.Map;
 
-// used as a data structure - no methods
 public class Operation {
     public String type;
+    public String chunkID;
     public String blockID;
-    public int destination;
-    public String jsonRepresentation;
-//    Source
-//    Dest
-//    Identifier
-//    Data ?
+    public String destination;
+    public String source;
+    public String ID;
 
-    private Operation() {
+    public Operation() {
 
     }
 
-    public static Operation fromJSON(String inputData) {
-        Operation operation = new Operation();
-        JSONObject operationJSON = new JSONObject(inputData);
+    public static String asJSON(Operation operation) {
+        Map<String, String> params = new HashMap<>();
+        params.put("type", operation.type);
+        params.put("chunkID", operation.chunkID);
+        params.put("blockID", operation.blockID);
+        params.put("destination", operation.destination);
+        params.put("source", operation.source);
+        params.put("ID", operation.ID);
 
-        operation.type = operationJSON.getString("type");
-        operation.blockID = operationJSON.getString("blockID");
-        operation.jsonRepresentation = buildJSON(operation.type, operation.blockID);
-
-        return operation;
+        return asJSON(params);
     }
 
-    public static Operation fromData(String type, String blockId) {
-        Operation operation = new Operation();
+    private static String asJSON(Map<String, String> params) {
+        String json =  "{";
 
-        operation.type = type;
-        operation.blockID = blockId;
-        operation.jsonRepresentation = buildJSON(operation.type, operation.blockID);
+        for(Map.Entry<String, String> param :params.entrySet()){
+            json += "\"" + param.getKey() + "\":";
+            json += "\"" + param.getValue() + "\",";
+        }
 
-        return operation;
-    }
-
-    private static String buildJSON(String type, String blockID) {
-        String json =  new String("{\"type\": \"" + type + "\"" +
-                ", \"blockID\": \"" + blockID + "\"}");
+        json += "}";
 
         return json;
     }

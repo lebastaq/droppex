@@ -7,9 +7,7 @@ import org.jgroups.View;
 import org.jgroups.util.Util;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,6 +21,7 @@ public class StorageContainer extends ReceiverAdapter {
             StorageContainer storageContainer = null;
             storageContainer = new StorageContainer();
             storageContainer.connectToChannel();
+            storageContainer.sync();
             storageContainer.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,9 +38,15 @@ public class StorageContainer extends ReceiverAdapter {
     TODO for each new operation, execute it...
      */
     private void eventLoop() throws Exception {
-        Operation operation = Operation.fromData("test", "block id");
-        sendOperation(operation);
-        System.out.println("Sent operation: " + operation.jsonRepresentation);
+        Operation operation = new Operation();
+        operation.type = "Test";
+        operation.blockID = "Test block ID";
+        operation.chunkID = "Test chunk ID";
+        operation.destination = "dest src";
+        operation.source = "test source";
+        operation.ID = "test ID";
+        updateOperation(Operation.asJSON(operation));
+        System.out.println("Sent operation: " + Operation.asJSON(operation));
         while (true) {
 
         }
@@ -54,11 +59,16 @@ public class StorageContainer extends ReceiverAdapter {
 
     public void connectToChannel() throws Exception {
         channel.connect("ChatCluster");
-        channel.getState(null, 1000);
     }
 
-    public void sendOperation(Operation operation) throws Exception {
-        channel.send(null, operation.jsonRepresentation);
+    public void sync() throws Exception {
+        loadLocalOperationsFromDB();
+        channel.getState(null, 1000); // will callback local setState
+    }
+
+    public void updateOperation(String operation) throws Exception {
+        channel.send(null, operation);
+        writeOperationIntoDB(operation);
     }
 
     public void viewAccepted(View new_view) {
@@ -82,9 +92,21 @@ public class StorageContainer extends ReceiverAdapter {
     }
 
     public void syncOperations(final List<String> newOperations) {
-        for (String op : newOperations) {
-            System.out.println(op);
+        for (String op : newOperations)
+        {
+            if(!operations.contains(op)) {
+                operations.add(op);
+                writeOperationIntoDB(op);
+            }
         }
+    }
+
+    public void loadLocalOperationsFromDB() {
+
+    }
+
+    public void writeOperationIntoDB(String operation) {
+
     }
 
 
