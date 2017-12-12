@@ -5,66 +5,55 @@ import java.net.Socket;
 
 public class ChunkSeeder extends Thread{
     private final Socket socket;
-    String chunk;
+    private final Object STORAGE_FOLDER;
+    String chunkName;
     File file;
 
-    public ChunkSeeder(Socket socket, String chunk) {
-        this.chunk = chunk;
+    public ChunkSeeder(Socket socket, String STORAGE_FOLDER) {
         this.socket = socket;
+        this.STORAGE_FOLDER = STORAGE_FOLDER;
     }
 
     public void run() {
         try {
-            OutputStream os = socket.getOutputStream();
-            PrintWriter out = new PrintWriter(os, true);
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))
-
-            System.out.println("Requested chunk" + chunk);
-
             openFile();
+            readFileName();
+            writeFileIntoBuffer();
 
-            try(FileInputStream fis = new FileInputStream(file);
-                BufferedInputStream bis = new BufferedInputStream(fis)) {
-
-                long fileLength = file.length();
-
-                byte[] contents = new byte[(int)fileLength]; // 1MB
-                int bytesRead = 0;
-
-                while((bytesRead = bis.read(contents)) > 0){
-                    os.write(contents, 0, bytesRead);
-
-                    // update every 20%
-                    if((bytesRead*100)/fileLength % 20 == 0) {
-                        System.out.print("Sending file ... " + (bytesRead * 100) / fileLength + "% complete!");
-                    }
-                }
-
-                os.flush();
-            }
-
-
-        }
-        catch(java.lang.NullPointerException e)
-        {
-            System.out.println("Coulnd't retrieve seeder from hash map (" + filename + ")");
-            try{
-                sb.createSingleSeeder(filename);
-            }
-            catch (Exception f) {
-                // Do nothing, client can request again.
-                f.printStackTrace();
-            }
-        }
-        catch (IOException e) {
-            // Do nothing, client can request again.
+        } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
 
-    private File openFile() {
-        file = new File("storage/" + chunk);
+    void readFileName() throws IOException {
+
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(socket.getInputStream()));
+        chunkName = in.readLine();
+        System.out.println("Requested chunkName" + chunkName);
+    }
+
+    private void writeFileIntoBuffer() throws IOException {
+        OutputStream os = socket.getOutputStream();
+        FileInputStream fis = new FileInputStream(file);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+
+        long fileLength = file.length();
+
+        byte[] contents = new byte[(int)fileLength];
+        int bytesRead;
+
+        while((bytesRead = bis.read(contents)) > 0){
+            os.write(contents, 0, bytesRead);
+        }
+        os.flush();
+    }
+
+    private void openFile() throws FileNotFoundException {
+        file = new File(STORAGE_FOLDER + chunkName);
+        if(!file.exists()) {
+            System.err.println("File not found: storage/" + chunkName);
+            throw new FileNotFoundException();
+        }
     }
 }
