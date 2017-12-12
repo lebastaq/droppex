@@ -64,9 +64,17 @@ public class DbManager {
         // TODO
     }
 
+    public List<Operation> readEntry() throws SQLException {
+        Map<String, String> params = new HashMap<>();
+        return readEntry(params);
+    }
+
+
     public List<Operation> readEntry(Map<String, String> params) throws SQLException {
         List<Operation> results = new ArrayList<>();
-        String query = "SELECT * FROM " + table + " WHERE ";
+        String query = "SELECT * FROM " + table;
+        if(params.size() > 0)
+            query += " WHERE ";
         String separator = "";
         // TODO tidy this up
         for(Map.Entry<String, String> param :params.entrySet()){
@@ -76,7 +84,6 @@ public class DbManager {
             separator = " AND ";
         }
         query += ";";
-        System.out.println("Executing query " + query);
         Statement statement = dbConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
         ResultSetMetaData rsmd = rs.getMetaData();
@@ -113,7 +120,6 @@ public class DbManager {
             separator = ",";
         }
         request += ")";
-        System.out.println("Request = "+ request);
         Statement statement = dbConnection.createStatement();
         statement.executeUpdate( request );
     }

@@ -68,7 +68,29 @@ public class dbManagerTest {
     }
 
     @Test
-    public void getAllEntriesFromTable() throws Exception {
+    public void insertAndReadSingleEntry() {
+        try{
+            dbManager.connect();
+            Operation operation = new Operation();
+            operation.changeKeyValue("chunkID", "testchunkID");
+            operation.changeKeyValue("blockID", "testblockID");
+            dbManager.insertOperation(operation);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Could not insert values into database");
+        }
+
+        try {
+            Map<String, String> queryParams = new HashMap<>();
+            List<Operation> operationsRead = dbManager.readEntry();
+
+            if(!operationsRead.get(0).hasChunkIDAndBlockID("testchunkID", "testblockID"))
+                fail("Read bad value from database: " + "should have read " + "testchunkID");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            fail("Could not read values from database");
+        }
     }
 
     @After

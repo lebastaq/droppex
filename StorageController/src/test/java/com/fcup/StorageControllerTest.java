@@ -11,7 +11,6 @@ import static org.jgroups.util.Util.assertEquals;
 import static org.junit.Assert.fail;
 
 public class StorageControllerTest {
-
     private StorageController storageController;
 
     @Before
@@ -23,6 +22,30 @@ public class StorageControllerTest {
             e.printStackTrace();
         }
     }
+
+
+    @Test
+    public void writeOperationIntoDBAndThenLoadIt() throws Exception {
+        Operation operation = new Operation();
+        DbManager dbManager = new DbManager();
+
+        dbManager.connect();
+
+        storageController.storeOperationInLocal(operation);
+        storageController.writeOperationIntoDB(operation);
+
+        storageController.operations = new LinkedList<>();
+        storageController.loadLocalOperationsFromDB();
+
+        List<Operation> operationsExpected;
+        operationsExpected = dbManager.readEntry();
+
+        if(storageController.operations.size() != operationsExpected.size())
+        {
+            fail("Stored " + storageController.operations.size() + " operations from db instead of " + operationsExpected.size());
+        }
+    }
+
 
     @Test
     public void syncOperations() throws Exception {

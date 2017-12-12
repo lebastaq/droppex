@@ -19,7 +19,7 @@ public class StorageController extends ReceiverAdapter {
     JChannel channel;
     DbManager dbManager;
     String user_name = System.getProperty("user.name", "n/a");
-    final List<String> operations = new LinkedList<>();
+    List<Operation> operations = new LinkedList<>();
 
     public static void main(String[] args) {
         try {
@@ -75,7 +75,12 @@ public class StorageController extends ReceiverAdapter {
 
     public void doOperation(Operation operation) throws Exception {
         channel.send(null, operation.asJSONString());
+        storeOperationInLocal(operation);
         writeOperationIntoDB(operation);
+    }
+
+    public void storeOperationInLocal(Operation operation) {
+        operations.add(operation);
     }
 
     public void viewAccepted(View new_view) {
@@ -86,7 +91,7 @@ public class StorageController extends ReceiverAdapter {
         String line = msg.getObject();
         System.out.println("Received: " + line);
         synchronized(operations) {
-            operations.add(line);
+            operations.add(Operation.fromJSON(line));
             // TODO update database
         }
     }
@@ -108,19 +113,29 @@ public class StorageController extends ReceiverAdapter {
         for (String op : newOperations)
         {
             if(!operations.contains(op)) {
-                    operations.add(op);
-                writeOperationIntoDB(Operation.fromJSON(op));
+                final Operation operation = Operation.fromJSON(op);
+                operations.add(operation);
+                writeOperationIntoDB(operation);
             }
         }
 
         System.out.println("Operations:");
-        for (String op : operations) {
-            System.out.println(op);
+        for (Operation op : operations) {
+            System.out.println(op.asJSONString());
         }
     }
 
-    public void loadLocalOperationsFromDB() {
-        // TODO
+    public void loadLocalOperationsFromDB() throws SQLException {
+        try {
+            List<Operation> operationsFromDB = dbManager.readEntry();
+            for (Operation operation : operationsFromDB) {
+                operations.add(operation);
+            }
+        } catch (SQLException e) {
+            System.err.println("Could not read operation: ");
+            e.printStackTrace();
+            throw new SQLException();
+        }
     }
 
     public void writeOperationIntoDB(Operation operation) throws SQLException {
