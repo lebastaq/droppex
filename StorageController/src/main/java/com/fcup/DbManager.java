@@ -59,10 +59,6 @@ public class DbManager {
         }
     }
 
-    public void getAllEntries(String table) {
-        String sMakeSelect = "SELECT response from operations";
-        // TODO
-    }
 
     public List<Operation> readEntry() throws SQLException {
         Map<String, String> params = new HashMap<>();
@@ -125,14 +121,16 @@ public class DbManager {
     }
 
     public void createOperationsTableIfNotExists() throws SQLException {
+        Operation operation = new Operation();
         String sql = "CREATE TABLE IF NOT EXISTS " + table + "(\n"
-                + "	id integer PRIMARY KEY AUTOINCREMENT,\n"
-                + "	type text,\n"
-                + "	chunkID text,\n"
-                + "	blockID text,\n"
-                + "	destination text,\n"
-                + "	source text\n"
-                + ");";
+                + "	id integer PRIMARY KEY AUTOINCREMENT,\n";
+
+        String separator = "";
+        for(String key: operation.getKeys()){
+            sql += separator + " " + key + " text";
+            separator = ",";
+        }
+        sql += ");";
 
         Statement statement = dbConnection.createStatement();
         statement.execute(sql);

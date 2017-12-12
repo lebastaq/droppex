@@ -18,7 +18,7 @@ public class Operation {
         params.put("type", dummy);
         params.put("chunkID", dummy);
         params.put("blockID", dummy);
-        params.put("destination", dummy);
+        params.put("storagePool", dummy);
         params.put("source", dummy);
     }
 
@@ -41,7 +41,6 @@ public class Operation {
     public String asJSONString() {
         JSONObject json = new JSONObject();
 
-        String separator = "";
         for(Map.Entry<String, String> param :params.entrySet()){
             json.put(param.getKey(), param.getValue());
         }
