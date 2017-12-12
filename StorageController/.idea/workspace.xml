@@ -2,16 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e5f758d-a827-4174-b3c2-73d36543e8af" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StoragePool/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StoragePool/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StoragePool/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StoragePool/StoragePool.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StoragePool/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StoragePool/src/main/java/StoragePool.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StoragePool/.idea/libraries/Maven__junit_junit_4_12.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StoragePool/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StoragePool/.idea/uiDesigner.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/ChunkSeeder.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StoragePool/src/test/java/com/fcup/ChunkSeederTest.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/StoragePool.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/DbManager.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/DbManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/StoragePool.iml" afterPath="$PROJECT_DIR$/../StoragePool/StoragePool.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/pom.xml" afterPath="$PROJECT_DIR$/../StoragePool/pom.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -46,7 +45,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DbManager.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DbManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/DbManager.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="378">
@@ -56,6 +55,16 @@
                 <element signature="e#337#338#0" expanded="true" />
                 <element signature="e#393#394#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="314">
+              <caret line="101" column="21" lean-forward="true" selection-start-line="95" selection-start-column="6" selection-end-line="101" selection-end-column="21" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -118,7 +127,6 @@
       <find>setRec</find>
       <find>sendOperation</find>
       <find>sync</find>
-      <find>junit</find>
       <find>hashmap</find>
       <find>Operation</find>
       <find>creating new</find>
@@ -134,6 +142,7 @@
       <find>JSON</find>
       <find>REQ</find>
       <find>query</find>
+      <find>junit</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -662,7 +671,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513100377346</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Cleaned up database creation to acknowledge changes in operation fields">
+      <created>1513101484283</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1513101484283</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -759,7 +775,8 @@
     <MESSAGE value="Added getState method to solve problem getting state, updated test classes" />
     <MESSAGE value="Storage controllers now syncs from local database upon start up, and updates it" />
     <MESSAGE value="Cleaned up JSON building" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleaned up JSON building" />
+    <MESSAGE value="Cleaned up database creation to acknowledge changes in operation fields" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleaned up database creation to acknowledge changes in operation fields" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1036,14 +1053,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/OperationTest.java" />
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="95" column="53" lean-forward="false" selection-start-line="95" selection-start-column="48" selection-end-line="95" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/java/jdk1.8.0_144/jre/lib/ext/jgroups-4.0.8.Final.jar!/org/jgroups/JChannel.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -1101,6 +1110,14 @@
             <element signature="e#337#338#0" expanded="true" />
             <element signature="e#393#394#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="101" column="21" lean-forward="true" selection-start-line="95" selection-start-column="6" selection-end-line="101" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
