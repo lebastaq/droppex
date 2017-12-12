@@ -24,6 +24,7 @@ public class StorageControllerTest {
     }
 
 
+    // TODO tidy this up
     @Test
     public void writeOperationIntoDBAndThenLoadIt() throws Exception {
         Operation operation = new Operation();
@@ -33,6 +34,29 @@ public class StorageControllerTest {
 
         storageController.storeOperationInLocal(operation);
         storageController.writeOperationIntoDB(operation);
+
+        storageController.operations = new LinkedList<>();
+        storageController.loadLocalOperationsFromDB();
+
+        List<Operation> operationsExpected;
+        operationsExpected = dbManager.readEntry();
+
+        if(storageController.operations.size() != operationsExpected.size())
+        {
+            fail("Stored " + storageController.operations.size() + " operations from db instead of " + operationsExpected.size());
+        }
+    }
+
+    // TODO tidy this up
+    @Test
+    public void doOperationIntoDBAndThenLoadIt() throws Exception {
+        Operation operation = new Operation();
+        DbManager dbManager = new DbManager();
+
+        dbManager.connect();
+
+        storageController.connectToChannel();
+        storageController.doOperation(operation);
 
         storageController.operations = new LinkedList<>();
         storageController.loadLocalOperationsFromDB();

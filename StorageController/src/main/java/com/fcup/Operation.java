@@ -39,19 +39,14 @@ public class Operation {
     }
 
     public String asJSONString() {
-        String json =  "{";
+        JSONObject json = new JSONObject();
 
         String separator = "";
         for(Map.Entry<String, String> param :params.entrySet()){
-            json += separator;
-            json += "\"" + param.getKey() + "\":";
-            json += "\"" + param.getValue() + "\"";
-            separator = ",";
+            json.put(param.getKey(), param.getValue());
         }
 
-        json += "}";
-
-        return json;
+        return json.toString();
     }
 
     public boolean hasChunkIDAndBlockID(String chunkID, String blockID) {
