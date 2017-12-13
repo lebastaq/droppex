@@ -91,11 +91,11 @@ func queryFiles(pattern string) {
 
 	// Grabbing response from URL (raw JSON)
 	resp, err := http.Get(target)
-	defer resp.Body.Close()
 	if err != nil {
 		// TODO: Handle
 		panic(err)
 	}
+	defer resp.Body.Close()
 
 	// Read body of HTTP response (JSON)
 	body, err := ioutil.ReadAll(resp.Body)
@@ -119,11 +119,11 @@ func downloadFile(filename string) {
 	target := URL + "files/" + filename
 
 	resp, err := http.Get(target)
-	defer resp.Body.Close()
 	if err != nil {
 		// TODO: Handle
 		panic(err)
 	}
+	defer resp.Body.Close()
 
 	if DEBUGGING {
 		fmt.Println("Download request for file:", filename)
@@ -138,13 +138,13 @@ func uploadFile(filepath string) {
 	jsonValue, _ := json.Marshal(values)
 
 	resp, err := http.Post(target, "application/json", bytes.NewBuffer(jsonValue))
-	defer resp.Body.Close()
 	if err != nil {
 		// TODO: Handle
 		panic(err)
 	}
+	defer resp.Body.Close()
 
-	// TODO: Put into use?
+	// TODO: Should this kind of check be used?
 	// if 200 != resp.StatusCode {
 	// 	return nil, fmt.Errorf("%s", body)
 	// }
@@ -159,11 +159,11 @@ func deleteFile(filename string) {
 	target := URL + "delete/" + filename
 
 	resp, err := http.Post(target, "", nil)
-	defer resp.Body.Close()
 	if err != nil {
 		// TODO: Handle
 		panic(err)
 	}
+	defer resp.Body.Close()
 
 	if DEBUGGING {
 		fmt.Println("Deletion request for file:", filename)

@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strings"
 
+	//"github.com/freddygv/droppex/app-server/utils"
 	"github.com/gorilla/mux"
 )
 
@@ -64,9 +65,8 @@ func DownloadFile(w http.ResponseWriter, r *http.Request) {
 
 	if _, ok := files[params["filename"]]; ok {
 		w.Write([]byte("Found."))
-	} else {
-		w.Write([]byte("File not found."))
 	}
+	w.Write([]byte("File not found."))
 }
 
 // UploadFile uploads a file to the servers
@@ -83,8 +83,6 @@ func DeleteFile(w http.ResponseWriter, r *http.Request) {
 
 	if _, ok := files[params["filename"]]; ok {
 		w.Write([]byte("Found."))
-	} else {
-		w.Write([]byte("File not found."))
 	}
-
+	w.Write([]byte("File not found."))
 }
