@@ -34,3 +34,7 @@ hs_err_pid*
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+#
+tmp/*
+dummy.go
