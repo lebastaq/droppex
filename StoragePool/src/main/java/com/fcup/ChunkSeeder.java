@@ -6,7 +6,7 @@ import java.net.Socket;
 public class ChunkSeeder extends Thread{
     private final Socket socket;
     private final Object STORAGE_FOLDER;
-    String chunkName;
+    String chunkID;
     File file;
 
     public ChunkSeeder(Socket socket, String STORAGE_FOLDER) {
@@ -16,21 +16,28 @@ public class ChunkSeeder extends Thread{
 
     public void run() {
         try {
-            openFile();
-            readFileName();
+            readChunkId();
+            openChunkFile();
             writeFileIntoBuffer();
-
+            closeSocket();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    void readFileName() throws IOException {
-
+    void readChunkId() throws IOException {
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(socket.getInputStream()));
-        chunkName = in.readLine();
-        System.out.println("Requested chunkName" + chunkName);
+        chunkID = in.readLine();
+        System.out.println("ChunkSeeder: Requested chunkID: " + chunkID);
+    }
+
+    private void openChunkFile() throws FileNotFoundException {
+        file = new File(STORAGE_FOLDER + "/" + chunkID);
+        if(!file.exists()) {
+            System.err.println("File not found:" + STORAGE_FOLDER + "/" + chunkID);
+            throw new FileNotFoundException();
+        }
     }
 
     private void writeFileIntoBuffer() throws IOException {
@@ -47,13 +54,17 @@ public class ChunkSeeder extends Thread{
             os.write(contents, 0, bytesRead);
         }
         os.flush();
+        fis.close();
+        bis.close();
+        System.out.println("ChunkSeeder: finished seeding file");
     }
 
-    private void openFile() throws FileNotFoundException {
-        file = new File(STORAGE_FOLDER + chunkName);
-        if(!file.exists()) {
-            System.err.println("File not found: storage/" + chunkName);
-            throw new FileNotFoundException();
+    private void closeSocket() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
 }
