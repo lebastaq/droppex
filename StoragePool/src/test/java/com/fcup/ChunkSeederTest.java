@@ -1,7 +1,8 @@
 package com.fcup;
 
-import com.fcup.Utilities.Client;
-import com.fcup.Utilities.Downloader;
+import com.fcup.utilities.ChunkSeeder;
+import com.fcup.utilities.Client;
+import com.fcup.utilities.Downloader;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

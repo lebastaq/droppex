@@ -1,7 +1,6 @@
-package com.fcup.Utilities;
+package com.fcup.utilities;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class Client {

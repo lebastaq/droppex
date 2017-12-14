@@ -1,4 +1,4 @@
-package com.fcup.Utilities;
+package com.fcup.utilities;
 
 import java.io.*;
 import java.net.Socket;
@@ -11,10 +11,10 @@ public class Downloader extends Thread {
 
 
     // todo something about these 3 parameters in the constructor
-    public Downloader(String STORAGE_FOLDER, Client client, String chunkID) {
+    public Downloader(String STORAGE_FOLDER, Client seeder, String chunkID) {
         // TODO
         this.STORAGE_FOLDER = STORAGE_FOLDER;
-        this.seeder = client;
+        this.seeder = seeder;
         this.chunkID = chunkID;
     }
 

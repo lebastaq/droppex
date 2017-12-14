@@ -1,4 +1,4 @@
-package com.fcup;
+package com.fcup.utilities;
 
 import java.io.*;
 import java.net.Socket;
