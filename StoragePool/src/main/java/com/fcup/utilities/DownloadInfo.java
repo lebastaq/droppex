@@ -3,12 +3,12 @@ package com.fcup.utilities;
 import java.io.IOException;
 import java.net.Socket;
 
-public class Download {
+public class DownloadInfo {
     String IP;
     int port;
     String chunkID;
 
-    public Download(String IP, int port, String chunkID) {
+    public DownloadInfo(String IP, int port, String chunkID) {
         this.IP = IP;
         this.port = port;
         this.chunkID = chunkID;

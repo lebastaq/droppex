@@ -5,11 +5,11 @@ import java.net.Socket;
 
 public class Downloader extends Thread {
 
-    private Download info;
+    private DownloadInfo info;
     private final String STORAGE_FOLDER;
 
 
-    public Downloader(String STORAGE_FOLDER, Download seeder) {
+    public Downloader(String STORAGE_FOLDER, DownloadInfo seeder) {
         // TODO
         this.STORAGE_FOLDER = STORAGE_FOLDER;
         this.info = seeder;

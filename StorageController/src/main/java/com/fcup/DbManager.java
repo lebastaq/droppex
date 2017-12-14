@@ -121,7 +121,14 @@ public class DbManager {
     }
 
     public void createOperationsTableIfNotExists() throws SQLException {
+        String sql = buildCreateTableQuery();
+        Statement statement = dbConnection.createStatement();
+        statement.execute(sql);
+    }
+
+    private String buildCreateTableQuery() {
         Operation operation = new Operation();
+        
         String sql = "CREATE TABLE IF NOT EXISTS " + table + "(\n"
                 + "	id integer PRIMARY KEY AUTOINCREMENT,\n";
 
@@ -131,8 +138,6 @@ public class DbManager {
             separator = ",";
         }
         sql += ");";
-
-        Statement statement = dbConnection.createStatement();
-        statement.execute(sql);
+        return sql;
     }
 }
