@@ -5,17 +5,14 @@ import java.net.Socket;
 
 public class Downloader extends Thread {
 
-    private Client seeder;
-    private final String chunkID;
+    private Download info;
     private final String STORAGE_FOLDER;
 
 
-    // todo something about these 3 parameters in the constructor
-    public Downloader(String STORAGE_FOLDER, Client seeder, String chunkID) {
+    public Downloader(String STORAGE_FOLDER, Download seeder) {
         // TODO
         this.STORAGE_FOLDER = STORAGE_FOLDER;
-        this.seeder = seeder;
-        this.chunkID = chunkID;
+        this.info = seeder;
     }
 
     @Override
@@ -29,17 +26,17 @@ public class Downloader extends Thread {
     }
 
     private void downloadFile() throws Exception {
-        System.out.println("Downloader: Downloading file " + chunkID + " - connecting to seeder...");
-        Socket clientSocket = seeder.connectToSocket();
+        System.out.println("Downloader: Downloading file " + info.chunkID + " - connecting to seeder...");
+        Socket clientSocket = info.connectToSocket();
 
         PrintWriter out =
                 new PrintWriter(clientSocket.getOutputStream(), true);
         DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
-        FileOutputStream fos = new FileOutputStream(STORAGE_FOLDER + "/" + chunkID);
+        FileOutputStream fos = new FileOutputStream(STORAGE_FOLDER + "/" + info.chunkID);
 
-        out.println(chunkID);
+        out.println(info.chunkID);
 
-        byte[] contents = new byte[1024 * 1024]; // 10MB
+        byte[] contents = new byte[1024]; // 1MB
         int bytesRead = 0;
         while ((bytesRead = dis.read(contents)) > 0) {
             fos.write(contents, 0, bytesRead);

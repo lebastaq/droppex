@@ -3,13 +3,15 @@ package com.fcup.utilities;
 import java.io.IOException;
 import java.net.Socket;
 
-public class Client {
+public class Download {
     String IP;
     int port;
+    String chunkID;
 
-    public Client(String IP, int port) {
+    public Download(String IP, int port, String chunkID) {
         this.IP = IP;
         this.port = port;
+        this.chunkID = chunkID;
     }
 
     Socket connectToSocket() {

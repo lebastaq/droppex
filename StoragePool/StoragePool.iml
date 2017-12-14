@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/protobuf" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -17,12 +18,17 @@
     <orderEntry type="library" name="Maven: io.grpc:grpc-stub:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-core:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-context:1.8.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.guava:guava:19.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.errorprone:error_prone_annotations:2.0.19" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.instrumentation:instrumentation-api:0.4.3" level="project" />
     <orderEntry type="library" name="Maven: io.opencensus:opencensus-api:0.8.0" level="project" />
     <orderEntry type="library" name="Maven: io.opencensus:opencensus-contrib-grpc-metrics:0.8.0" level="project" />
+    <orderEntry type="library" name="Maven: io.grpc:grpc-protobuf:1.8.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:19.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java-util:3.4.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.7" level="project" />
+    <orderEntry type="library" name="Maven: com.google.api.grpc:proto-google-common-protos:0.1.9" level="project" />
+    <orderEntry type="library" name="Maven: io.grpc:grpc-protobuf-lite:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.5.0" level="project" />
   </component>
 </module>

@@ -1,7 +1,7 @@
 package com.fcup;
 
 import com.fcup.utilities.ChunkSeeder;
-import com.fcup.utilities.Client;
+import com.fcup.utilities.Download;
 import com.fcup.utilities.Downloader;
 import org.junit.After;
 import org.junit.Before;
@@ -17,7 +17,7 @@ public class ChunkSeederTest {
 
     private final int BASE_PORT = 26000;
     private String chunkID = "chunkIDXYZ";
-    private Client client;
+    private Download client;
     private String STORAGE_FOLDER = "temp_stor";
     private String DOWNLOAD_FOLDER = "temp_down";
 
@@ -32,8 +32,8 @@ public class ChunkSeederTest {
     @Test
     public void  testChunkSeederAndDownloader() {
         try {
-            client = new Client("127.0.0.1", BASE_PORT);
-            Downloader downloader = new Downloader(DOWNLOAD_FOLDER, client, chunkID);
+            client = new Download("127.0.0.1", BASE_PORT);
+            Downloader downloader = new Downloader(DOWNLOAD_FOLDER, client);
             downloader.start();
             System.out.println("Downloader is running");
 
