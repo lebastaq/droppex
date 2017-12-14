@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bufio"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
@@ -16,8 +17,6 @@ import (
 // const chunkSizeBytes int = 1024 * 1024 * 10
 const chunkSizeBytes int = 1024 * 1024
 
-var wg sync.WaitGroup
-
 // ChunkFile splits a file into
 func ChunkFile(filepath string) error {
 	tmpDir := createTempDir(filepath)
@@ -26,13 +25,14 @@ func ChunkFile(filepath string) error {
 		return err
 	}
 
+	var wg sync.WaitGroup
 	for i := 0; ; i++ {
 		buffer := make([]byte, chunkSizeBytes)
 
 		n, err := file.Read(buffer)
 		if err == nil {
 			wg.Add(1)
-			go prepareChunkUpload(tmpDir, i, buffer[:n])
+			go prepareChunkUpload(tmpDir, i, buffer[:n], &wg)
 
 		} else if err == io.EOF {
 			break
@@ -48,7 +48,7 @@ func ChunkFile(filepath string) error {
 
 // Create temporary dir for chunks
 func createTempDir(filepath string) string {
-	// Remove file extension
+	// Reuse the filename but remove extension first
 	if lastPeriod := strings.LastIndex(filepath, "."); lastPeriod > 0 {
 		runes := []rune(filepath)
 		filepath = string(runes[0:lastPeriod])
@@ -59,9 +59,9 @@ func createTempDir(filepath string) string {
 	return filepath
 }
 
-func prepareChunkUpload(dirPath string, index int, buffer []byte) error {
+func prepareChunkUpload(dirPath string, index int, buffer []byte, wg *sync.WaitGroup) error {
 	defer wg.Done()
-	// Filename format is index-randomnumber
+	// Filename format is "index-randomnumber"
 	tmpfile, err := ioutil.TempFile(dirPath, strconv.Itoa(index)+"-")
 	if err != nil {
 		return err
@@ -91,15 +91,32 @@ func uploadChunk(f *os.File) error {
 }
 
 // AssembleFile re-assembles chunks into a whole file
-func AssembleFile(path string) error {
-	chunks, err := ioutil.ReadDir(path)
+func AssembleFile(directory string, ext string) error {
+	outfile, err := os.Create(directory + ext)
+	if err != nil {
+		return err
+	}
+	defer outfile.Close()
+
+	chunks, err := ioutil.ReadDir(directory)
 	if err != nil {
 		return err
 	}
 
-	for _, file := range chunks {
-		fmt.Println(file)
+	w := bufio.NewWriter(outfile)
+	for _, chunk := range chunks {
+		inbytes, err := ioutil.ReadFile(directory + "/" + chunk.Name())
+		if err != nil {
+			return err
+		}
+
+		_, err = w.Write(inbytes)
+		if err != nil {
+			return err
+		}
 	}
+
+	w.Flush()
 
 	return nil
 }
