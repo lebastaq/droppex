@@ -30,9 +30,9 @@ public class ChunkSeederTest {
 
     // TODO tidy this up
     @Test
-    public void  testChunkSeederAndDownloader() {
+    public void testChunkSeederAndDownloader() {
         try {
-            client = new DownloadInfo("127.0.0.1", BASE_PORT);
+            client = new DownloadInfo("127.0.0.1", BASE_PORT, chunkID);
             Downloader downloader = new Downloader(DOWNLOAD_FOLDER, client);
             downloader.start();
             System.out.println("Downloader is running");

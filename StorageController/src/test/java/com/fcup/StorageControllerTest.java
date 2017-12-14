@@ -1,5 +1,6 @@
 package com.fcup;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,13 +17,25 @@ public class StorageControllerTest {
     @Before
     public void createStorageController() {
         try {
-            storageController = new StorageController();
+            // TODO adress ?
+            storageController = new StorageController("127.0.0.1", 50051);
         } catch (Exception e) {
             System.err.println("Could not create storage controller:");
             e.printStackTrace();
         }
     }
 
+    @After
+    public void shutdownGrpcChannel() throws InterruptedException {
+        storageController.closeGrpcChannel();
+    }
+
+    // should be run at the same time as a storage pool
+    // TODO finish it...
+    @Test
+    public void startDownloaderInStoragePool() {
+        storageController.makeStoragePoolDownloadAFileFromTheAppServer();
+    }
 
     // TODO tidy this up
     @Test
@@ -90,7 +103,7 @@ public class StorageControllerTest {
             storageController.connectToChannel();
         } catch (Exception e) {
             e.printStackTrace();
-            fail("Could not connect to channel");
+            fail("Could not connect to jgroupsChannel");
         }
 
         assertEquals(storageController.operations, expectedNewOperations);
@@ -101,7 +114,8 @@ public class StorageControllerTest {
         try {
             storageController.connectToChannel();
             storageController.sync();
-            StorageController storageController2 = new StorageController();
+            // TODO something with the IP adress...
+            StorageController storageController2 = new StorageController("127.0.0.1", 50051);
             storageController2.connectToChannel();
             storageController2.sync();
         } catch (Exception e) {

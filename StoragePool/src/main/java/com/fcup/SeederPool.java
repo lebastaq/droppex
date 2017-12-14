@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 
 public class SeederPool implements Runnable {
 
-    private final int BASE_PORT = 26000;
+    private final int BASE_PORT = 26001;
     private final String STORAGE_FOLDER;
     private static final int MAX_THREADS = Runtime.getRuntime().availableProcessors();
 
