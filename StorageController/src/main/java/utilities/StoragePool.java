@@ -9,7 +9,7 @@ public class StoragePool {
 
     public List<String> chunks;
 
-    public StoragePool(int port, String ip) {
+    public StoragePool(String ip, int port) {
         this();
         this.ip = ip;
         this.port = port;
@@ -20,8 +20,10 @@ public class StoragePool {
     }
 
     public void addChunk(String chunkID) {
-        if(!chunks.contains(chunkID))
+        if(!chunks.contains(chunkID)) {
             chunks.add(chunkID);
+            System.out.println("Adding chunk " + chunkID +" to pool " + ip + ":" + port);
+        }
     }
 
     public void removeChunk(String chunkID) {
@@ -32,5 +34,13 @@ public class StoragePool {
 
     public boolean hasNChunks(int n) {
         return (n == chunks.size());
+    }
+
+    public boolean containsChunk(String chunk) {
+        return chunks.contains(chunk);
+    }
+
+    public boolean hasIPAndPort(String storagePoolIP, int storagePoolPort) {
+        return ((ip.equals(storagePoolIP)) && (port == storagePoolPort));
     }
 }

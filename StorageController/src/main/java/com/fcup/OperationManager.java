@@ -54,6 +54,7 @@ public class OperationManager {
                 syncOperation(op);
             }
         }
+
     }
 
     public void syncOperation(String op) {
@@ -87,9 +88,12 @@ public class OperationManager {
     }
 
     protected void syncLocalPoolsWithOperationPool(List<StoragePool> storagePools, Operation newOperation) {
-        StoragePool operationStoragePool = newOperation.isInStoragePool(storagePools);
+        // create new storage pool if it does not exist
+        StoragePool operationStoragePool = newOperation.operationPoolToStoreMe(storagePools);
+
         if (!storagePools.contains(operationStoragePool)) {
             storagePools.add(operationStoragePool);
+            System.out.println("Registering new storage pool...");
         }
 
         newOperation.addMyselfToStoragePool(operationStoragePool);

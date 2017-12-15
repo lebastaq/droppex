@@ -31,6 +31,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
 
     public void connectToChannel() throws Exception {
         jgroupsChannel.connect("ChatCluster");
+        electNewLeader();
         System.out.println("Connected to channel");
     }
 
@@ -40,7 +41,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
 
     public void sync() throws Exception {
         operationManager.loadLocalOperationsFromDB();
-        jgroupsChannel.getState(null, 1000); // will callback setState
+        jgroupsChannel.getState(null, 10000); // will callback setState
         System.out.println("Synced!");
     }
 
@@ -71,6 +72,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
         operationManager.syncLocalStoragePools(storagePools);
 
         for(StoragePool storagePool: storagePools) {
+            System.out.println("Storage Pool:");
             for (String chunk : storagePool.chunks) {
                 System.out.println("Chunk >> " + chunk);
             }
@@ -80,6 +82,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
     public void setState(InputStream input) throws Exception {
         List<String> newOperations = Util.objectFromStream(new DataInputStream(input));
         operationManager.syncOperations(newOperations);
+        operationManager.syncLocalStoragePools(storagePools);
     }
 
     public void getState(OutputStream output) throws Exception {

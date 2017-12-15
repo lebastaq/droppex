@@ -67,24 +67,17 @@ public class Operation {
         return operation;
     }
 
-    public StoragePool isInStoragePool(List<StoragePool> pools) {
-        StoragePool localPool = getStoragePool();
-        for (StoragePool pool : pools) {
-            if(pool.equals(localPool))
-                return pool;
-        }
-
-        return new StoragePool();
-    }
-
-    public StoragePool getStoragePool() {
-        StoragePool localPool = new StoragePool(Integer.parseInt(params.get("storagePoolPort")),
-                params.get("storagePoolIP"));
-        return localPool;
-    }
-
     public void addMyselfToStoragePool(StoragePool storagePool) {
         storagePool.addChunk(params.get("chunkID"));
+    }
+
+    public StoragePool operationPoolToStoreMe(List<StoragePool> pools) {
+        for (StoragePool pool : pools) {
+            if(pool.hasIPAndPort(params.get("storagePoolIP"), Integer.parseInt(params.get("storagePoolPort")))) {
+                return pool;
+            }
+        }
+        return new StoragePool(params.get("storagePoolIP"), Integer.parseInt(params.get("storagePoolPort")));
     }
 
     @Override

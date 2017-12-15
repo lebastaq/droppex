@@ -61,7 +61,8 @@ public class StorageController extends StoragePoolsManager {
 
     private void eventLoop() throws Exception {
         Operation operation = new Operation();
-        operation.changeKeyValue("type", Integer.toString((int)(Math.random()*20)));
+        operation.changeKeyValue("chunkID", Integer.toString((int)(Math.random()*20)));
+        operation.changeKeyValue("storagePoolIP", "dummy 2");
         doOperation(operation);
         System.out.println("Sent operation: " + operation.asJSONString());
 
