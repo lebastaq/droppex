@@ -44,6 +44,12 @@ public class StorageController extends ReceiverAdapter {
         }
     }
 
+    public StorageController() throws Exception {
+        operationManager = new OperationManager();
+        grpcServer = new GrpcServer();
+        jgroupsChannel = new JChannel("config.xml").setReceiver(this);
+    }
+
     // TODO create client that registers the storage pools
     // --> receive storage pool info via Grpc
     // --> when a new storage pool connects, contact all the storage controllers to register as well, via Grpc...
@@ -56,6 +62,7 @@ public class StorageController extends ReceiverAdapter {
     // TODO implement grpc app server <-> storage controller (e.g. implement grpc client......)
     // TODO add the good chunk ID (retrieved from app server)
     // called via Grpc by the app server
+    // note: the app server or storage pool MUST have started a seeder before calling...
     public void makeStoragePoolDownloadAFileFromTheAppServer() throws Exception {
         String chunkID = "Test chunk ID...."; // TODO retrieve from grpc call from app server
         String poolAddress = "127.0.0.1"; // TODO retrieve from grpc call from app server
@@ -75,6 +82,7 @@ public class StorageController extends ReceiverAdapter {
     }
 
     public void start() throws Exception {
+        grpcServer.startGrpcServer();
         eventLoop();
         jgroupsChannel.close();
     }

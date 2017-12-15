@@ -4,13 +4,13 @@ import com.fcup.StoragePoolRegisterer;
 import io.grpc.ServerBuilder;
 
 public class GrpcServer {
-    int port = 50051;
+    int port = 50052;
     private io.grpc.Server server;
 
     public GrpcServer() {
     }
 
-    private void startGrpcServer() throws Exception {
+    public void startGrpcServer() throws Exception {
         server = ServerBuilder.forPort(port)
                 .addService(new StoragePoolRegisterer())
                 .build()
@@ -19,8 +19,6 @@ public class GrpcServer {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-                // Use stderr here since the logger may have been reset by its JVM shutdown hook.
-                System.err.println("*** shutting down gRPC server since JVM is shutting down");
                 GrpcServer.this.stopServer();
                 System.err.println("*** server shut down");
             }
