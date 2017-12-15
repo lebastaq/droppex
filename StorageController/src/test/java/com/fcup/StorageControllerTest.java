@@ -17,7 +17,6 @@ public class StorageControllerTest {
     @Before
     public void createStorageController() {
         try {
-            // TODO adress ?
             storageController = new StorageController();
         } catch (Exception e) {
             System.err.println("Could not create storage controller:");
@@ -38,9 +37,9 @@ public class StorageControllerTest {
     }
 
     @Test
-    public void testElectionOfLeader() {
+    public void testElectionOfLeader() throws Exception {
+        StorageController storageController2 = new StorageController();
         try {
-            StorageController storageController2 = new StorageController();
             storageController.connectToChannel();
             storageController.sync();
             storageController2.connectToChannel();
@@ -57,6 +56,7 @@ public class StorageControllerTest {
             e.printStackTrace();
             fail("Unexpected exception");
         }
+        storageController2.disconnectFromChannel();
     }
 
     @Test
@@ -109,28 +109,24 @@ public class StorageControllerTest {
     }
 
     @Test
-    public void retrieveStateWithoutException(){
+    public void retrieveStateWithoutException() throws Exception {
+        StorageController storageController2 = new StorageController();
         try {
             storageController.connectToChannel();
             storageController.sync();
             // TODO something with the IP adress...
-            StorageController storageController2 = new StorageController();
             storageController2.connectToChannel();
             storageController2.sync();
         } catch (Exception e) {
             e.printStackTrace();
             fail("Could not sync state");
         }
+        storageController2.disconnectFromChannel();
     }
 
-    // TODO add test sync
-
-    @Test
-    public void receive() throws Exception {
-    }
-
-    @Test
-    public void setState() throws Exception {
+    @After
+    public void disconnectFromChannel() {
+        storageController.disconnectFromChannel();
     }
 
 }
