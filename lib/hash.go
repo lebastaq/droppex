@@ -1,5 +1,13 @@
 package hash
 
+import (
+    "crypto/sha256"
+    "encoding/hex"
+    "io"
+    "log"
+    "os"
+)
+
 // HashFile Returns SHA-256 checksum of the file as a string
 func HashFile(file string) string {
 	f, err := os.Open(file)
