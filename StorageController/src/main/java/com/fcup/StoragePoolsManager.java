@@ -73,9 +73,12 @@ public class StoragePoolsManager extends ReceiverAdapter {
     }
 
     protected void syncLocalPoolsWithOperationPool(Operation newOperation) {
-        if (!newOperation.storagePoolIsIn(storagePools)) {
-            storagePools.add(new StoragePool());
+        StoragePool operationStoragePool = newOperation.isInStoragePool(storagePools);
+        if (!storagePools.contains(operationStoragePool)) {
+            storagePools.add(operationStoragePool);
         }
+
+        newOperation.addMyselfToStoragePool(operationStoragePool);
     }
 
     public void setState(InputStream input) throws Exception {

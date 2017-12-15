@@ -74,14 +74,20 @@ public class StoragePoolsManagerTest {
 
         storagePoolsManager.syncLocalPoolsWithOperationPool(operation1);
 
-        if (storagePoolsManager.storagePools.size() != 1) {
-            fail("Did not insert first storage pool");
+        if (storagePoolsManager.storagePools.size() == 1) {
+            if (!storagePoolsManager.storagePools.get(0).hasNChunks(1)) {
+                fail("Did not insert correct number of chunks!");
+            }
         }
+        else
+            fail("Did not insert first storage pool: size = " + storagePoolsManager.storagePools.size());
 
         storagePoolsManager.syncLocalPoolsWithOperationPool(operation1);
 
-        if (storagePoolsManager.storagePools.size() != 2) {
-            fail("Did not insert second storage pool");
+        if (storagePoolsManager.storagePools.size() == 1) {
+            if (!storagePoolsManager.storagePools.get(1).hasNChunks(1)) {
+                fail("Did not insert correct number of chunks!");
+            }
         }
     }
 

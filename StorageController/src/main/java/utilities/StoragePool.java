@@ -28,4 +28,8 @@ public class StoragePool {
             chunks.remove(chunkID);
         }
     }
+
+    public boolean hasNChunks(int n) {
+        return (n == chunks.size());
+    }
 }
