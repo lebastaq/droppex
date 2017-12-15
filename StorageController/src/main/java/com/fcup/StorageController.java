@@ -22,9 +22,10 @@ import com.fcup.generated.*;
 
 public class StorageController extends ReceiverAdapter {
     JChannel jgroupsChannel;
-    DbManager dbManager;
+//    DbManager dbManager;
+    OperationManager operationManager;
     String user_name = System.getProperty("user.name", "n/a");
-    List<Operation> operations = new LinkedList<>();
+//    List<Operation> operations = new LinkedList<>();
 
     private final ManagedChannel grpcChannel;
     private final downloaderGrpc.downloaderBlockingStub blockingStub;
@@ -47,12 +48,15 @@ public class StorageController extends ReceiverAdapter {
         }
     }
 
-    // TODO implement grpc app server <-> storage controller
+    // TODO create client that registers the storage pools
+    // (storage pools get the storage controller IPs via the google bucket...)
+
+    // TODO implement grpc app server <-> storage controller (e.g. implement grpc client......)
     // TODO add the good chunk ID (retrieved from app server)
     // called via Grpc by the app server
     public void makeStoragePoolDownloadAFileFromTheAppServer() {
         String chunkID = "Test chunk ID...."; // todo retrieve from grpc call from app server
-        Info request = Info.newBuilder().setIp(host).setPort(grpcPort).setChunkId(chunkID).build();
+        Info request = Info.newBuilder().setIp(host).setPort(grpcPort).setChunkId(chunkID).build(); // todo host = storage pool - how to get it ?
         Status response;
         try {
             response = blockingStub.startDownloader(request);
@@ -95,8 +99,9 @@ public class StorageController extends ReceiverAdapter {
     public StorageController(ManagedChannel channel) throws Exception {
         this.grpcChannel = channel;
         blockingStub = downloaderGrpc.newBlockingStub(this.grpcChannel);
-        dbManager = new DbManager();
-        dbManager.connect();
+        operationManager = new OperationManager();
+//        dbManager = new DbManager();
+//        dbManager.connect();
         jgroupsChannel = new JChannel("config.xml");
         jgroupsChannel.setReceiver(this);
     }
@@ -107,18 +112,14 @@ public class StorageController extends ReceiverAdapter {
     }
 
     public void sync() throws Exception {
-        loadLocalOperationsFromDB();
+        operationManager.loadLocalOperationsFromDB();
         jgroupsChannel.getState(null, 10000); // will callback local setState
     }
 
     public void doOperation(Operation operation) throws Exception {
         jgroupsChannel.send(null, operation.asJSONString());
-        storeOperationInLocal(operation);
-        writeOperationIntoDB(operation);
-    }
-
-    public void storeOperationInLocal(Operation operation) {
-        operations.add(operation);
+        operationManager.storeOperationInLocal(operation);
+        operationManager.writeOperationIntoDB(operation);
     }
 
     public void viewAccepted(View new_view) {
@@ -128,62 +129,26 @@ public class StorageController extends ReceiverAdapter {
     public void receive(Message msg) {
         String line = msg.getObject();
         System.out.println("Received: " + line);
-        synchronized(operations) {
-            operations.add(Operation.fromJSON(line));
-            // TODO update database
-        }
+        operationManager.storeOperationInLocal(Operation.fromJSON(line));
+//        synchronized(operations) {
+//            operations.add(Operation.fromJSON(line));
+//             TODO update database
+//        }
     }
 
     public void setState(InputStream input) throws Exception {
         List<String> newOperations = Util.objectFromStream(new DataInputStream(input));
-        synchronized(operations) {
-            syncOperations(newOperations);
-        }
+//        synchronized(operations) {
+            operationManager.syncOperations(newOperations);
+//        }
     }
 
     public void getState(OutputStream output) throws Exception {
-        synchronized(operations) {
-            Util.objectToStream(operations, new DataOutputStream(output));
-        }
-    }
+//        synchronized(operations) {
+//            Util.objectToStream(operations, new DataOutputStream(output));
+//        }
+        operationManager.getState(output);
 
-    public void syncOperations(final List<String> newOperations) throws SQLException {
-        for (String op : newOperations)
-        {
-            if(!operations.contains(op)) {
-                final Operation operation = Operation.fromJSON(op);
-                operations.add(operation);
-                writeOperationIntoDB(operation);
-            }
-        }
-
-        System.out.println("Operations:");
-        for (Operation op : operations) {
-            System.out.println(op.asJSONString());
-        }
-    }
-
-    public void loadLocalOperationsFromDB() throws SQLException {
-        try {
-            List<Operation> operationsFromDB = dbManager.readEntry();
-            for (Operation operation : operationsFromDB) {
-                operations.add(operation);
-            }
-        } catch (SQLException e) {
-            System.err.println("Could not read operation: ");
-            e.printStackTrace();
-            throw new SQLException();
-        }
-    }
-
-    public void writeOperationIntoDB(Operation operation) throws SQLException {
-        try {
-            dbManager.insertOperation(operation);
-        } catch (Exception e) {
-            System.err.println("Could not insert operation: ");
-            e.printStackTrace();
-            throw new SQLException();
-        }
     }
 
     public void closeGrpcChannel() throws InterruptedException {

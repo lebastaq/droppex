@@ -37,28 +37,6 @@ public class StorageControllerTest {
         storageController.makeStoragePoolDownloadAFileFromTheAppServer();
     }
 
-    // TODO tidy this up
-    @Test
-    public void writeOperationIntoDBAndThenLoadIt() throws Exception {
-        Operation operation = new Operation();
-        DbManager dbManager = new DbManager();
-
-        dbManager.connect();
-
-        storageController.storeOperationInLocal(operation);
-        storageController.writeOperationIntoDB(operation);
-
-        storageController.operations = new LinkedList<>();
-        storageController.loadLocalOperationsFromDB();
-
-        List<Operation> operationsExpected;
-        operationsExpected = dbManager.readEntry();
-
-        if(storageController.operations.size() != operationsExpected.size())
-        {
-            fail("Stored " + storageController.operations.size() + " operations from db instead of " + operationsExpected.size());
-        }
-    }
 
     // TODO tidy this up
     @Test
@@ -71,15 +49,15 @@ public class StorageControllerTest {
         storageController.connectToChannel();
         storageController.doOperation(operation);
 
-        storageController.operations = new LinkedList<>();
-        storageController.loadLocalOperationsFromDB();
+        storageController.operationManager.operations = new LinkedList<>();
+        storageController.operationManager.loadLocalOperationsFromDB();
 
         List<Operation> operationsExpected;
         operationsExpected = dbManager.readEntry();
 
-        if(storageController.operations.size() != operationsExpected.size())
+        if(storageController.operationManager.operations.size() != operationsExpected.size())
         {
-            fail("Stored " + storageController.operations.size() + " operations from db instead of " + operationsExpected.size());
+            fail("Stored " + storageController.operationManager.operations.size() + " operations from db instead of " + operationsExpected.size());
         }
     }
 
@@ -88,9 +66,10 @@ public class StorageControllerTest {
     public void syncOperations() throws Exception {
         try{
             storageController.connectToChannel();
-            storageController.syncOperations(new ArrayList<String>());
+            storageController.operationManager.syncOperations(new ArrayList<String>());
         }
         catch (Exception e){
+            e.printStackTrace();
             fail("Could not sync operations");
         }
     }
@@ -106,7 +85,7 @@ public class StorageControllerTest {
             fail("Could not connect to jgroupsChannel");
         }
 
-        assertEquals(storageController.operations, expectedNewOperations);
+        assertEquals(storageController.operationManager.operations, expectedNewOperations);
     }
 
     @Test

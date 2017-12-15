@@ -27,7 +27,7 @@ public class GrpcDownloadServer extends downloaderGrpc.downloaderImplBase{
 
         Downloader downloader = new Downloader(STORAGE_FOLDER, downloadInfo);
         downloader.run();
-        System.out.println("Finished running downloader !");
+        System.out.println("Started downloader !");
 
         return Status.newBuilder().setOk(true).build();
     }
