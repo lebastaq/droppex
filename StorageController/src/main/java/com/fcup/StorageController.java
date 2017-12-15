@@ -20,6 +20,7 @@ public class StorageController extends ReceiverAdapter {
     String user_name = System.getProperty("user.name", "n/a");
     GrpcServer grpcServer;
     boolean isLeader = false;
+    private final String CONFIG_FILE = "config.xml"; /* google_config.xml */
 
     public static void main(String[] args) {
         try {
@@ -37,7 +38,7 @@ public class StorageController extends ReceiverAdapter {
     public StorageController() throws Exception {
         operationManager = new OperationManager();
         grpcServer = new GrpcServer();
-        jgroupsChannel = new JChannel("config.xml").setReceiver(this);
+        jgroupsChannel = new JChannel(CONFIG_FILE).setReceiver(this);
     }
 
     // TODO create a method to send the new master controller adress to the storage pools
@@ -108,7 +109,7 @@ public class StorageController extends ReceiverAdapter {
 
     public void viewAccepted(View new_view) {
         System.out.println("Joined View: " + new_view);
-        electNewLeader();
+//        electNewLeader();
     }
 
     public void electNewLeader() {

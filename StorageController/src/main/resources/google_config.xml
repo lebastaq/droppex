@@ -18,26 +18,12 @@
          thread_pool.max_threads="20"
          thread_pool.keep_alive_time="30000"/>
 
-    <TCPPING async_discovery="true"
-             initial_hosts="${jgroups.tcpping.initial_hosts:10.128.0.3[7800],10.132.0.6[7800]}"
-             port_range="2"/>
-
-    <MPING />
-    <MERGE3/>
-    <FD_SOCK/>
-    <FD_ALL/>
-    <VERIFY_SUSPECT/>
-    <BARRIER/>
+    <GOOGLE_PING
+        location="controller-list"
+        access_key="GOOGBUJV5HMG7ABHK6WK"
+        secret_access_key="/zsPHSXmSZF54QMIznp5wnKiSk8S/lmo8nlfcg1y"
+        />
     <pbcast.NAKACK2 use_mcast_xmit="false"
-                    <!--discard_delivered_msgs="true"/>-->
-    <UNICAST3 />
-    <pbcast.STABLE desired_avg_gossip="50000"
-                   max_bytes="4M"/>
-    <pbcast.GMS print_local_addr="true" join_timeout="2000"/>
-    <MFC max_credits="2M"
-         min_threshold="0.4"/>
-     <!--SEQUENCER could also be placed just under GMS, if messages and views need to be totally ordered -->
-    <SEQUENCER />
-    <FRAG2 frag_size="60K"  />
+                    discard_delivered_msgs="true"/>
     <pbcast.STATE_TRANSFER />
 </config>

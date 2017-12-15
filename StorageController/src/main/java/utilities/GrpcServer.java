@@ -12,16 +12,18 @@ public class GrpcServer {
     public void startGrpcServer() throws Exception {
         do {
             try {
+                port ++;
                 server = ServerBuilder.forPort(port)
                         .addService(new StoragePoolRegisterer())
                         .build()
                         .start();
-                port ++;
             }
-            catch(java.io.IOException e)
-                ;
+            catch(java.io.IOException e){
+                System.out.println("Could not start server on port " + port);
+            }
         } while(server == null);
         System.out.println("Grpc server started, listening on " + port);
+
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
