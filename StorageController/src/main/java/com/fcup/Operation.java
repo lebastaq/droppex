@@ -20,7 +20,7 @@ public class Operation {
         params.put("chunkID", dummy);
         params.put("blockID", dummy);
         params.put("storagePoolIP", dummy);
-        params.put("storagePoolPort", dummy);
+        params.put("storagePoolPort", Integer.toString(0));
         params.put("source", dummy);
     }
 
@@ -68,8 +68,8 @@ public class Operation {
     }
 
     public boolean storagePoolIsIn(List<StoragePool> pools) {
-        StoragePool localPool = new StoragePool(Integer.parseInt(params.get("port")),
-                                                    params.get("ip"));
+        StoragePool localPool = new StoragePool(Integer.parseInt(params.get("storagePoolPort")),
+                                                    params.get("storagePoolIP"));
         for (StoragePool pool : pools) {
             if(pool.equals(localPool))
                 return true;
