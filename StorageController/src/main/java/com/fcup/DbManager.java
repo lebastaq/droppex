@@ -14,7 +14,7 @@ public class DbManager {
     private String dbUrl;
 
     public DbManager() {
-        this("src/main/resources/operations-db");
+        this("operations-db");
     }
 
     public DbManager(String dbName) {

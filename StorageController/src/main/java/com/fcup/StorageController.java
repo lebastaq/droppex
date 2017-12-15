@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.fcup.generated.*;
 
+// TODO extract custom jChannel class ?
 public class StorageController extends ReceiverAdapter {
     JChannel jgroupsChannel;
     OperationManager operationManager;
@@ -33,18 +34,27 @@ public class StorageController extends ReceiverAdapter {
 
     public static void main(String[] args) {
         try {
-            // TODO retrieve local adress + grpcPort ?
+            // TODO retrieve local address + grpcPort ?
+            System.out.println("0");
             StorageController storageController = new StorageController("127.0.0.1", 50051);
+            System.out.println("1");
             storageController.connectToChannel();
+            System.out.println("2");
             storageController.sync();
-            storageController.start();
+//            System.out.println("3");
+//            storageController.start();
+            System.out.println("Started!");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    // TODO register in the google bucket  (and make a list of other controllers ?)
+
     // TODO create client that registers the storage pools
     // (storage pools get the storage controller IPs via the google bucket...)
+    // --> read the storage pools in the google bucket ?
+    // --> when a new storage pool connects, contact all the storage controllers to register as well...
 
     // TODO implement grpc app server <-> storage controller (e.g. implement grpc client......)
     // TODO add the good chunk ID (retrieved from app server)
@@ -67,6 +77,7 @@ public class StorageController extends ReceiverAdapter {
     public void start() throws Exception {
         eventLoop();
         jgroupsChannel.close();
+        closeGrpcChannel();
     }
 
     private void eventLoop() throws Exception {
@@ -86,11 +97,17 @@ public class StorageController extends ReceiverAdapter {
     }
 
     public StorageController(ManagedChannel channel) throws Exception {
+        System.out.println("A");
         this.grpcChannel = channel;
+        System.out.println("B");
         blockingStub = downloaderGrpc.newBlockingStub(this.grpcChannel);
+        System.out.println("C");
         operationManager = new OperationManager();
+        System.out.println("D");
         jgroupsChannel = new JChannel("config.xml");
+        System.out.println("E");
         jgroupsChannel.setReceiver(this);
+        System.out.println("F");
     }
 
 
@@ -100,7 +117,8 @@ public class StorageController extends ReceiverAdapter {
 
     public void sync() throws Exception {
         operationManager.loadLocalOperationsFromDB();
-        jgroupsChannel.getState(null, 10000); // will callback local setState
+        jgroupsChannel.getState(null, 100000); // will callback local setState
+        System.out.println("Synced!");
     }
 
     public void doOperation(Operation operation) throws Exception {
