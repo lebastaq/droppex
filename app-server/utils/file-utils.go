@@ -2,12 +2,9 @@ package utils
 
 import (
 	"bufio"
-	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -119,22 +116,4 @@ func AssembleFile(directory string, ext string) error {
 	w.Flush()
 
 	return nil
-}
-
-// HashFile Returns SHA-256 checksum of the file as a string
-func HashFile(file string) string {
-	f, err := os.Open(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
-
-	h := sha256.New()
-	if _, err := io.Copy(h, f); err != nil {
-		log.Fatal(err)
-	}
-
-	checkSum := h.Sum(nil)
-
-	return hex.EncodeToString(checkSum)
 }
