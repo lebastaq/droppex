@@ -1,12 +1,17 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
+	"io"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	//"github.com/freddygv/droppex/app-server/utils"
+	//"github.com/freddygv/droppex/lib"
 	"github.com/gorilla/mux"
 )
 
@@ -73,6 +78,37 @@ func DownloadFile(w http.ResponseWriter, r *http.Request) {
 // TODO: Verify file doesn't already exist
 func UploadFile(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
+
+	var Buf bytes.Buffer
+	file, header, err := r.FormFile("file")
+	if err != nil {
+		// TODO: Return error response instead
+		panic(err)
+	}
+	defer file.Close()
+
+	name := strings.Split(header.Filename, ".")
+	fmt.Prinf("File uploaded: %s \n", name[0])
+
+	io.Copy(&Buf, file)
+	// Make RPC call to controller for target pools
+
+	// Send blocks over RPC to storage pools (pass in buffer)
+	// Write it out to disk
+	// TODO: Keeping this in case it's needed for R-S EC
+	f, err := os.OpenFile(header.Filename, os.O_WRONLY|os.O_CREATE, 0755)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer f.Close()
+	io.Copy(f, file)
+
+	// Cleanup buffer
+	Buf.Reset()
+	os.Remove(f)
+
+	// Only reply success if the RPC to storage pool is successful
 	w.Write([]byte("File upload success."))
 }
 
