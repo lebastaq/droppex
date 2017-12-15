@@ -37,8 +37,28 @@ public class StorageControllerTest {
         }
     }
 
+    @Test
+    public void testElectionOfLeader() {
+        try {
+            StorageController storageController2 = new StorageController();
+            storageController.connectToChannel();
+            storageController.sync();
+            storageController2.connectToChannel();
+            storageController2.sync();
+            if(!storageController.isLeader || storageController2.isLeader)
+                fail("Did not assign leader correctly");
 
-    // TODO tidy this up
+            storageController.jgroupsChannel.close();
+
+            if(!storageController2.isLeader)
+                fail("Did not change leader correctly");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Unexpected exception");
+        }
+    }
+
     @Test
     public void doOperationIntoDBAndThenLoadIt() throws Exception {
         Operation operation = new Operation();

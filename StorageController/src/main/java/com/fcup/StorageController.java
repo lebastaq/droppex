@@ -39,13 +39,6 @@ public class StorageController extends ReceiverAdapter {
         jgroupsChannel = new JChannel(CONFIG_FILE).setReceiver(this);
     }
 
-    // TODO create a method to send the new master controller adress to the storage pools
-
-    // TODO create method that receives the new storage pool
-    // from the storage pool, or...
-    // by the master controller
-    // Done by GrpcServer...
-
     // TODO implement grpc app server <-> storage controller (e.g. implement grpc client......)
     // TODO add the good chunk ID (retrieved from app server)
     // called via Grpc by the app server
