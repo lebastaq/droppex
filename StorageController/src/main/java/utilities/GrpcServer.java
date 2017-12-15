@@ -1,20 +1,26 @@
 package utilities;
 
-import com.fcup.StoragePoolRegisterer;
 import io.grpc.ServerBuilder;
 
 public class GrpcServer {
     int port = 50052;
-    private io.grpc.Server server;
+    private io.grpc.Server server = null;
 
     public GrpcServer() {
     }
 
     public void startGrpcServer() throws Exception {
-        server = ServerBuilder.forPort(port)
-                .addService(new StoragePoolRegisterer())
-                .build()
-                .start();
+        do {
+            try {
+                server = ServerBuilder.forPort(port)
+                        .addService(new StoragePoolRegisterer())
+                        .build()
+                        .start();
+                port ++;
+            }
+            catch(java.io.IOException e)
+                ;
+        } while(server == null);
         System.out.println("Grpc server started, listening on " + port);
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override

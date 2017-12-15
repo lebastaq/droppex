@@ -1,18 +1,13 @@
 package com.fcup;
 
-import io.grpc.ManagedChannel;
 import io.grpc.StatusRuntimeException;
-import org.jgroups.JChannel;
-import org.jgroups.Message;
-import org.jgroups.ReceiverAdapter;
-import org.jgroups.View;
+import org.jgroups.*;
 import org.jgroups.util.Util;
 
 import java.io.DataInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import com.fcup.generated.*;
 import utilities.GrpcServer;
@@ -24,12 +19,7 @@ public class StorageController extends ReceiverAdapter {
     OperationManager operationManager;
     String user_name = System.getProperty("user.name", "n/a");
     GrpcServer grpcServer;
-
-    // TODO change this to the real grpcPort in the google VMs ?
-    // TODO test it in 1 VM, then 2 different ones
-    private String host = "127.0.0.1";
-    private int grpcPort = 50051;
-
+    boolean isLeader = false;
 
     public static void main(String[] args) {
         try {
@@ -50,9 +40,7 @@ public class StorageController extends ReceiverAdapter {
         jgroupsChannel = new JChannel("config.xml").setReceiver(this);
     }
 
-    // TODO create client that registers the storage pools
-    // --> receive storage pool info via Grpc
-    // --> when a new storage pool connects, contact all the storage controllers to register as well, via Grpc...
+    // TODO create a method to send the new master controller adress to the storage pools
 
     // TODO create method that receives the new storage pool
     // from the storage pool, or...
@@ -66,8 +54,13 @@ public class StorageController extends ReceiverAdapter {
     public void makeStoragePoolDownloadAFileFromTheAppServer() throws Exception {
         String chunkID = "Test chunk ID...."; // TODO retrieve from grpc call from app server
         String poolAddress = "127.0.0.1"; // TODO retrieve from grpc call from app server
-        int poolPort = 50051; // same...
-        Info request = Info.newBuilder().setIp(host).setPort(grpcPort).setChunkId(chunkID).build(); // todo host = storage pool - how to get it ?
+        int poolPort = 50051; // same... this is the default one
+
+        // TODO retrieve this from the grpc call
+        String destinationAdress = "";
+        int destinationPort = 26001;
+
+        Info request = Info.newBuilder().setIp(destinationAdress).setPort(destinationPort).setChunkId(chunkID).build(); // todo host = storage pool - how to get it ?
         Status response;
         try {
             downloadStarter downloadStarter = new downloadStarter(poolAddress, poolPort);
@@ -115,7 +108,22 @@ public class StorageController extends ReceiverAdapter {
 
     public void viewAccepted(View new_view) {
         System.out.println("Joined View: " + new_view);
+        electNewLeader();
     }
+
+    public void electNewLeader() {
+        View view = jgroupsChannel.getView();
+        Address address = view.getMembers()
+                .get(0);
+        if (address.equals(jgroupsChannel.getAddress())) {
+            System.out.println("I'm (" + jgroupsChannel.getAddress() + ") the leader");
+            isLeader = true;
+        } else {
+            System.out.println("I'm (" + jgroupsChannel.getAddress() + ") not the leader");
+            isLeader = false;
+        }
+    }
+
 
     public void receive(Message msg) {
         String line = msg.getObject();
