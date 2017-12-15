@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8e5f758d-a827-4174-b3c2-73d36543e8af" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/OperationManager.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/OperationManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/utilities/StoragePool.java" afterPath="$PROJECT_DIR$/src/main/java/utilities/StoragePool.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/fcup/OperationManagerTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/fcup/OperationManagerTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolsManagerTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolsManagerTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -50,21 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StoragePoolsManagerTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolsManagerTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1326">
-              <caret line="86" column="53" lean-forward="false" selection-start-line="86" selection-start-column="53" selection-end-line="86" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StoragePoolsManager.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StoragePoolsManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="76" column="26" lean-forward="false" selection-start-line="76" selection-start-column="26" selection-end-line="76" selection-end-column="26" />
+            <state relative-caret-position="323">
+              <caret line="70" column="60" lean-forward="true" selection-start-line="70" selection-start-column="60" selection-end-line="72" selection-end-column="85" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1050#1051#0" expanded="true" />
@@ -74,11 +64,31 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="StoragePoolsManagerTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolsManagerTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="86" column="121" lean-forward="false" selection-start-line="86" selection-start-column="121" selection-end-line="86" selection-end-column="121" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OperationManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/OperationManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="470">
+              <caret line="80" column="43" lean-forward="false" selection-start-line="80" selection-start-column="12" selection-end-line="80" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Operation.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/Operation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="77" column="5" lean-forward="false" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
+            <state relative-caret-position="181">
+              <caret line="69" column="57" lean-forward="false" selection-start-line="69" selection-start-column="57" selection-end-line="69" selection-end-column="57" />
               <folding>
                 <element signature="e#2474#2475#0" expanded="true" />
                 <element signature="e#2533#2534#0" expanded="true" />
@@ -164,9 +174,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/generated/Status.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/generated/downloaderGrpc.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/test/java/com/fcup/OperationManagerTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/DbManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fcup/OperationManager.java" />
         <option value="$PROJECT_DIR$/../README.md" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/generated/PoolInfoOrBuilder.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/GrpcServer.java" />
@@ -185,9 +193,11 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/ChannelStateSynchronizer.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/ChannelStateSynchronizerTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/utilities/StoragePool.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolsManagerTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/OperationManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/fcup/OperationManagerTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolsManagerTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" />
       </list>
     </option>
   </component>
@@ -846,15 +856,22 @@
       <option name="project" value="LOCAL" />
       <updated>1513370534113</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Can now add operations to storage pools">
+      <created>1513372117297</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1513372117297</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TestHistory">
     <history-entry file="StoragePoolsManagerTest - 2017.12.15 at 21h 08m 13s.xml">
       <configuration name="StoragePoolsManagerTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StoragePoolsManagerTest_syncLocalStoragePools - 2017.12.15 at 20h 40m 17s.xml">
-      <configuration name="StoragePoolsManagerTest.syncLocalStoragePools" configurationId="JUnit" />
+    <history-entry file="StoragePoolsManagerTest - 2017.12.15 at 21h 17m 13s.xml">
+      <configuration name="StoragePoolsManagerTest" configurationId="JUnit" />
     </history-entry>
     <history-entry file="StoragePoolsManagerTest_syncLocalStoragePools - 2017.12.15 at 20h 40m 43s.xml">
       <configuration name="StoragePoolsManagerTest.syncLocalStoragePools" configurationId="JUnit" />
@@ -902,7 +919,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20904645" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20904645" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2958435" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.184375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -930,7 +947,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/../../.." />
     </ignored-roots>
-    <MESSAGE value="Added local sqlite connection" />
     <MESSAGE value="Database read and write" />
     <MESSAGE value="Changed params of operation to hashmap for more flexibility" />
     <MESSAGE value="Reformated storage controller, now having problem syncing view" />
@@ -955,11 +971,12 @@
     <MESSAGE value="Moved tests to where they should be" />
     <MESSAGE value="Started adding storage pool logic to controller" />
     <MESSAGE value="Added more storage pool tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added more storage pool tests" />
+    <MESSAGE value="Can now add operations to storage pools" />
+    <option name="LAST_COMMIT_MESSAGE" value="Can now add operations to storage pools" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="23" />
+      <option name="time" value="25" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1068,16 +1085,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/OperationManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="71" column="5" lean-forward="true" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/DbManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
@@ -1095,16 +1102,6 @@
             <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           </first_editor>
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/OperationManagerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-26">
-          <caret line="15" column="11" lean-forward="false" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1300,25 +1297,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/Operation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="77" column="5" lean-forward="false" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
-          <folding>
-            <element signature="e#2474#2475#0" expanded="true" />
-            <element signature="e#2533#2534#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolsManagerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1326">
-          <caret line="86" column="53" lean-forward="false" selection-start-line="86" selection-start-column="53" selection-end-line="86" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/utilities/StoragePool.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -1333,15 +1311,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/OperationManagerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="76" column="26" lean-forward="false" selection-start-line="76" selection-start-column="26" selection-end-line="76" selection-end-column="26" />
+        <state relative-caret-position="323">
+          <caret line="70" column="60" lean-forward="true" selection-start-line="70" selection-start-column="60" selection-end-line="72" selection-end-column="85" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1050#1051#0" expanded="true" />
             <element signature="e#1093#1094#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/Operation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="69" column="57" lean-forward="false" selection-start-line="69" selection-start-column="57" selection-end-line="69" selection-end-column="57" />
+          <folding>
+            <element signature="e#2474#2475#0" expanded="true" />
+            <element signature="e#2533#2534#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/OperationManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="470">
+          <caret line="80" column="43" lean-forward="false" selection-start-line="80" selection-start-column="12" selection-end-line="80" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolsManagerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="86" column="121" lean-forward="false" selection-start-line="86" selection-start-column="121" selection-end-line="86" selection-end-column="121" />
+          <folding />
         </state>
       </provider>
     </entry>

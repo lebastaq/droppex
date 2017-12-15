@@ -72,7 +72,8 @@ public class StoragePoolsManagerTest {
         Operation operation2 = new Operation();
         operation2.changeKeyValue("storagePoolIP", "ip2");
 
-        storagePoolsManager.syncLocalPoolsWithOperationPool(operation1);
+        storagePoolsManager.operationManager.syncOperation(operation1.asJSONString());
+        storagePoolsManager.operationManager.syncLocalPoolsWithOperationPool(storagePoolsManager.storagePools, operation1);
 
         if (storagePoolsManager.storagePools.size() == 1) {
             if (!storagePoolsManager.storagePools.get(0).hasNChunks(1)) {
@@ -82,7 +83,8 @@ public class StoragePoolsManagerTest {
         else
             fail("Did not insert first storage pool: size = " + storagePoolsManager.storagePools.size());
 
-        storagePoolsManager.syncLocalPoolsWithOperationPool(operation1);
+        storagePoolsManager.operationManager.syncOperation(operation2.asJSONString());
+        storagePoolsManager.operationManager.syncLocalPoolsWithOperationPool(storagePoolsManager.storagePools, operation2);
 
         if (storagePoolsManager.storagePools.size() == 1) {
             if (!storagePoolsManager.storagePools.get(1).hasNChunks(1)) {

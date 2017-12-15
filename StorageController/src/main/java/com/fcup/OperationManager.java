@@ -1,6 +1,7 @@
 package com.fcup;
 
 import org.jgroups.util.Util;
+import utilities.StoragePool;
 
 import java.io.DataOutputStream;
 import java.io.OutputStream;
@@ -45,14 +46,18 @@ public class OperationManager {
         synchronized (operationsAsString) {
             for (String op : newOperations)
             {
-                if(!operationsAsString.contains(op)) {
-                    final Operation operation = Operation.fromJSON(op);
-                    operations.add(operation);
-                    operationsAsString.add(op);
-                    writeOperationIntoDB(operation);
-                    System.out.println("New Operations: " + op);
-                }
+                syncOperation(op);
             }
+        }
+    }
+
+    public void syncOperation(String op) {
+        if(!operationsAsString.contains(op)) {
+            final Operation operation = Operation.fromJSON(op);
+            operations.add(operation);
+            operationsAsString.add(op);
+            writeOperationIntoDB(operation);
+            System.out.println("New Operations: " + op);
         }
     }
 
@@ -69,5 +74,20 @@ public class OperationManager {
         synchronized (operationsAsString) {
             Util.objectToStream(operationsAsString, new DataOutputStream(output));
         }
+    }
+
+    public void syncLocalStoragePools(List<StoragePool> storagePools) {
+        for (Operation op : operations) {
+            syncLocalPoolsWithOperationPool(storagePools, op);
+        }
+    }
+
+    protected void syncLocalPoolsWithOperationPool(List<StoragePool> storagePools, Operation newOperation) {
+        StoragePool operationStoragePool = newOperation.isInStoragePool(storagePools);
+        if (!storagePools.contains(operationStoragePool)) {
+            storagePools.add(operationStoragePool);
+        }
+
+        newOperation.addMyselfToStoragePool(operationStoragePool);
     }
 }

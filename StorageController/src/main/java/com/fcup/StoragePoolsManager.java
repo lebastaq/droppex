@@ -69,21 +69,14 @@ public class StoragePoolsManager extends ReceiverAdapter {
         Operation newOperation = Operation.fromJSON(line);
         operationManager.storeOperationInLocal(newOperation);
         operationManager.writeOperationIntoDB(newOperation);
-        syncLocalPoolsWithOperationPool(newOperation);
-    }
-
-    protected void syncLocalPoolsWithOperationPool(Operation newOperation) {
-        StoragePool operationStoragePool = newOperation.isInStoragePool(storagePools);
-        if (!storagePools.contains(operationStoragePool)) {
-            storagePools.add(operationStoragePool);
-        }
-
-        newOperation.addMyselfToStoragePool(operationStoragePool);
+        operationManager.syncOperation(newOperation.asJSONString());
+        operationManager.syncLocalPoolsWithOperationPool(storagePools, newOperation);
     }
 
     public void setState(InputStream input) throws Exception {
         List<String> newOperations = Util.objectFromStream(new DataInputStream(input));
         operationManager.syncOperations(newOperations);
+        operationManager.syncLocalStoragePools(storagePools);
     }
 
     public void getState(OutputStream output) throws Exception {
