@@ -28,10 +28,10 @@ func main() {
         http.StripPrefix(Home + "files/", http.FileServer(http.Dir(Home + "files/")))
     )
 
-	router.HandleFunc(Home + "list", ListFiles).Methods("GET")
-	router.HandleFunc(Home + "list/{pattern}", ListMatching).Methods("GET")
-	router.HandleFunc(Home + "files_post", UploadFile).Methods("POST")
-	router.HandleFunc(Home + "delete/{filename}", DeleteFile).Methods("POST")
+	router.HandleFunc(Home + "list", listAll).Methods("GET")
+	router.HandleFunc(Home + "list/{pattern}", listMatching).Methods("GET")
+	router.HandleFunc(Home + "files_post", uploadFile).Methods("POST")
+	router.HandleFunc(Home + "delete/{filename}", deleteFile).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
@@ -42,16 +42,14 @@ type File struct {
 	SizeInBytes int    `json:"size,omitempty"`
 }
 
-// ListFiles lists all files or files matching a pattern
-// curl test: curl localhost:8080/1/list
-func ListFiles(w http.ResponseWriter, r *http.Request) {
+// listAll lists all files or files matching a pattern
+func listAll(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
 	json.NewEncoder(w).Encode(files)
 }
 
-// ListMatching lists all files matching a pattern
-// curl test: curl localhost:8080/1/list/photo
-func ListMatching(w http.ResponseWriter, r *http.Request) {
+// listMatching lists all files matching a pattern
+func listMatching(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
 	params := mux.Vars(r)
 	output := make(map[string]File)
@@ -65,9 +63,9 @@ func ListMatching(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(output)
 }
 
-// UploadFile uploads a file to the servers
+// uploadFile uploads a file to the servers
 // TODO: Verify file doesn't already exist
-func UploadFile(w http.ResponseWriter, r *http.Request) {
+func uploadFile(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
 
 	var Buf bytes.Buffer
@@ -86,6 +84,8 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 
 	// Send blocks over RPC to storage pools (pass in buffer)
 
+    // Store name and size in files
+
 	// Cleanup buffer
 	Buf.Reset()
 
@@ -93,8 +93,8 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("File upload success."))
 }
 
-// DeleteFile deletes the file associated with the input
-func DeleteFile(w http.ResponseWriter, r *http.Request) {
+// deleteFile deletes the file associated with the input
+func deleteFile(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
 	params := mux.Vars(r)
 
