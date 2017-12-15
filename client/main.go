@@ -40,23 +40,23 @@ func main() {
 
 		case "list":
 			err := listFiles()
-			check(err)
+			checkErr(err)
 
 		case "search":
 			err := searchFiles(line[1])
-			check(err)
+			checkErr(err)
 
 		case "upload":
 			err := uploadFile(line[1])
-			check(err)
+			checkErr(err)
 
 		case "download":
 			err := downloadFile(line[1])
-			check(err)
+			checkErr(err)
 
 		case "delete":
 			err := deleteFile(line[1])
-			check(err)
+			checkErr(err)
 
 		case "help":
 			showHelp()
@@ -101,8 +101,7 @@ func queryFiles(pattern string) error {
 	// Grabbing response from URL (raw JSON)
 	resp, err := http.Get(target)
 	if err != nil {
-		// TODO: Handle
-		panic(err)
+		return err
 	}
 	defer resp.Body.Close()
 
@@ -113,16 +112,14 @@ func queryFiles(pattern string) error {
 	// Read body of HTTP response (JSON)
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		// TODO: Handle
-		panic(err)
+		return err
 	}
 
 	// Unmarshals JSON body into the payload struct by passing in the pointer
 	payload := make(map[string]File)
 	err = json.Unmarshal(body, &payload)
 	if err != nil {
-		// TODO: Handle
-		panic(err)
+		return err
 	}
 
 	printJSON(payload)
@@ -184,8 +181,7 @@ func deleteFile(filename string) error {
 
 	resp, err := http.Post(target, "", nil)
 	if err != nil {
-		// TODO: Handle
-		panic(err)
+		return err
 	}
 	defer resp.Body.Close()
 
@@ -214,8 +210,9 @@ func printJSON(payload map[string]File) {
 	}
 }
 
-func check(err error) {
+func checkErr(err error) {
 	if err != nil {
+		fmt.Println("Connection to server failed, try again later.")
 		log.Fatal(err)
 	}
 }
