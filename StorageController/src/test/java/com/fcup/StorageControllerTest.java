@@ -18,23 +18,23 @@ public class StorageControllerTest {
     public void createStorageController() {
         try {
             // TODO adress ?
-            storageController = new StorageController("127.0.0.1", 50051);
+            storageController = new StorageController();
         } catch (Exception e) {
             System.err.println("Could not create storage controller:");
             e.printStackTrace();
         }
     }
 
-    @After
-    public void shutdownGrpcChannel() throws InterruptedException {
-        storageController.closeGrpcChannel();
-    }
-
-    // should be run at the same time as a storage pool
+    // should be getAnswer at the same time as a storage pool
     // TODO finish it...
     @Test
-    public void startDownloaderInStoragePool() {
-        storageController.makeStoragePoolDownloadAFileFromTheAppServer();
+    public void startDownloaderInStoragePool()  {
+        try {
+            storageController.makeStoragePoolDownloadAFileFromTheAppServer();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Could not make storage pool download a file");
+        }
     }
 
 
@@ -94,7 +94,7 @@ public class StorageControllerTest {
             storageController.connectToChannel();
             storageController.sync();
             // TODO something with the IP adress...
-            StorageController storageController2 = new StorageController("127.0.0.1", 50051);
+            StorageController storageController2 = new StorageController();
             storageController2.connectToChannel();
             storageController2.sync();
         } catch (Exception e) {

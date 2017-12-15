@@ -1,7 +1,6 @@
 package com.fcup;
 
 import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
@@ -16,15 +15,15 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.fcup.generated.*;
+import utilities.GrpcServer;
+import utilities.downloadStarter;
 
 // TODO extract custom jChannel class ?
 public class StorageController extends ReceiverAdapter {
     JChannel jgroupsChannel;
     OperationManager operationManager;
     String user_name = System.getProperty("user.name", "n/a");
-
-    private final ManagedChannel grpcChannel;
-    private final downloaderGrpc.downloaderBlockingStub blockingStub;
+    GrpcServer grpcServer;
 
     // TODO change this to the real grpcPort in the google VMs ?
     // TODO test it in 1 VM, then 2 different ones
@@ -35,7 +34,7 @@ public class StorageController extends ReceiverAdapter {
     public static void main(String[] args) {
         try {
             // TODO retrieve local address + grpcPort ?
-            StorageController storageController = new StorageController("127.0.0.1", 50051);
+            StorageController storageController = new StorageController();
             storageController.connectToChannel();
             storageController.sync();
             storageController.start();
@@ -45,26 +44,31 @@ public class StorageController extends ReceiverAdapter {
         }
     }
 
-    // TODO register in the google bucket  (and make a list of other controllers ?)
-
     // TODO create client that registers the storage pools
-    // (storage pools get the storage controller IPs via the google bucket...)
-    // --> read the storage pools in the google bucket ?
-    // --> when a new storage pool connects, contact all the storage controllers to register as well...
+    // --> receive storage pool info via Grpc
+    // --> when a new storage pool connects, contact all the storage controllers to register as well, via Grpc...
+
+    // TODO create method that receives the new storage pool
+    // from the storage pool, or...
+    // by the master controller
+    // Done by GrpcServer...
 
     // TODO implement grpc app server <-> storage controller (e.g. implement grpc client......)
     // TODO add the good chunk ID (retrieved from app server)
     // called via Grpc by the app server
-    public void makeStoragePoolDownloadAFileFromTheAppServer() {
-        String chunkID = "Test chunk ID...."; // todo retrieve from grpc call from app server
+    public void makeStoragePoolDownloadAFileFromTheAppServer() throws Exception {
+        String chunkID = "Test chunk ID...."; // TODO retrieve from grpc call from app server
+        String poolAddress = "127.0.0.1"; // TODO retrieve from grpc call from app server
+        int poolPort = 50051; // same...
         Info request = Info.newBuilder().setIp(host).setPort(grpcPort).setChunkId(chunkID).build(); // todo host = storage pool - how to get it ?
         Status response;
         try {
-            response = blockingStub.startDownloader(request);
+            downloadStarter downloadStarter = new downloadStarter(poolAddress, poolPort);
+            response = downloadStarter.getAnswer(request);
         } catch (StatusRuntimeException e) {
             // TODO manage this: re-construct the chunks from FEC, and dispatch them in the other pools ... ?
             System.err.println("Could not start downloader in storage pool for chunk " + chunkID);
-            return;
+            throw e;
         }
         System.out.println("Response: " + response.getOk());
 
@@ -73,7 +77,6 @@ public class StorageController extends ReceiverAdapter {
     public void start() throws Exception {
         eventLoop();
         jgroupsChannel.close();
-        closeGrpcChannel();
     }
 
     private void eventLoop() throws Exception {
@@ -81,25 +84,9 @@ public class StorageController extends ReceiverAdapter {
         operation.changeKeyValue("type", Integer.toString((int)(Math.random()*20)));
         doOperation(operation);
         System.out.println("Sent operation: " + operation.asJSONString());
-        while (true) {
 
-        }
+        System.in.read();
     }
-
-    public StorageController(String host, int port) throws Exception {
-        this(ManagedChannelBuilder.forAddress(host, port)
-                .usePlaintext(true)
-                .build());
-    }
-
-    public StorageController(ManagedChannel channel) throws Exception {
-        this.grpcChannel = channel;
-        blockingStub = downloaderGrpc.newBlockingStub(this.grpcChannel);
-        operationManager = new OperationManager();
-        jgroupsChannel = new JChannel("config.xml").setReceiver(this);
-        System.out.println("Done init");
-    }
-
 
     public void connectToChannel() throws Exception {
         jgroupsChannel.connect("ChatCluster");
@@ -139,10 +126,6 @@ public class StorageController extends ReceiverAdapter {
         operationManager.getState(output);
     }
 
-    public void closeGrpcChannel() throws InterruptedException {
-        if(grpcChannel != null)
-            grpcChannel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
-    }
 
 
 }

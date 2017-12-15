@@ -8,4 +8,10 @@ Distributed file hosting
 * Seeding: to other pools (tested), to app server
 * Downloading: from other pools (tested), from app server
 
-Upon start, announces itself to the storage controllers. Gets their address via the google bucket.
+Upon start, announces itself to the storage controllers. 
+Tried to gets their address via the google bucket, but not working...
+
+Storage controllers start with option specifying the master controller's adress
+
+* Read from bucket ? Simplest...
+* When new master controller, send grpc messages to storage pools to give them the new master ? 

@@ -1,8 +1,7 @@
 package com.fcup.generated;
 
-import io.grpc.stub.ClientCalls;
-
 import static io.grpc.MethodDescriptor.generateFullMethodName;
+import static io.grpc.stub.ClientCalls.asyncUnaryCall;
 import static io.grpc.stub.ClientCalls.blockingUnaryCall;
 import static io.grpc.stub.ClientCalls.futureUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncUnaryCall;
@@ -22,16 +21,16 @@ public final class downloaderGrpc {
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   @Deprecated // Use {@link #getStartDownloaderMethod()} instead.
-  public static final io.grpc.MethodDescriptor<com.fcup.generated.Info,
-      com.fcup.generated.Status> METHOD_START_DOWNLOADER = getStartDownloaderMethod();
+  public static final io.grpc.MethodDescriptor<Info,
+      Status> METHOD_START_DOWNLOADER = getStartDownloaderMethod();
 
-  private static volatile io.grpc.MethodDescriptor<com.fcup.generated.Info,
-      com.fcup.generated.Status> getStartDownloaderMethod;
+  private static volatile io.grpc.MethodDescriptor<Info,
+      Status> getStartDownloaderMethod;
 
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static io.grpc.MethodDescriptor<com.fcup.generated.Info,
-      com.fcup.generated.Status> getStartDownloaderMethod() {
-    io.grpc.MethodDescriptor<com.fcup.generated.Info, com.fcup.generated.Status> getStartDownloaderMethod;
+  public static io.grpc.MethodDescriptor<Info,
+      Status> getStartDownloaderMethod() {
+    io.grpc.MethodDescriptor<Info, Status> getStartDownloaderMethod;
     if ((getStartDownloaderMethod = downloaderGrpc.getStartDownloaderMethod) == null) {
       synchronized (downloaderGrpc.class) {
         if ((getStartDownloaderMethod = downloaderGrpc.getStartDownloaderMethod) == null) {
@@ -83,7 +82,7 @@ public final class downloaderGrpc {
     /**
      */
     public void startDownloader(com.fcup.generated.Info request,
-        io.grpc.stub.StreamObserver<com.fcup.generated.Status> responseObserver) {
+        io.grpc.stub.StreamObserver<Status> responseObserver) {
       asyncUnimplementedUnaryCall(getStartDownloaderMethod(), responseObserver);
     }
 
@@ -121,8 +120,8 @@ public final class downloaderGrpc {
     /**
      */
     public void startDownloader(com.fcup.generated.Info request,
-        io.grpc.stub.StreamObserver<com.fcup.generated.Status> responseObserver) {
-      ClientCalls.asyncUnaryCall(
+        io.grpc.stub.StreamObserver<Status> responseObserver) {
+      asyncUnaryCall(
           getChannel().newCall(getStartDownloaderMethod(), getCallOptions()), request, responseObserver);
     }
   }
@@ -173,7 +172,7 @@ public final class downloaderGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.fcup.generated.Status> startDownloader(
+    public com.google.common.util.concurrent.ListenableFuture<Status> startDownloader(
         com.fcup.generated.Info request) {
       return futureUnaryCall(
           getChannel().newCall(getStartDownloaderMethod(), getCallOptions()), request);
@@ -201,7 +200,7 @@ public final class downloaderGrpc {
       switch (methodId) {
         case METHODID_START_DOWNLOADER:
           serviceImpl.startDownloader((com.fcup.generated.Info) request,
-              (io.grpc.stub.StreamObserver<com.fcup.generated.Status>) responseObserver);
+              (io.grpc.stub.StreamObserver<Status>) responseObserver);
           break;
         default:
           throw new AssertionError();
