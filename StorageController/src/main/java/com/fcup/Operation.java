@@ -1,6 +1,7 @@
 package com.fcup;
 
 import org.json.JSONObject;
+import utilities.StoragePool;
 
 import java.util.*;
 
@@ -18,7 +19,8 @@ public class Operation {
         params.put("type", dummy);
         params.put("chunkID", dummy);
         params.put("blockID", dummy);
-        params.put("storagePool", dummy);
+        params.put("storagePoolIP", dummy);
+        params.put("storagePoolPort", dummy);
         params.put("source", dummy);
     }
 
@@ -63,5 +65,16 @@ public class Operation {
         }
 
         return operation;
+    }
+
+    public boolean storagePoolIsIn(List<StoragePool> pools) {
+        StoragePool localPool = new StoragePool(Integer.parseInt(params.get("port")),
+                                                    params.get("ip"));
+        for (StoragePool pool : pools) {
+            if(pool.equals(localPool))
+                return true;
+        }
+
+        return false;
     }
 }

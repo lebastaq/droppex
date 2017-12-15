@@ -10,7 +10,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChannelStateSynchronizer extends ReceiverAdapter {
+public class StoragePoolsManager extends ReceiverAdapter {
 
     JChannel jgroupsChannel;
     OperationManager operationManager;
@@ -18,15 +18,15 @@ public class ChannelStateSynchronizer extends ReceiverAdapter {
     List<StoragePool> storagePools;
     static String CONFIG_FILE = "config.xml";
 
-    public ChannelStateSynchronizer() throws Exception {
+    public StoragePoolsManager() throws Exception {
         this(CONFIG_FILE);
     }
 
-    public ChannelStateSynchronizer(String CONFIG_FILE) throws Exception {
+    public StoragePoolsManager(String CONFIG_FILE) throws Exception {
         this.CONFIG_FILE = CONFIG_FILE;
         jgroupsChannel = new JChannel(CONFIG_FILE).setReceiver(this);
         operationManager = new OperationManager();
-        storagePools = new ArrayList<StoragePool>();
+        storagePools = new ArrayList<>();
     }
 
     public void connectToChannel() throws Exception {
@@ -69,6 +69,13 @@ public class ChannelStateSynchronizer extends ReceiverAdapter {
         Operation newOperation = Operation.fromJSON(line);
         operationManager.storeOperationInLocal(newOperation);
         operationManager.writeOperationIntoDB(newOperation);
+        syncLocalStoragePools(newOperation);
+    }
+
+    protected void syncLocalStoragePools(Operation newOperation) {
+        if (!newOperation.storagePoolIsIn(storagePools)) {
+            storagePools.add(new StoragePool());
+        }
     }
 
     public void setState(InputStream input) throws Exception {

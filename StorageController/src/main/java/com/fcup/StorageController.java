@@ -7,7 +7,7 @@ import utilities.GrpcServer;
 import utilities.DownloadStarter;
 
 // TODO extract custom jChannel class ?
-public class StorageController extends ChannelStateSynchronizer {
+public class StorageController extends StoragePoolsManager {
     String user_name = System.getProperty("user.name", "n/a");
     GrpcServer grpcServer;
     private final static String CONFIG_FILE = "config.xml"; /* google_config.xml */

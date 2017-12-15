@@ -9,6 +9,12 @@ public class StoragePool {
 
     List<String> chunks;
 
+    public StoragePool(int port, String ip) {
+        this();
+        this.ip = ip;
+        this.port = port;
+    }
+
     public StoragePool() {
         chunks = new ArrayList<>();
     }

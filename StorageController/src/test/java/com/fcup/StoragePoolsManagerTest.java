@@ -10,13 +10,13 @@ import java.util.List;
 import static org.jgroups.util.Util.assertEquals;
 import static org.junit.Assert.*;
 
-public class ChannelStateSynchronizerTest {
-    private ChannelStateSynchronizer stateSynchronizer;
+public class StoragePoolsManagerTest {
+    private StoragePoolsManager stateSynchronizer;
 
     @Before
     public void createStateSynchronizer() {
         try {
-            stateSynchronizer = new ChannelStateSynchronizer();
+            stateSynchronizer = new StoragePoolsManager();
         } catch (Exception e) {
             System.err.println("Could not create storage controller:");
             e.printStackTrace();
@@ -63,6 +63,10 @@ public class ChannelStateSynchronizerTest {
             fail("Could not sync state");
         }
         storageController2.disconnectFromChannel();
+    }
+
+    @Test
+    public void syncLocalStoragePools() throws Exception {
     }
 
 }
