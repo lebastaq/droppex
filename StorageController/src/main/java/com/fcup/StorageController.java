@@ -24,12 +24,10 @@ public class StorageController extends ReceiverAdapter {
 
     public static void main(String[] args) {
         try {
-            // TODO retrieve local address + grpcPort ?
             StorageController storageController = new StorageController();
             storageController.connectToChannel();
             storageController.sync();
             storageController.start();
-            System.out.println("Started!");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -109,7 +107,8 @@ public class StorageController extends ReceiverAdapter {
 
     public void viewAccepted(View new_view) {
         System.out.println("Joined View: " + new_view);
-//        electNewLeader();
+        electNewLeader();
+        // TODO send new leader's IP to storage controller and app server
     }
 
     public void electNewLeader() {
@@ -124,7 +123,6 @@ public class StorageController extends ReceiverAdapter {
             isLeader = false;
         }
     }
-
 
     public void receive(Message msg) {
         String line = msg.getObject();
