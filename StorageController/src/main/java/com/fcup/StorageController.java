@@ -6,7 +6,6 @@ import com.fcup.generated.*;
 import utilities.GrpcServer;
 import utilities.DownloadStarter;
 
-// TODO extract custom jChannel class ?
 public class StorageController extends StoragePoolsManager {
     String user_name = System.getProperty("user.name", "n/a");
     GrpcServer grpcServer;

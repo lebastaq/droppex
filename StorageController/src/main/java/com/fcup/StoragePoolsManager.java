@@ -69,6 +69,12 @@ public class StoragePoolsManager extends ReceiverAdapter {
         operationManager.storeOperation(Operation.fromJSON(newOperation));
         operationManager.syncOperation(newOperation);
         operationManager.syncLocalStoragePools(storagePools);
+
+        for(StoragePool storagePool: storagePools) {
+            for (String chunk : storagePool.chunks) {
+                System.out.println("Chunk >> " + chunk);
+            }
+        }
     }
 
     public void setState(InputStream input) throws Exception {

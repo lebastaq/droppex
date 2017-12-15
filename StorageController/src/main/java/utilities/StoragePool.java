@@ -7,7 +7,7 @@ public class StoragePool {
     String ip;
     int port;
 
-    List<String> chunks;
+    public List<String> chunks;
 
     public StoragePool(int port, String ip) {
         this();
@@ -20,7 +20,8 @@ public class StoragePool {
     }
 
     public void addChunk(String chunkID) {
-        chunks.add(chunkID);
+        if(!chunks.contains(chunkID))
+            chunks.add(chunkID);
     }
 
     public void removeChunk(String chunkID) {
