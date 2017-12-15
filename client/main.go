@@ -11,6 +11,7 @@ import (
 	"net/http/httputil"
 	"os"
 	"strings"
+	//"github.com/freddygv/droppex/lib"
 )
 
 // URL for app-server
@@ -38,19 +39,24 @@ func main() {
 			os.Exit(0)
 
 		case "list":
-			listFiles()
+			err := listFiles()
+			check(err)
 
 		case "search":
-			searchFiles(line[1])
+			err := searchFiles(line[1])
+			check(err)
 
 		case "upload":
-			uploadFile(line[1])
+			err := uploadFile(line[1])
+			check(err)
 
 		case "download":
-			downloadFile(line[1])
+			err := downloadFile(line[1])
+			check(err)
 
 		case "delete":
-			deleteFile(line[1])
+			err := deleteFile(line[1])
+			check(err)
 
 		case "help":
 			showHelp()
@@ -64,26 +70,29 @@ func main() {
 		fmt.Print("> ")
 	}
 	if err := scanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "STDIN:", err)
+		log.Println("STDIN: ", err)
 	}
 }
 
-func listFiles() {
+func listFiles() error {
 	if DEBUGGING {
-		fmt.Println("Listing all files")
+		log.Println("Listing all files")
 	}
-	queryFiles("")
+	err := queryFiles("")
 
+	return err
 }
 
-func searchFiles(pattern string) {
+func searchFiles(pattern string) error {
 	if DEBUGGING {
-		fmt.Println("Searching for:", pattern)
+		log.Println("Searching for:", pattern)
 	}
-	queryFiles(pattern)
+	err := queryFiles(pattern)
+
+	return err
 }
 
-func queryFiles(pattern string) {
+func queryFiles(pattern string) error {
 	target := URL + "list"
 	if pattern != "" {
 		target = target + "/" + pattern
@@ -96,6 +105,10 @@ func queryFiles(pattern string) {
 		panic(err)
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("Bad response: %s", resp.Status)
+	}
 
 	// Read body of HTTP response (JSON)
 	body, err := ioutil.ReadAll(resp.Body)
@@ -113,25 +126,34 @@ func queryFiles(pattern string) {
 	}
 
 	printJSON(payload)
+
+	return nil
 }
 
-func downloadFile(filename string) {
+func downloadFile(filename string) error {
 	target := URL + "files/" + filename
 
 	resp, err := http.Get(target)
 	if err != nil {
-		// TODO: Handle
-		panic(err)
+		return err
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("Bad response: %s", resp.Status)
+	}
+
+	// Actual download
+
 	if DEBUGGING {
-		fmt.Println("Download request for file:", filename)
+		log.Println("Download request for file:", filename)
 		debug(httputil.DumpResponse(resp, true))
 	}
+
+	return nil
 }
 
-func uploadFile(filepath string) {
+func uploadFile(filepath string) error {
 	target := URL + "files_post"
 
 	values := map[string]string{"filepath": filepath}
@@ -139,23 +161,25 @@ func uploadFile(filepath string) {
 
 	resp, err := http.Post(target, "application/json", bytes.NewBuffer(jsonValue))
 	if err != nil {
-		// TODO: Handle
-		panic(err)
+		return err
 	}
 	defer resp.Body.Close()
 
-	// TODO: Should this kind of check be used?
-	// if 200 != resp.StatusCode {
-	// 	return nil, fmt.Errorf("%s", body)
-	// }
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("Bad response: %s", resp.Status)
+	}
+
+	// Actual upload
 
 	if DEBUGGING {
-		fmt.Println("Upload request for file:", filepath)
+		log.Println("Upload request for file:", filepath)
 		debug(httputil.DumpResponse(resp, true))
 	}
+
+	return nil
 }
 
-func deleteFile(filename string) {
+func deleteFile(filename string) error {
 	target := URL + "delete/" + filename
 
 	resp, err := http.Post(target, "", nil)
@@ -165,10 +189,16 @@ func deleteFile(filename string) {
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("Bad response: %s", resp.Status)
+	}
+
 	if DEBUGGING {
-		fmt.Println("Deletion request for file:", filename)
+		log.Println("Deletion request for file:", filename)
 		debug(httputil.DumpResponse(resp, true))
 	}
+
+	return nil
 }
 
 func printJSON(payload map[string]File) {
@@ -180,7 +210,13 @@ func printJSON(payload map[string]File) {
 	}
 
 	if i == 1 {
-		fmt.Println("Your search did not match any files.")
+		log.Println("Your search did not match any files.")
+	}
+}
+
+func check(err error) {
+	if err != nil {
+		log.Fatal(err)
 	}
 }
 
@@ -208,7 +244,7 @@ func showHeader() {
 }
 
 func showHelp() {
-	fmt.Println(`
+	log.Println(`
 Commands Available:
     list                    Lists all files on the server.
     search {query}          Searches for files that match the query.
