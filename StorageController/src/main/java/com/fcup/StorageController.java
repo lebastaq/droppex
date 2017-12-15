@@ -35,13 +35,9 @@ public class StorageController extends ReceiverAdapter {
     public static void main(String[] args) {
         try {
             // TODO retrieve local address + grpcPort ?
-            System.out.println("0");
             StorageController storageController = new StorageController("127.0.0.1", 50051);
-            System.out.println("1");
             storageController.connectToChannel();
-            System.out.println("2");
             storageController.sync();
-//            System.out.println("3");
 //            storageController.start();
             System.out.println("Started!");
         } catch (Exception e) {
@@ -97,27 +93,22 @@ public class StorageController extends ReceiverAdapter {
     }
 
     public StorageController(ManagedChannel channel) throws Exception {
-        System.out.println("A");
         this.grpcChannel = channel;
-        System.out.println("B");
         blockingStub = downloaderGrpc.newBlockingStub(this.grpcChannel);
-        System.out.println("C");
         operationManager = new OperationManager();
-        System.out.println("D");
-        jgroupsChannel = new JChannel("config.xml");
-        System.out.println("E");
-        jgroupsChannel.setReceiver(this);
-        System.out.println("F");
+        jgroupsChannel = new JChannel("config.xml").setReceiver(this);
+        System.out.println("Done init");
     }
 
 
     public void connectToChannel() throws Exception {
         jgroupsChannel.connect("ChatCluster");
+        System.out.println("Connected to channel");
     }
 
     public void sync() throws Exception {
         operationManager.loadLocalOperationsFromDB();
-        jgroupsChannel.getState(null, 100000); // will callback local setState
+        jgroupsChannel.getState(null, 1000); // will callback local setState
         System.out.println("Synced!");
     }
 
@@ -146,7 +137,6 @@ public class StorageController extends ReceiverAdapter {
 
     public void getState(OutputStream output) throws Exception {
         operationManager.getState(output);
-
     }
 
     public void closeGrpcChannel() throws InterruptedException {

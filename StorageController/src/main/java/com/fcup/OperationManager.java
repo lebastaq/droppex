@@ -5,12 +5,14 @@ import org.jgroups.util.Util;
 import java.io.DataOutputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class OperationManager {
     DbManager dbManager;
     List<Operation> operations = new LinkedList<>();
+    List<String> operationsAsString = new LinkedList<>();
 
     public OperationManager() throws SQLException, ClassNotFoundException {
         dbManager = new DbManager();
@@ -22,6 +24,7 @@ public class OperationManager {
             List<Operation> operationsFromDB = dbManager.readEntry();
             for (Operation operation : operationsFromDB) {
                 operations.add(operation);
+                operationsAsString.add(operation.asJSONString());
             }
         } catch (SQLException e) {
             System.err.println("Could not read operation: ");
@@ -31,18 +34,20 @@ public class OperationManager {
     }
 
     public void storeOperationInLocal(Operation operation) {
-        synchronized (operations) {
+        synchronized (operationsAsString) {
             operations.add(operation);
+            operationsAsString.add(operation.asJSONString());
         }
     }
 
     public void syncOperations(final List<String> newOperations) throws SQLException {
-        synchronized (operations) {
+        synchronized (operationsAsString) {
             for (String op : newOperations)
             {
-                if(!operations.contains(op)) {
+                if(!operationsAsString.contains(op)) {
                     final Operation operation = Operation.fromJSON(op);
                     operations.add(operation);
+                    operationsAsString.add(op);
                     writeOperationIntoDB(operation);
                 }
             }
@@ -50,8 +55,8 @@ public class OperationManager {
 
 
         System.out.println("Operations:");
-        for (Operation op : operations) {
-            System.out.println(op.asJSONString());
+        for (String op : operationsAsString) {
+            System.out.println(op);
         }
     }
 
@@ -65,6 +70,8 @@ public class OperationManager {
     }
 
     public void getState(OutputStream output) throws Exception {
-        Util.objectToStream(operations, new DataOutputStream(output));
+        synchronized (operationsAsString) {
+            Util.objectToStream(operationsAsString, new DataOutputStream(output));
+        }
     }
 }
