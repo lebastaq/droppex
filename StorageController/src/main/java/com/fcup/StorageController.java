@@ -1,17 +1,10 @@
 package com.fcup;
 
 import io.grpc.StatusRuntimeException;
-import org.jgroups.*;
-import org.jgroups.util.Util;
-
-import java.io.DataInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.List;
 
 import com.fcup.generated.*;
 import utilities.GrpcServer;
-import utilities.downloadStarter;
+import utilities.DownloadStarter;
 
 // TODO extract custom jChannel class ?
 public class StorageController extends ChannelStateSynchronizer {
@@ -31,7 +24,7 @@ public class StorageController extends ChannelStateSynchronizer {
     }
 
     public StorageController() throws Exception {
-        super(CONFIG_FILE);
+        super();
         grpcServer = new GrpcServer();
     }
 
@@ -51,7 +44,7 @@ public class StorageController extends ChannelStateSynchronizer {
         Info request = Info.newBuilder().setIp(destinationAdress).setPort(destinationPort).setChunkId(chunkID).build(); // todo host = storage pool - how to get it ?
         Status response;
         try {
-            downloadStarter downloadStarter = new downloadStarter(poolAddress, poolPort);
+            DownloadStarter downloadStarter = new DownloadStarter(poolAddress, poolPort);
             response = downloadStarter.getAnswer(request);
         } catch (StatusRuntimeException e) {
             // TODO manage this: re-construct the chunks from FEC, and dispatch them in the other pools ... ?

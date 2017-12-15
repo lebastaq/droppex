@@ -82,48 +82,6 @@ public class StorageControllerTest {
     }
 
 
-    @Test
-    public void syncOperations() throws Exception {
-        try{
-            storageController.connectToChannel();
-            storageController.operationManager.syncOperations(new ArrayList<String>());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            fail("Could not sync operations");
-        }
-    }
-
-    @Test
-    public void viewAccepted() {
-        List<String> expectedNewOperations = new LinkedList<>();
-
-        try {
-            storageController.connectToChannel();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Could not connect to jgroupsChannel");
-        }
-
-        assertEquals(storageController.operationManager.operations, expectedNewOperations);
-    }
-
-    @Test
-    public void retrieveStateWithoutException() throws Exception {
-        StorageController storageController2 = new StorageController();
-        try {
-            storageController.connectToChannel();
-            storageController.sync();
-            // TODO something with the IP adress...
-            storageController2.connectToChannel();
-            storageController2.sync();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Could not sync state");
-        }
-        storageController2.disconnectFromChannel();
-    }
-
     @After
     public void disconnectFromChannel() {
         storageController.disconnectFromChannel();

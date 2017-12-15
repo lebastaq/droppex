@@ -2,10 +2,12 @@ package com.fcup;
 
 import org.jgroups.*;
 import org.jgroups.util.Util;
+import utilities.StoragePool;
 
 import java.io.DataInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChannelStateSynchronizer extends ReceiverAdapter {
@@ -13,10 +15,18 @@ public class ChannelStateSynchronizer extends ReceiverAdapter {
     JChannel jgroupsChannel;
     OperationManager operationManager;
     boolean isLeader = false;
+    List<StoragePool> storagePools;
+    static String CONFIG_FILE = "config.xml";
+
+    public ChannelStateSynchronizer() throws Exception {
+        this(CONFIG_FILE);
+    }
 
     public ChannelStateSynchronizer(String CONFIG_FILE) throws Exception {
+        this.CONFIG_FILE = CONFIG_FILE;
         jgroupsChannel = new JChannel(CONFIG_FILE).setReceiver(this);
         operationManager = new OperationManager();
+        storagePools = new ArrayList<StoragePool>();
     }
 
     public void connectToChannel() throws Exception {
@@ -30,7 +40,7 @@ public class ChannelStateSynchronizer extends ReceiverAdapter {
 
     public void sync() throws Exception {
         operationManager.loadLocalOperationsFromDB();
-        jgroupsChannel.getState(null, 1000); // will callback local setState
+        jgroupsChannel.getState(null, 1000); // will callback setState
         System.out.println("Synced!");
     }
 
