@@ -20,8 +20,7 @@ const URL string = "http://localhost:8000/1/"
 // DEBUGGING mode shows HTTP req details
 const DEBUGGING bool = true
 
-// File struct holds file name and size
-type File struct {
+type file struct {
 	Filename    string `json:"filename,omitempty"`
 	SizeInBytes int    `json:"size,omitempty"`
 }
@@ -78,6 +77,7 @@ func listFiles() error {
 	if DEBUGGING {
 		log.Println("Listing all files")
 	}
+
 	err := queryFiles("")
 
 	return err
@@ -87,6 +87,7 @@ func searchFiles(pattern string) error {
 	if DEBUGGING {
 		log.Println("Searching for:", pattern)
 	}
+
 	err := queryFiles(pattern)
 
 	return err
@@ -106,7 +107,7 @@ func queryFiles(pattern string) error {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Bad response: %s", resp.Status)
+		return fmt.Errorf("list - bad response: %s", resp.Status)
 	}
 
 	// Read body of HTTP response (JSON)
@@ -116,7 +117,7 @@ func queryFiles(pattern string) error {
 	}
 
 	// Unmarshals JSON body into the payload struct by passing in the pointer
-	payload := make(map[string]File)
+	payload := make(map[string]file)
 	err = json.Unmarshal(body, &payload)
 	if err != nil {
 		return err
@@ -136,16 +137,16 @@ func downloadFile(filename string) error {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Bad response: %s", resp.Status)
-	}
-
-	// Actual download
-
 	if DEBUGGING {
 		log.Println("Download request for file:", filename)
 		debug(httputil.DumpResponse(resp, true))
 	}
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("download - bad response: %s", resp.Status)
+	}
+
+	// Actual download
 
 	return nil
 }
@@ -162,16 +163,16 @@ func uploadFile(filepath string) error {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Bad response: %s", resp.Status)
-	}
-
-	// Actual upload
-
 	if DEBUGGING {
 		log.Println("Upload request for file:", filepath)
 		debug(httputil.DumpResponse(resp, true))
 	}
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("upload - bad response: %s", resp.Status)
+	}
+
+	// Actual upload
 
 	return nil
 }
@@ -185,19 +186,19 @@ func deleteFile(filename string) error {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Bad response: %s", resp.Status)
-	}
-
 	if DEBUGGING {
 		log.Println("Deletion request for file:", filename)
 		debug(httputil.DumpResponse(resp, true))
 	}
 
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("delete - bad response: %s", resp.Status)
+	}
+
 	return nil
 }
 
-func printJSON(payload map[string]File) {
+func printJSON(payload map[string]file) {
 	i := 1
 	for _, value := range payload {
 		size := float64(value.SizeInBytes) / float64(1024)
