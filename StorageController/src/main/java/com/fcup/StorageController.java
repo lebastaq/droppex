@@ -38,7 +38,7 @@ public class StorageController extends ReceiverAdapter {
             StorageController storageController = new StorageController("127.0.0.1", 50051);
             storageController.connectToChannel();
             storageController.sync();
-//            storageController.start();
+            storageController.start();
             System.out.println("Started!");
         } catch (Exception e) {
             e.printStackTrace();

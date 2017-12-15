@@ -5,12 +5,13 @@ import org.jgroups.util.Util;
 import java.io.DataOutputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class OperationManager {
     DbManager dbManager;
+
+    // TODO clean up double-variable mess
     List<Operation> operations = new LinkedList<>();
     List<String> operationsAsString = new LinkedList<>();
 
@@ -49,14 +50,9 @@ public class OperationManager {
                     operations.add(operation);
                     operationsAsString.add(op);
                     writeOperationIntoDB(operation);
+                    System.out.println("New Operations: " + op);
                 }
             }
-        }
-
-
-        System.out.println("Operations:");
-        for (String op : operationsAsString) {
-            System.out.println(op);
         }
     }
 
@@ -64,8 +60,8 @@ public class OperationManager {
         try {
             dbManager.insertOperation(operation);
         } catch (Exception e) {
-            System.err.println("Could not insert operation: ");
-            e.printStackTrace();
+            System.err.println("Could not insert operation");
+//            e.printStackTrace();
         }
     }
 

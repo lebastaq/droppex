@@ -59,8 +59,6 @@ public class Operation {
 
         for (String key : operationJSON.keySet()) {
             String value = (String)operationJSON.get(key);
-
-            System.out.println("key: "+ key + " value: " + value);
             operation.changeKeyValue(key, value);
         }
 
