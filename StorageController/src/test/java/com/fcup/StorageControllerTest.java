@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class StorageControllerTest {
         storageController.operationManager.loadLocalOperationsFromDB();
 
         List<Operation> operationsExpected;
-        operationsExpected = dbManager.readEntry();
+        operationsExpected = dbManager.readEntries();
 
         if(storageController.operationManager.operations.size() != operationsExpected.size())
         {

@@ -16,12 +16,12 @@ public class Operation {
     public Operation() {
         params = new HashMap<>();
         String dummy = "dummy";
-        params.put("type", dummy);
-        params.put("chunkID", dummy);
-        params.put("blockID", dummy);
-        params.put("storagePoolIP", dummy);
-        params.put("storagePoolPort", Integer.toString(0));
-        params.put("source", dummy);
+        changeKeyValue("type", dummy);
+        changeKeyValue("blockID", dummy);
+        changeKeyValue("storagePoolIP", dummy);
+        changeKeyValue("storagePoolPort", Integer.toString(0));
+        changeKeyValue("source", dummy);
+        changeKeyValue("chunkID", dummy);
     }
 
     public List<String> getKeys() {
@@ -85,5 +85,10 @@ public class Operation {
 
     public void addMyselfToStoragePool(StoragePool storagePool) {
         storagePool.addChunk(params.get("chunkID"));
+    }
+
+    @Override
+    public String toString() {
+        return asJSONString();
     }
 }

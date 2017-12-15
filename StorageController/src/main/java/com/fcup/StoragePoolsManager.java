@@ -64,19 +64,16 @@ public class StoragePoolsManager extends ReceiverAdapter {
     }
 
     public void receive(Message msg) {
-        String line = msg.getObject();
-        System.out.println("Received: " + line);
-        Operation newOperation = Operation.fromJSON(line);
-        operationManager.storeOperationInLocal(newOperation);
-        operationManager.writeOperationIntoDB(newOperation);
-        operationManager.syncOperation(newOperation.asJSONString());
-        operationManager.syncLocalPoolsWithOperationPool(storagePools, newOperation);
+        String newOperation = msg.getObject();
+        System.out.println("Received: " + newOperation);
+        operationManager.storeOperation(Operation.fromJSON(newOperation));
+        operationManager.syncOperation(newOperation);
+        operationManager.syncLocalStoragePools(storagePools);
     }
 
     public void setState(InputStream input) throws Exception {
         List<String> newOperations = Util.objectFromStream(new DataInputStream(input));
         operationManager.syncOperations(newOperations);
-        operationManager.syncLocalStoragePools(storagePools);
     }
 
     public void getState(OutputStream output) throws Exception {
@@ -85,7 +82,6 @@ public class StoragePoolsManager extends ReceiverAdapter {
 
     public void doOperation(Operation operation) throws Exception {
         jgroupsChannel.send(null, operation.asJSONString());
-        operationManager.storeOperationInLocal(operation);
-        operationManager.writeOperationIntoDB(operation);
+        operationManager.storeOperation(operation);
     }
 }

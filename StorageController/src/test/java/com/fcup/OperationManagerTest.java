@@ -25,14 +25,13 @@ public class OperationManagerTest {
     public void writeOperationIntoDBAndThenLoadIt() throws Exception {
         Operation operation = new Operation();
 
-        operationManager.storeOperationInLocal(operation);
-        operationManager.writeOperationIntoDB(operation);
+        operationManager.storeOperation(operation);
 
         operationManager.operations = new LinkedList<>();
         operationManager.loadLocalOperationsFromDB();
 
         List<Operation> operationsExpected;
-        operationsExpected = dbManager.readEntry();
+        operationsExpected = dbManager.readEntries();
 
         if(operationManager.operations.size() != operationsExpected.size())
         {

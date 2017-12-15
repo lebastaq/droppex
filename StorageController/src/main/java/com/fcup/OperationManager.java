@@ -23,7 +23,7 @@ public class OperationManager {
 
     public void loadLocalOperationsFromDB() throws SQLException {
         try {
-            List<Operation> operationsFromDB = dbManager.readEntry();
+            List<Operation> operationsFromDB = dbManager.readEntries();
             for (Operation operation : operationsFromDB) {
                 operations.add(operation);
                 operationsAsString.add(operation.asJSONString());
@@ -35,7 +35,12 @@ public class OperationManager {
         }
     }
 
-    public void storeOperationInLocal(Operation operation) {
+    public void storeOperation(Operation operation) {
+        storeOperationInLocal(operation);
+        writeOperationIntoDB(operation);
+    }
+
+    private void storeOperationInLocal(Operation operation) {
         synchronized (operationsAsString) {
             operations.add(operation);
             operationsAsString.add(operation.asJSONString());
@@ -61,12 +66,11 @@ public class OperationManager {
         }
     }
 
-    public void writeOperationIntoDB(Operation operation) {
+    private void writeOperationIntoDB(Operation operation) {
         try {
             dbManager.insertOperation(operation);
         } catch (Exception e) {
             System.err.println("Could not insert operation");
-//            e.printStackTrace();
         }
     }
 

@@ -60,13 +60,13 @@ public class DbManager {
     }
 
 
-    public List<Operation> readEntry() throws SQLException {
+    public List<Operation> readEntries() throws SQLException {
         Map<String, String> params = new HashMap<>();
-        return readEntry(params);
+        return readEntries(params);
     }
 
 
-    public List<Operation> readEntry(Map<String, String> params) throws SQLException {
+    public List<Operation> readEntries(Map<String, String> params) throws SQLException {
         List<Operation> results = new ArrayList<>();
         String query = "SELECT * FROM " + table;
         if(params.size() > 0)
@@ -87,7 +87,7 @@ public class DbManager {
 
         while (rs.next()) {
             Operation operation = new Operation();
-            for(int i = 1; i < columnCount; i++) {
+            for(int i = 1; i <= columnCount; i++) {
                 String colName = rsmd.getColumnName(i);
                 operation.changeKeyValue(colName, rs.getString(colName));
             }
