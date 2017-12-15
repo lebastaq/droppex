@@ -14,21 +14,24 @@ import (
 	"github.com/gorilla/mux"
 )
 
+const Home = "api/1/"
 var files = make(map[string]File)
 
 func main() {
-	const Version = "/1"
 	router := mux.NewRouter()
 
 	// TODO: Remove this dummy data
 	files["homework1.pdf"] = File{Filename: "homework1.pdf", SizeInBytes: 2048}
 	files["photo1.jpeg"] = File{Filename: "photo1.jpeg", SizeInBytes: 1024}
 
-	router.HandleFunc(Version+"/list", ListFiles).Methods("GET")
-	router.HandleFunc(Version+"/list/{pattern}", ListMatching).Methods("GET")
-	router.HandleFunc(Version+"/files/{filename}", DownloadFile).Methods("GET")
-	router.HandleFunc(Version+"/files_post", UploadFile).Methods("POST")
-	router.HandleFunc(Version+"/delete/{filename}", DeleteFile).Methods("POST")
+    router.PathPrefix(Home + "files/").Handler(
+        http.StripPrefix(Home + "files/", http.FileServer(http.Dir(Home + "files/")))
+    )
+
+	router.HandleFunc(Home + "list", ListFiles).Methods("GET")
+	router.HandleFunc(Home + "list/{pattern}", ListMatching).Methods("GET")
+	router.HandleFunc(Home + "files_post", UploadFile).Methods("POST")
+	router.HandleFunc(Home + "delete/{filename}", DeleteFile).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
@@ -62,17 +65,6 @@ func ListMatching(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(output)
 }
 
-// DownloadFile downloads a file with a given filename
-func DownloadFile(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
-	params := mux.Vars(r)
-
-	if _, ok := files[params["filename"]]; ok {
-		w.Write([]byte("Found."))
-	}
-	w.Write([]byte("File not found."))
-}
-
 // UploadFile uploads a file to the servers
 // TODO: Verify file doesn't already exist
 func UploadFile(w http.ResponseWriter, r *http.Request) {
@@ -81,8 +73,8 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	var Buf bytes.Buffer
 	file, header, err := r.FormFile("file")
 	if err != nil {
-		// TODO: Return error response instead
-		panic(err)
+        renderError(w, "INVALID_FILE", http.StatusBadRequest)
+		return
 	}
 	defer file.Close()
 
@@ -110,4 +102,9 @@ func DeleteFile(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Found."))
 	}
 	w.Write([]byte("File not found."))
+}
+
+func renderError(w http.ResponseWriter, message string, statusCode int) {
+	w.WriteHeader(statusCode)
+	w.Write([]byte(message))
 }

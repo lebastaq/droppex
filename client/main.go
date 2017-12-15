@@ -15,7 +15,7 @@ import (
 )
 
 // URL for app-server
-const URL string = "http://localhost:8000/1/"
+const URL string = "http://localhost:8000/api/1/"
 
 // DEBUGGING mode shows HTTP req details
 const DEBUGGING bool = true
@@ -137,6 +137,8 @@ func downloadFile(filename string) error {
 	}
 	defer resp.Body.Close()
 
+	// Actual download
+
 	if DEBUGGING {
 		log.Println("Download request for file:", filename)
 		debug(httputil.DumpResponse(resp, true))
@@ -146,16 +148,13 @@ func downloadFile(filename string) error {
 		return fmt.Errorf("download - bad response: %s", resp.Status)
 	}
 
-	// Actual download
-
 	return nil
 }
 
 func uploadFile(filepath string) error {
 	target := URL + "files_post"
 
-	values := map[string]string{"filepath": filepath}
-	jsonValue, _ := json.Marshal(values)
+	// Actual upload
 
 	resp, err := http.Post(target, "application/json", bytes.NewBuffer(jsonValue))
 	if err != nil {
@@ -171,8 +170,6 @@ func uploadFile(filepath string) error {
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("upload - bad response: %s", resp.Status)
 	}
-
-	// Actual upload
 
 	return nil
 }
