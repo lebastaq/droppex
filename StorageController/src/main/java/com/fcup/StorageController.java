@@ -10,11 +10,8 @@ import org.jgroups.View;
 import org.jgroups.util.Util;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -22,10 +19,8 @@ import com.fcup.generated.*;
 
 public class StorageController extends ReceiverAdapter {
     JChannel jgroupsChannel;
-//    DbManager dbManager;
     OperationManager operationManager;
     String user_name = System.getProperty("user.name", "n/a");
-//    List<Operation> operations = new LinkedList<>();
 
     private final ManagedChannel grpcChannel;
     private final downloaderGrpc.downloaderBlockingStub blockingStub;
@@ -77,12 +72,6 @@ public class StorageController extends ReceiverAdapter {
     private void eventLoop() throws Exception {
         Operation operation = new Operation();
         operation.changeKeyValue("type", Integer.toString((int)(Math.random()*20)));
-//        operation.type = "Test";
-//        operation.blockID = "Test block ID";
-//        operation.chunkID = "Test chunk ID";
-//        operation.destination = "dest src";
-//        operation.source = "test source";
-//        operation.ID = "test ID";
         doOperation(operation);
         System.out.println("Sent operation: " + operation.asJSONString());
         while (true) {
@@ -100,8 +89,6 @@ public class StorageController extends ReceiverAdapter {
         this.grpcChannel = channel;
         blockingStub = downloaderGrpc.newBlockingStub(this.grpcChannel);
         operationManager = new OperationManager();
-//        dbManager = new DbManager();
-//        dbManager.connect();
         jgroupsChannel = new JChannel("config.xml");
         jgroupsChannel.setReceiver(this);
     }
@@ -129,24 +116,17 @@ public class StorageController extends ReceiverAdapter {
     public void receive(Message msg) {
         String line = msg.getObject();
         System.out.println("Received: " + line);
-        operationManager.storeOperationInLocal(Operation.fromJSON(line));
-//        synchronized(operations) {
-//            operations.add(Operation.fromJSON(line));
-//             TODO update database
-//        }
+        Operation newOperation = Operation.fromJSON(line);
+        operationManager.storeOperationInLocal(newOperation);
+        operationManager.writeOperationIntoDB(newOperation);
     }
 
     public void setState(InputStream input) throws Exception {
         List<String> newOperations = Util.objectFromStream(new DataInputStream(input));
-//        synchronized(operations) {
-            operationManager.syncOperations(newOperations);
-//        }
+        operationManager.syncOperations(newOperations);
     }
 
     public void getState(OutputStream output) throws Exception {
-//        synchronized(operations) {
-//            Util.objectToStream(operations, new DataOutputStream(output));
-//        }
         operationManager.getState(output);
 
     }

@@ -55,13 +55,12 @@ public class OperationManager {
         }
     }
 
-    public void writeOperationIntoDB(Operation operation) throws SQLException {
+    public void writeOperationIntoDB(Operation operation) {
         try {
             dbManager.insertOperation(operation);
         } catch (Exception e) {
             System.err.println("Could not insert operation: ");
             e.printStackTrace();
-            throw new SQLException();
         }
     }
 
