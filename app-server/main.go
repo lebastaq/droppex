@@ -12,23 +12,25 @@ import (
 
 	//"github.com/freddygv/droppex/app-server/utils"
 	//"github.com/freddygv/droppex/lib"
+
 	"github.com/boltdb/bolt"
 	"github.com/gorilla/mux"
 )
 
-const Version = "api/1"
-const maxUploadSize = 500 * 1024 * 1024 // 500 MB
+const (
+	Version       = "/api/1"
+	maxUploadSize = 500 * 1024 * 1024 // 500 MB
+)
 
-var db bolt.DB
+var db *bolt.DB
 
 func main() {
 	// key-value store for files
-	bolt, err := bolt.Open("files.db", 0600, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer bolt.Close()
-	db = *bolt
+	db, _ = bolt.Open("files.db", 0600, nil)
+	defer db.Close()
+
+	// TODO: Remove
+	dummyData("123")
 
 	router := mux.NewRouter()
 
@@ -38,14 +40,7 @@ func main() {
 	router.HandleFunc(Version+"/files_post", uploadFile).Methods("POST")
 	router.HandleFunc(Version+"/delete/{filename}", deleteFile).Methods("POST")
 
-	dummyData("123")
-	files, err := searchDB("123", "")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(files)
-
-	// log.Fatal(http.ListenAndServe(":8000", router))
+	log.Fatal(http.ListenAndServe(":8004", router))
 }
 
 // File struct holds file name, size, and upload date
@@ -57,15 +52,29 @@ type File struct {
 
 // listAll lists all files or files matching a pattern
 func listAll(w http.ResponseWriter, r *http.Request) {
-	// json.NewEncoder(w).Encode(files)
+	// TODO: update token with real value
+	token := "123"
+
+	files, err := searchDB(token, "")
+	if err != nil {
+		renderError(w, "ERROR_LISTING_FILES", http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(files)
 }
 
 // listMatching lists all files matching a pattern
 func listMatching(w http.ResponseWriter, r *http.Request) {
-	// params := mux.Vars(r)
-	// pattern := params["pattern"]
+	// TODO: update token with real value
+	token := "123"
 
-	// json.NewEncoder(w).Encode(output)
+	params := mux.Vars(r)
+	matches, err := searchDB(token, params["pattern"])
+	if err != nil {
+		renderError(w, "ERROR_LISTING_FILES", http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(matches)
 }
 
 // downloadFile downloads a file with a given filename
@@ -128,14 +137,18 @@ func renderError(w http.ResponseWriter, message string, statusCode int) {
 func searchDB(token string, pattern string) ([]File, error) {
 	var files []File
 
-	// Create a bucket in case the first API call is a search
+	// Create a bucket in case the first API call for this user was a search
 	if err := db.Update(func(tx *bolt.Tx) error {
-		_, err := tx.CreateBucketIfNotExists([]byte(token))
-		return err
+		if _, err := tx.CreateBucketIfNotExists([]byte(token)); err != nil {
+			return err
+		}
+		return nil
+
 	}); err != nil {
 		return files, err
 	}
 
+	// Loop over all entries in the DB to match a string or list all
 	err := db.View(func(tx *bolt.Tx) error {
 		var file File
 		b := tx.Bucket([]byte(token))
