@@ -14,7 +14,7 @@ import (
 )
 
 // URL for app-server
-const URL string = "http://localhost:8000/api/1/"
+const URL string = "https://localhost:8000/api/1/"
 
 // DEBUGGING mode shows HTTP req details
 const DEBUGGING bool = true

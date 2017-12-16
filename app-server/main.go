@@ -110,18 +110,19 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	token := r.Header.Get("Authorization")
 
 	// TODO: Get real filename
-	filename := "blahblah.png"
+	filename := "homework1.pdf"
 
 	// Verify file doesn't already exist
 	if err := db.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(token))
 		v := b.Get([]byte(filename))
-		if v == nil {
+		if v != nil {
 			return fmt.Errorf("FILE_ALREADY_EXISTS")
 		}
 		return nil
 	}); err != nil {
 		renderError(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	var Buf bytes.Buffer
