@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -20,12 +19,20 @@ const URL string = "http://localhost:8000/api/1/"
 // DEBUGGING mode shows HTTP req details
 const DEBUGGING bool = true
 
+var token jwtToken
+
 type file struct {
 	Filename    string `json:"filename,omitempty"`
 	SizeInBytes int    `json:"size,omitempty"`
 }
 
+type jwtToken struct {
+	Token string `json:"token"`
+}
+
 func main() {
+	authenticate()
+	fmt.Println(token)
 	showHeader()
 
 	scanner := bufio.NewScanner(os.Stdin)
@@ -152,24 +159,18 @@ func downloadFile(filename string) error {
 }
 
 func uploadFile(filepath string) error {
-	target := URL + "files_post"
-
-	// Actual upload
-
-	resp, err := http.Post(target, "application/json", bytes.NewBuffer(jsonValue))
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	if DEBUGGING {
-		log.Println("Upload request for file:", filepath)
-		debug(httputil.DumpResponse(resp, true))
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("upload - bad response: %s", resp.Status)
-	}
+	// target := URL + "files_post"
+	//
+	// // Actual upload
+	//
+	// if DEBUGGING {
+	// 	log.Println("Upload request for file:", filepath)
+	// 	debug(httputil.DumpResponse(resp, true))
+	// }
+	//
+	// if resp.StatusCode != http.StatusOK {
+	// 	return fmt.Errorf("upload - bad response: %s", resp.Status)
+	// }
 
 	return nil
 }
@@ -192,6 +193,20 @@ func deleteFile(filename string) error {
 		return fmt.Errorf("delete - bad response: %s", resp.Status)
 	}
 
+	return nil
+}
+
+// Get jwt authentication token from server
+func authenticate() error {
+	target := URL + "auth"
+
+	resp, err := http.Get(target)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	json.NewDecoder(resp.Body).Decode(&token)
 	return nil
 }
 
