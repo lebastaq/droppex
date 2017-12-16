@@ -8,83 +8,104 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
 	//"github.com/freddygv/droppex/app-server/utils"
 	//"github.com/freddygv/droppex/lib"
+	"github.com/boltdb/bolt"
 	"github.com/gorilla/mux"
 )
 
-const Home = "api/1/"
-var files = make(map[string]File)
+const Version = "api/1"
+const maxUploadSize = 500 * 1024 * 1024 // 500 MB
+
+var db bolt.DB
 
 func main() {
+	// key-value store for files
+	bolt, err := bolt.Open("files.db", 0600, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer bolt.Close()
+	db = *bolt
+
 	router := mux.NewRouter()
 
-	// TODO: Remove this dummy data
-	files["homework1.pdf"] = File{Filename: "homework1.pdf", SizeInBytes: 2048}
-	files["photo1.jpeg"] = File{Filename: "photo1.jpeg", SizeInBytes: 1024}
+	router.HandleFunc(Version+"/list", listAll).Methods("GET")
+	router.HandleFunc(Version+"/list/{pattern}", listMatching).Methods("GET")
+	router.HandleFunc(Version+"/files/{filename}", downloadFile).Methods("GET")
+	router.HandleFunc(Version+"/files_post", uploadFile).Methods("POST")
+	router.HandleFunc(Version+"/delete/{filename}", deleteFile).Methods("POST")
 
-    router.PathPrefix(Home + "files/").Handler(
-        http.StripPrefix(Home + "files/", http.FileServer(http.Dir(Home + "files/")))
-    )
+	dummyData("123")
+	files, err := searchDB("123", "")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(files)
 
-	router.HandleFunc(Home + "list", listAll).Methods("GET")
-	router.HandleFunc(Home + "list/{pattern}", listMatching).Methods("GET")
-	router.HandleFunc(Home + "files_post", uploadFile).Methods("POST")
-	router.HandleFunc(Home + "delete/{filename}", deleteFile).Methods("POST")
-
-	log.Fatal(http.ListenAndServe(":8000", router))
+	// log.Fatal(http.ListenAndServe(":8000", router))
 }
 
-// File struct holds file name and size
+// File struct holds file name, size, and upload date
 type File struct {
 	Filename    string `json:"filename,omitempty"`
 	SizeInBytes int    `json:"size,omitempty"`
+	Created     time.Time
 }
 
 // listAll lists all files or files matching a pattern
 func listAll(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
-	json.NewEncoder(w).Encode(files)
+	// json.NewEncoder(w).Encode(files)
 }
 
 // listMatching lists all files matching a pattern
 func listMatching(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
-	params := mux.Vars(r)
-	output := make(map[string]File)
+	// params := mux.Vars(r)
+	// pattern := params["pattern"]
 
-	for key, value := range files {
-		if strings.Contains(key, params["pattern"]) {
-			output[key] = value
-		}
-	}
+	// json.NewEncoder(w).Encode(output)
+}
 
-	json.NewEncoder(w).Encode(output)
+// downloadFile downloads a file with a given filename
+func downloadFile(w http.ResponseWriter, r *http.Request) {
+	// params := mux.Vars(r)
+	// filename := params["filename"]
+
 }
 
 // uploadFile uploads a file to the servers
 // TODO: Verify file doesn't already exist
 func uploadFile(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
+	// Verify that filesize is below max allowed
+	r.Body = http.MaxBytesReader(w, r.Body, maxUploadSize)
+	if err := r.ParseMultipartForm(maxUploadSize); err != nil {
+		renderError(w, "FILESIZE_LIMIT_EXCEEDED", http.StatusBadRequest)
+		return
+	}
 
 	var Buf bytes.Buffer
+
+	// fileType := r.PostFormValue("type")
 	file, header, err := r.FormFile("file")
 	if err != nil {
-        renderError(w, "INVALID_FILE", http.StatusBadRequest)
+		renderError(w, "INVALID_FILE", http.StatusBadRequest)
 		return
 	}
 	defer file.Close()
 
 	name := strings.Split(header.Filename, ".")
-	fmt.Prinf("File uploaded: %s \n", name[0])
+	fmt.Printf("File uploaded: %s \n", name[0])
 
+	// Read into buffer
 	io.Copy(&Buf, file)
+
 	// Make RPC call to controller for target pools
 
 	// Send blocks over RPC to storage pools (pass in buffer)
 
-    // Store name and size in files
+	// Store name and size in files
 
 	// Cleanup buffer
 	Buf.Reset()
@@ -95,16 +116,72 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 
 // deleteFile deletes the file associated with the input
 func deleteFile(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
-	params := mux.Vars(r)
-
-	if _, ok := files[params["filename"]]; ok {
-		w.Write([]byte("Found."))
-	}
-	w.Write([]byte("File not found."))
+	// params := mux.Vars(r)
+	// filename := params["filename"]
 }
 
 func renderError(w http.ResponseWriter, message string, statusCode int) {
 	w.WriteHeader(statusCode)
 	w.Write([]byte(message))
+}
+
+func searchDB(token string, pattern string) ([]File, error) {
+	var files []File
+
+	// Create a bucket in case the first API call is a search
+	if err := db.Update(func(tx *bolt.Tx) error {
+		_, err := tx.CreateBucketIfNotExists([]byte(token))
+		return err
+	}); err != nil {
+		return files, err
+	}
+
+	err := db.View(func(tx *bolt.Tx) error {
+		var file File
+		b := tx.Bucket([]byte(token))
+		b.ForEach(func(k, v []byte) error {
+			json.Unmarshal(v, &file)
+			// We only skip if there is a pattern and the pattern doesn't match the name
+			if !(pattern != "" && !strings.Contains(file.Filename, pattern)) {
+				files = append(files, file)
+			}
+			return nil
+		})
+		return nil
+	})
+
+	return files, err
+}
+
+func updateDB(token string, f File) error {
+	err := db.Update(func(tx *bolt.Tx) error {
+		b, err := tx.CreateBucketIfNotExists([]byte(token))
+		if err != nil {
+			return err
+		}
+
+		encoded, err := json.Marshal(f)
+		if err != nil {
+			return err
+		}
+		b.Put([]byte(f.Filename), []byte(encoded))
+		return nil
+	})
+
+	return err
+}
+
+// TODO: Remove after testing
+func dummyData(token string) error {
+	files := []File{
+		File{"homework1.pdf", 1024 * 1024, time.Now()},
+		File{"homework2.pdf", 2 * 1024 * 1024, time.Now()}}
+
+	for _, f := range files {
+		if err := updateDB(token, f); err != nil {
+			panic(err)
+		}
+
+	}
+	return nil
 }
