@@ -45,7 +45,7 @@ func main() {
 	router.Handle(Version+"/files_post", jwtMiddleware.Handler(uploadHandler)).Methods("POST")
 	router.Handle(Version+"/delete/{filename}", jwtMiddleware.Handler(deleteHandler)).Methods("POST")
 
-	log.Fatal(http.ListenAndServeTLS(":8000", "server.crt", "server.key", handlers.LoggingHandler(os.Stdout, router)))
+	log.Fatal(http.ListenAndServeTLS(":8000", "domain.crt", "domain.key", handlers.LoggingHandler(os.Stdout, router)))
 }
 
 // File struct holds file name, size, and upload date
@@ -162,7 +162,8 @@ var deleteHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	w.Write([]byte(fmt.Sprintf("Deleting %s", params["filename"])))
 })
 
-// Generate token for hardcoded admin user, obviously not secure
+// Generate token for hardcoded admin user
+// Obviously not secure, can move this auth0 later
 func authHandler(w http.ResponseWriter, r *http.Request) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"name":  "admin",

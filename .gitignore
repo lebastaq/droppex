@@ -41,3 +41,4 @@ dummy.go
 *.db
 **/*.key
 **/*.crt
+**/*.csr
