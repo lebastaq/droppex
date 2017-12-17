@@ -101,7 +101,6 @@ var downloadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Reque
 })
 
 // uploadHandler uploads a file to the servers
-// TODO: Verify file doesn't already exist
 var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	// Verify that filesize is below max allowed
 	r.Body = http.MaxBytesReader(w, r.Body, maxUploadSize)

@@ -133,7 +133,7 @@ func queryFiles(pattern string) error {
 	}
 
 	// Unmarshals JSON body into the payload struct by passing in the pointer
-	payload := make(map[string]file)
+	payload := make([]file, 0)
 	err = json.NewDecoder(resp.Body).Decode(&payload)
 	if err != nil {
 		return err
@@ -231,7 +231,7 @@ func authenticate() error {
 	return nil
 }
 
-func printJSON(payload map[string]file) {
+func printJSON(payload []file) {
 	i := 1
 	for _, value := range payload {
 		size := float64(value.SizeInBytes) / float64(1024)
