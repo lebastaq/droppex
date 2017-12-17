@@ -2,14 +2,15 @@ package main
 
 import (
 	"bufio"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httputil"
 	"os"
 	"strings"
+	"time"
 	//"github.com/freddygv/droppex/lib"
 )
 
@@ -20,10 +21,12 @@ const URL string = "https://localhost:8000/api/1/"
 const DEBUGGING bool = true
 
 var token jwtToken
+var client *http.Client
 
 type file struct {
-	Filename    string `json:"filename,omitempty"`
-	SizeInBytes int    `json:"size,omitempty"`
+	Filename    string    `json:"filename,omitempty"`
+	SizeInBytes int       `json:"size,omitempty"`
+	Created     time.Time `json:"time,omitempty"`
 }
 
 type jwtToken struct {
@@ -31,6 +34,13 @@ type jwtToken struct {
 }
 
 func main() {
+	// Skipping because of self-signed cert
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	client = &http.Client{Transport: tr,
+		Timeout: time.Second * 10}
+
 	authenticate()
 	fmt.Println(token)
 	showHeader()
@@ -106,8 +116,13 @@ func queryFiles(pattern string) error {
 		target = target + "/" + pattern
 	}
 
-	// Grabbing response from URL (raw JSON)
-	resp, err := http.Get(target)
+	req, err := http.NewRequest("GET", target, nil)
+	if err != nil {
+		return err
+	}
+
+	req.Header.Add("Authorization", "Bearer "+token.Token)
+	resp, err := client.Do(req)
 	if err != nil {
 		return err
 	}
@@ -117,15 +132,9 @@ func queryFiles(pattern string) error {
 		return fmt.Errorf("list - bad response: %s", resp.Status)
 	}
 
-	// Read body of HTTP response (JSON)
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
 	// Unmarshals JSON body into the payload struct by passing in the pointer
 	payload := make(map[string]file)
-	err = json.Unmarshal(body, &payload)
+	err = json.NewDecoder(resp.Body).Decode(&payload)
 	if err != nil {
 		return err
 	}
@@ -138,7 +147,13 @@ func queryFiles(pattern string) error {
 func downloadFile(filename string) error {
 	target := URL + "files/" + filename
 
-	resp, err := http.Get(target)
+	req, err := http.NewRequest("GET", target, nil)
+	if err != nil {
+		return err
+	}
+
+	req.Header.Add("Authorization", "Bearer "+token.Token)
+	resp, err := client.Do(req)
 	if err != nil {
 		return err
 	}
@@ -178,7 +193,13 @@ func uploadFile(filepath string) error {
 func deleteFile(filename string) error {
 	target := URL + "delete/" + filename
 
-	resp, err := http.Post(target, "", nil)
+	req, err := http.NewRequest("POST", target, nil)
+	if err != nil {
+		return err
+	}
+
+	req.Header.Add("Authorization", "Bearer "+token.Token)
+	resp, err := client.Do(req)
 	if err != nil {
 		return err
 	}
@@ -200,7 +221,7 @@ func deleteFile(filename string) error {
 func authenticate() error {
 	target := URL + "auth"
 
-	resp, err := http.Get(target)
+	resp, err := client.Get(target)
 	if err != nil {
 		return err
 	}

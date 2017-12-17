@@ -50,9 +50,9 @@ func main() {
 
 // File struct holds file name, size, and upload date
 type File struct {
-	Filename    string `json:"filename,omitempty"`
-	SizeInBytes int    `json:"size,omitempty"`
-	Created     time.Time
+	Filename    string    `json:"filename,omitempty"`
+	SizeInBytes int       `json:"size,omitempty"`
+	Created     time.Time `json:"time,omitempty"`
 }
 
 type JwtToken struct {
@@ -69,6 +69,9 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 // listHandler lists all files or files matching a pattern
 var listHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	token := r.Header.Get("Authorization")
+
+	// TODO: Remove
+	dummyData(token)
 
 	files, err := searchDB(token, "")
 	if err != nil {
