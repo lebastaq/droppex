@@ -88,7 +88,7 @@ var searchHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 
 	matches, err := searchDB(token, params["pattern"])
 	if err != nil {
-		renderError(w, "ERROR_LISTING_FILES", http.StatusInternalServerError)
+		renderError(w, "ERROR_SEARCHING_FOR_PATTERN", http.StatusInternalServerError)
 		return
 	}
 	json.NewEncoder(w).Encode(matches)
@@ -112,7 +112,8 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	token := r.Header.Get("Authorization")
 
 	// TODO: Get real filename
-	filename := "homework1.pdf"
+	filename := r.PostFormValue("filename")
+	log.Printf("Upload requested for %s by token: %s\n", filename, token)
 
 	// Verify file doesn't already exist
 	if err := db.View(func(tx *bolt.Tx) error {
@@ -130,15 +131,12 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	var Buf bytes.Buffer
 
 	// TODO: fileType := r.PostFormValue("type")
-	file, header, err := r.FormFile("file")
+	file, _, err := r.FormFile("file")
 	if err != nil {
 		renderError(w, "INVALID_FILE", http.StatusBadRequest)
 		return
 	}
 	defer file.Close()
-
-	name := strings.Split(header.Filename, ".")
-	fmt.Printf("File uploaded: %s \n", name[0])
 
 	// Read into buffer
 	io.Copy(&Buf, file)
