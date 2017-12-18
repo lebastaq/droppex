@@ -176,8 +176,7 @@ func downloadFile(filename string) error {
 	}
 	defer file.Close()
 
-	_, err = io.Copy(file, resp.Body)
-	if err != nil {
+	if _, err = io.Copy(file, resp.Body); err != nil {
 		return err
 	}
 
@@ -189,12 +188,7 @@ func uploadFile(filepath string) error {
 
 	// Actual upload
 	var Buf bytes.Buffer
-	bodyWriter := multipart.NewWriter(&Buf)
-
-	fileWriter, err := bodyWriter.CreateFormFile("file", filepath)
-	if err != nil {
-		return err
-	}
+	mpw := multipart.NewWriter(&Buf)
 
 	file, err := os.Open(filepath)
 	if err != nil {
@@ -202,19 +196,31 @@ func uploadFile(filepath string) error {
 	}
 	defer file.Close()
 
-	_, err = io.Copy(fileWriter, file)
+	fw, err := mpw.CreateFormFile("file", filepath)
 	if err != nil {
 		return err
 	}
+	if _, err = io.Copy(fw, file); err != nil {
+		return err
+	}
 
-	bodyWriter.Close()
+	if fw, err = mpw.CreateFormField("filename"); err != nil {
+		return err
+	}
+	if _, err = fw.Write([]byte(filepath)); err != nil {
+		return err
+	}
+
+	mpw.Close()
 
 	req, err := http.NewRequest("POST", target, &Buf)
 	if err != nil {
 		return err
 	}
 
+	req.Header.Set("Content-Type", mpw.FormDataContentType())
 	req.Header.Add("Authorization", "Bearer "+token.Token)
+
 	resp, err := client.Do(req)
 	if err != nil {
 		return err
