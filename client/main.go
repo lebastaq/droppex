@@ -16,7 +16,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	//"github.com/freddygv/droppex/lib"
+
+	"github.com/freddygv/droppex/shared"
 )
 
 // URL for app-server
@@ -193,7 +194,8 @@ func uploadFile(filepath string) error {
 
 	file, err := os.Open(filepath)
 	if err != nil {
-		return err
+		fmt.Println("Invalid filepath, please try again.")
+		return nil
 	}
 	defer file.Close()
 
@@ -221,6 +223,13 @@ func uploadFile(filepath string) error {
 		return err
 	}
 	if _, err = fw.Write([]byte(strconv.FormatInt(fileStats.Size(), 10))); err != nil {
+		return err
+	}
+
+	if fw, err = mpw.CreateFormField("hash"); err != nil {
+		return err
+	}
+	if _, err = fw.Write([]byte(shared.HashFile(filepath))); err != nil {
 		return err
 	}
 

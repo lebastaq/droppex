@@ -14,8 +14,6 @@ import (
 	"time"
 
 	//"github.com/freddygv/droppex/app-server/utils"
-	//"github.com/freddygv/droppex/lib"
-
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	"github.com/boltdb/bolt"
 	jwt "github.com/dgrijalva/jwt-go"
@@ -57,6 +55,7 @@ func main() {
 type File struct {
 	Filename    string    `json:"filename,omitempty"`
 	SizeInBytes int       `json:"size,omitempty"`
+	Hash        string    `json:"hash,omitempty"`
 	Created     time.Time `json:"time,omitempty"`
 }
 
@@ -128,6 +127,7 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 
 	filename := r.PostFormValue("filename")
 	fileSize := r.PostFormValue("filesize")
+	fileHash := r.PostFormValue("hash")
 	log.Printf("Upload requested for %s (%s Bytes) by token: %s\n", filename, fileSize, token)
 
 	// Verify file doesn't already exist
@@ -165,13 +165,13 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 
 	// Store name and size in files
 	byteSize, _ := strconv.Atoi(fileSize)
-	fileMetadata := File{filename, byteSize, time.Now()}
+	fileMetadata := File{filename, byteSize, fileHash, time.Now()}
 	if err := updateDB(token, fileMetadata); err != nil {
 		renderError(w, "DB_UPDATE_FAILED", http.StatusInternalServerError)
 	}
 
 	// Cleanup buffer
-	// Buf.Reset()
+	Buf.Reset()
 
 	// Only reply success if the RPC to storage pool is successful
 	w.Write([]byte("File upload success."))
@@ -266,8 +266,8 @@ func renderError(w http.ResponseWriter, message string, statusCode int) {
 // TODO: Remove after testing
 func dummyData(bucket string) error {
 	files := []File{
-		File{"homework1.pdf", 1024 * 1024, time.Now()},
-		File{"homework2.pdf", 2 * 1024 * 1024, time.Now()}}
+		File{"homework1.pdf", 1024 * 1024, "abc", time.Now()},
+		File{"homework2.pdf", 2 * 1024 * 1024, "def", time.Now()}}
 
 	for _, f := range files {
 		if err := updateDB(bucket, f); err != nil {
