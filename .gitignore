@@ -43,3 +43,4 @@ dummy.go
 **/*.crt
 **/*.csr
 **/*.pdf
+**/*.mp4

@@ -51,7 +51,7 @@ func createTempDir(filepath string) string {
 		filepath = string(runes[0:lastPeriod])
 	}
 
-	os.Mkdir(filepath, os.FileMode(0755))
+	os.Mkdir(filepath, os.FileMode(0600))
 
 	return filepath
 }
