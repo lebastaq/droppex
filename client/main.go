@@ -13,6 +13,7 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 	//"github.com/freddygv/droppex/lib"
@@ -208,6 +209,18 @@ func uploadFile(filepath string) error {
 		return err
 	}
 	if _, err = fw.Write([]byte(filepath)); err != nil {
+		return err
+	}
+
+	fileStats, err := file.Stat()
+	if err != nil {
+		return err
+	}
+
+	if fw, err = mpw.CreateFormField("filesize"); err != nil {
+		return err
+	}
+	if _, err = fw.Write([]byte(strconv.FormatInt(fileStats.Size(), 10))); err != nil {
 		return err
 	}
 
