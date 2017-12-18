@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"strings"
 	"time"
@@ -97,7 +98,17 @@ var searchHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 // downloadHandler downloads a file with a given filename
 var downloadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	w.Write([]byte(fmt.Sprintf("Downloading %s", params["filename"])))
+	token := r.Header.Get("Authorization")
+	filename, err := url.PathUnescape(params["filename"])
+	if err != nil {
+		renderError(w, "INVALID_FILENAME", http.StatusBadRequest)
+		return
+	}
+
+	log.Printf("Request to download %s from %s", filename, token)
+
+	http.ServeFile(w, r, filename)
+
 })
 
 // uploadHandler uploads a file to the servers

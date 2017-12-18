@@ -42,3 +42,4 @@ dummy.go
 **/*.key
 **/*.crt
 **/*.csr
+**/*.pdf

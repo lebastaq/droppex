@@ -2,12 +2,16 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
+	"mime/multipart"
 	"net/http"
 	"net/http/httputil"
+	"net/url"
 	"os"
 	"strings"
 	"time"
@@ -42,39 +46,38 @@ func main() {
 		Timeout: time.Second * 10}
 
 	authenticate()
-	fmt.Println(token)
 	showHeader()
 
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Print("> ")
 	for scanner.Scan() {
-		line := strings.Split(scanner.Text(), " ")
+		line := scanner.Text()
 
-		switch line[0] {
-		case "exit":
+		switch {
+		case strings.HasPrefix(line, "exit"):
 			os.Exit(0)
 
-		case "list":
+		case strings.HasPrefix(line, "list"):
 			err := listFiles()
 			checkErr(err)
 
-		case "search":
-			err := searchFiles(line[1])
+		case strings.HasPrefix(line, "search"):
+			err := searchFiles(strings.Split(line, "search ")[1])
 			checkErr(err)
 
-		case "upload":
-			err := uploadFile(line[1])
+		case strings.HasPrefix(line, "upload"):
+			err := uploadFile(strings.Split(line, "upload ")[1])
 			checkErr(err)
 
-		case "download":
-			err := downloadFile(line[1])
+		case strings.HasPrefix(line, "download"):
+			err := downloadFile(strings.Split(line, "download ")[1])
 			checkErr(err)
 
-		case "delete":
-			err := deleteFile(line[1])
+		case strings.HasPrefix(line, "delete"):
+			err := deleteFile(strings.Split(line, "delete ")[1])
 			checkErr(err)
 
-		case "help":
+		case strings.HasPrefix(line, "help"):
 			showHelp()
 
 		default:
@@ -145,7 +148,7 @@ func queryFiles(pattern string) error {
 }
 
 func downloadFile(filename string) error {
-	target := URL + "files/" + filename
+	target := URL + "files/" + url.PathEscape(filename)
 
 	req, err := http.NewRequest("GET", target, nil)
 	if err != nil {
@@ -159,33 +162,73 @@ func downloadFile(filename string) error {
 	}
 	defer resp.Body.Close()
 
-	// Actual download
-
 	if DEBUGGING {
 		log.Println("Download request for file:", filename)
-		debug(httputil.DumpResponse(resp, true))
 	}
 
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("download - bad response: %s", resp.Status)
 	}
 
+	file, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	_, err = io.Copy(file, resp.Body)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
 func uploadFile(filepath string) error {
-	// target := URL + "files_post"
-	//
-	// // Actual upload
-	//
-	// if DEBUGGING {
-	// 	log.Println("Upload request for file:", filepath)
-	// 	debug(httputil.DumpResponse(resp, true))
-	// }
-	//
-	// if resp.StatusCode != http.StatusOK {
-	// 	return fmt.Errorf("upload - bad response: %s", resp.Status)
-	// }
+	target := URL + "files_post"
+
+	// Actual upload
+	var Buf bytes.Buffer
+	bodyWriter := multipart.NewWriter(&Buf)
+
+	fileWriter, err := bodyWriter.CreateFormFile("file", filepath)
+	if err != nil {
+		return err
+	}
+
+	file, err := os.Open(filepath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	_, err = io.Copy(fileWriter, file)
+	if err != nil {
+		return err
+	}
+
+	bodyWriter.Close()
+
+	req, err := http.NewRequest("POST", target, &Buf)
+	if err != nil {
+		return err
+	}
+
+	req.Header.Add("Authorization", "Bearer "+token.Token)
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if DEBUGGING {
+		log.Println("Upload request for file:", filepath)
+		debug(httputil.DumpResponse(resp, true))
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("upload - bad response: %s", resp.Status)
+	}
 
 	return nil
 }
@@ -275,7 +318,7 @@ func showHeader() {
 }
 
 func showHelp() {
-	log.Println(`
+	fmt.Println(`
 Commands Available:
     list                    Lists all files on the server.
     search {query}          Searches for files that match the query.
