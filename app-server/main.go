@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -32,7 +33,10 @@ var db *bolt.DB
 
 func main() {
 	// key-value store for files
-	db, _ = bolt.Open("files.db", 0600, nil)
+	dbFile := "files.db"
+	os.Remove(dbFile) // Cleanup outdated db before opening
+
+	db, _ = bolt.Open(dbFile, 0600, nil)
 	defer db.Close()
 
 	router := mux.NewRouter()
@@ -122,11 +126,15 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 
 	token := r.Header.Get("Authorization")
 
-	// TODO: Get real filename
 	filename := r.PostFormValue("filename")
-	log.Printf("Upload requested for %s by token: %s\n", filename, token)
+	fileSize := r.PostFormValue("filesize")
+	log.Printf("Upload requested for %s (%s Bytes) by token: %s\n", filename, fileSize, token)
 
 	// Verify file doesn't already exist
+	if err := verifyBucket(token); err != nil {
+		renderError(w, "ERROR_CREATING_DB", http.StatusInternalServerError)
+		return
+	}
 	if err := db.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(token))
 		v := b.Get([]byte(filename))
@@ -141,7 +149,6 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 
 	var Buf bytes.Buffer
 
-	// TODO: fileType := r.PostFormValue("type")
 	file, _, err := r.FormFile("file")
 	if err != nil {
 		renderError(w, "INVALID_FILE", http.StatusBadRequest)
@@ -157,9 +164,14 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	// Send blocks over RPC to storage pools (pass in buffer)
 
 	// Store name and size in files
+	byteSize, _ := strconv.Atoi(fileSize)
+	fileMetadata := File{filename, byteSize, time.Now()}
+	if err := updateDB(token, fileMetadata); err != nil {
+		renderError(w, "DB_UPDATE_FAILED", http.StatusInternalServerError)
+	}
 
 	// Cleanup buffer
-	Buf.Reset()
+	// Buf.Reset()
 
 	// Only reply success if the RPC to storage pool is successful
 	w.Write([]byte("File upload success."))
@@ -189,10 +201,8 @@ func statusHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("API is up and running."))
 }
 
-func searchDB(bucket string, pattern string) ([]File, error) {
-	var files []File
-
-	// Create a bucket in case the first API call for this user was a search
+// Ensures that bucket exists, added because of read-only db.View calls
+func verifyBucket(bucket string) error {
 	if err := db.Update(func(tx *bolt.Tx) error {
 		if _, err := tx.CreateBucketIfNotExists([]byte(bucket)); err != nil {
 			return err
@@ -200,6 +210,15 @@ func searchDB(bucket string, pattern string) ([]File, error) {
 		return nil
 
 	}); err != nil {
+		return err
+	}
+	return nil
+}
+
+func searchDB(bucket string, pattern string) ([]File, error) {
+	var files []File
+
+	if err := verifyBucket(bucket); err != nil {
 		return files, err
 	}
 
