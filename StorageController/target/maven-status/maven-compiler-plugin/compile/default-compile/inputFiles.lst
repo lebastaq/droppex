@@ -1,3 +1,10 @@
-/media/quentin/stockage/FCUP/fcup/03 Distributed systems/assignments/droppex/StorageController/src/main/java/com/fcup/MessageReceiver.java
-/media/quentin/stockage/FCUP/fcup/03 Distributed systems/assignments/droppex/StorageController/src/main/java/com/fcup/StorageContainer.java
+/media/quentin/stockage/FCUP/fcup/03 Distributed systems/assignments/droppex/StorageController/src/main/java/com/fcup/generated/Status.java
+/media/quentin/stockage/FCUP/fcup/03 Distributed systems/assignments/droppex/StorageController/src/main/java/com/fcup/DbManager.java
+/media/quentin/stockage/FCUP/fcup/03 Distributed systems/assignments/droppex/StorageController/src/main/java/com/fcup/generated/InfoOrBuilder.java
+/media/quentin/stockage/FCUP/fcup/03 Distributed systems/assignments/droppex/StorageController/src/main/java/com/fcup/OperationManager.java
+/media/quentin/stockage/FCUP/fcup/03 Distributed systems/assignments/droppex/StorageController/src/main/java/com/fcup/generated/DownloaderProto.java
+/media/quentin/stockage/FCUP/fcup/03 Distributed systems/assignments/droppex/StorageController/src/main/java/com/fcup/generated/StatusOrBuilder.java
 /media/quentin/stockage/FCUP/fcup/03 Distributed systems/assignments/droppex/StorageController/src/main/java/com/fcup/Operation.java
+/media/quentin/stockage/FCUP/fcup/03 Distributed systems/assignments/droppex/StorageController/src/main/java/com/fcup/generated/downloaderGrpc.java
+/media/quentin/stockage/FCUP/fcup/03 Distributed systems/assignments/droppex/StorageController/src/main/java/com/fcup/StorageController.java
+/media/quentin/stockage/FCUP/fcup/03 Distributed systems/assignments/droppex/StorageController/src/main/java/com/fcup/generated/Info.java
