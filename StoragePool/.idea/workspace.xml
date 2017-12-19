@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="895aba22-be9a-4d7f-8166-785ff6181618" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/DownloaderPool.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/utilities/ChunkDownloader.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/Test chunk ID...." afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../StorageController/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/Operation.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/Operation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/OperationManager.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/OperationManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StoragePoolsManager.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StoragePoolsManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/StoragePool.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/StoragePool.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -26,8 +27,8 @@
       <file leaf-file-name="StoragePool.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="98" column="28" lean-forward="false" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="28" />
+            <state relative-caret-position="561">
+              <caret line="33" column="14" lean-forward="false" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -35,21 +36,69 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="filetransfer.proto" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/proto/filetransfer.proto">
+      <file leaf-file-name="DownloaderPool.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/DownloaderPool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="48" lean-forward="false" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
+            <state relative-caret-position="187">
+              <caret line="11" column="39" lean-forward="false" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#474#475#0" expanded="true" />
+                <element signature="e#526#527#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChunkDownloader.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/ChunkDownloader.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StoragePoolTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="22" column="26" lean-forward="false" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GrpcDownloadServer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ChunkSeeder.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/ChunkSeeder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="629">
+              <caret line="49" column="50" lean-forward="false" selection-start-line="49" selection-start-column="40" selection-end-line="49" selection-end-column="50" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SeederPool.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/SeederPool.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="18" column="33" lean-forward="false" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GrpcDownloadServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcDownloadServer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="425">
-              <caret line="28" column="21" lean-forward="false" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
+              <caret line="28" column="25" lean-forward="false" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -61,7 +110,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/Downloader.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="340">
-              <caret line="21" column="31" lean-forward="true" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+              <caret line="21" column="31" lean-forward="false" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -100,6 +149,7 @@
       <find>blockingstu</find>
       <find>could not register</find>
       <find>blockingstub</find>
+      <find>fos</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -114,7 +164,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/ChunkSeederTest.groovy" />
-        <option value="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/DownloaderPool.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/Downloader.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/ChunkData.java" />
@@ -134,11 +183,15 @@
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/ChunkSeederTest.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/SeederPool.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcDownloadServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/generated/PoolRegisterProto.java" />
         <option value="$PROJECT_DIR$/src/main/proto/poolregister.proto" />
         <option value="$PROJECT_DIR$/src/main/proto/filetransfer.proto" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcDownloadServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/ChunkDownloader.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/DownloaderPool.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/utilities/ChunkDownloader.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java" />
       </list>
     </option>
   </component>
@@ -172,7 +225,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -195,32 +247,22 @@
               <item name="StoragePool" type="b2602c69:ProjectViewProjectNode" />
               <item name="StoragePool" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="StoragePool" type="b2602c69:ProjectViewProjectNode" />
+              <item name="StoragePool" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="StoragePool" type="b2602c69:ProjectViewProjectNode" />
               <item name="StoragePool" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="fcup" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="StoragePool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="StoragePool" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="fcup" type="462c0819:PsiDirectoryNode" />
-              <item name="generated" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="StoragePool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="StoragePool" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="proto" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="StoragePool" type="b2602c69:ProjectViewProjectNode" />
@@ -244,12 +286,13 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../trabblex/client/src/main/java/pt/fcup/Downloader.java" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
@@ -258,18 +301,21 @@
     <key name="CreateTestDialog.RecentsKey">
       <recent name="com.fcup" />
     </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com.fcup" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/proto" />
-    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
       <recent name="groovy.util.GroovyTestCase" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/com/fcup/generated" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.fcup" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/proto" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.fcup" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -284,7 +330,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.StoragePool">
+  <component name="RunManager" selected="JUnit.StoragePoolTest.testUploadDownload">
     <configuration name="ChunkSeederTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -360,31 +406,6 @@
       <envs />
       <patterns />
     </configuration>
-    <configuration name="ChunkSeederTest.testInitChunkSeederNotNull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.fcup.utilities.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="StoragePool" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.fcup" />
-      <option name="MAIN_CLASS_NAME" value="com.fcup.ChunkSeederTest" />
-      <option name="METHOD_NAME" value="testInitChunkSeederNotNull" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-    </configuration>
     <configuration name="StoragePool" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -403,6 +424,31 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="StoragePool" />
       <envs />
+    </configuration>
+    <configuration name="StoragePoolTest.testUploadDownload" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.fcup.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="StoragePool" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.fcup" />
+      <option name="MAIN_CLASS_NAME" value="com.fcup.StoragePoolTest" />
+      <option name="METHOD_NAME" value="testUploadDownload" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="WIDTH" value="400" />
@@ -487,17 +533,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="JUnit.ChunkSeederTest" />
       <item index="1" class="java.lang.String" itemvalue="Application.StoragePool" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.ChunkSeederTest.testInitChunkSeederNotNull" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.ChunkSeederTest.testInitChunkSeeder" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.ChunkSeederTest.testChunkSeederAndDownloader" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.ChunkSeederTest.testInitChunkSeeder" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.ChunkSeederTest.testChunkSeederAndDownloader" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.StoragePoolTest.testUploadDownload" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.StoragePool" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.ChunkSeederTest.testChunkSeederAndDownloader" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.ChunkSeederTest" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.ChunkSeederTest.testInitChunkSeeder" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.ChunkSeederTest.testInitChunkSeederNotNull" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.StoragePoolTest.testUploadDownload" />
+        <item index="1" class="java.lang.String" itemvalue="Application.StoragePool" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.ChunkSeederTest.testChunkSeederAndDownloader" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.ChunkSeederTest" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.ChunkSeederTest.testInitChunkSeeder" />
       </list>
     </recent_temporary>
   </component>
@@ -579,21 +625,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ChunkSeederTest_testChunkSeederAndDownloader - 2017.12.14 at 15h 38m 29s.xml">
-      <configuration name="ChunkSeederTest.testChunkSeederAndDownloader" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ChunkSeederTest_testChunkSeederAndDownloader - 2017.12.14 at 15h 39m 21s.xml">
-      <configuration name="ChunkSeederTest.testChunkSeederAndDownloader" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ChunkSeederTest_testChunkSeederAndDownloader - 2017.12.14 at 15h 39m 45s.xml">
-      <configuration name="ChunkSeederTest.testChunkSeederAndDownloader" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ChunkSeederTest_testChunkSeederAndDownloader - 2017.12.14 at 15h 40m 19s.xml">
-      <configuration name="ChunkSeederTest.testChunkSeederAndDownloader" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ChunkSeederTest_testChunkSeederAndDownloader - 2017.12.14 at 15h 42m 17s.xml">
-      <configuration name="ChunkSeederTest.testChunkSeederAndDownloader" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="ChunkSeederTest_testChunkSeederAndDownloader - 2017.12.14 at 15h 43m 40s.xml">
       <configuration name="ChunkSeederTest.testChunkSeederAndDownloader" configurationId="JUnit" />
     </history-entry>
@@ -609,6 +640,21 @@
     <history-entry file="ChunkSeederTest_testChunkSeederAndDownloader - 2017.12.14 at 15h 45m 53s.xml">
       <configuration name="ChunkSeederTest.testChunkSeederAndDownloader" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="StoragePoolTest_testUploadDownload - 2017.12.19 at 16h 53m 14s.xml">
+      <configuration name="StoragePoolTest.testUploadDownload" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="StoragePoolTest_testUploadDownload - 2017.12.19 at 16h 54m 41s.xml">
+      <configuration name="StoragePoolTest.testUploadDownload" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="StoragePoolTest_testUploadDownload - 2017.12.19 at 16h 56m 51s.xml">
+      <configuration name="StoragePoolTest.testUploadDownload" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="StoragePoolTest_testUploadDownload - 2017.12.19 at 16h 57m 44s.xml">
+      <configuration name="StoragePoolTest.testUploadDownload" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="StoragePoolTest_testUploadDownload - 2017.12.19 at 16h 57m 55s.xml">
+      <configuration name="StoragePoolTest.testUploadDownload" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1602" height="880" extended-state="0" />
@@ -622,7 +668,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20171149" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30929095" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29217604" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.230625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -663,48 +709,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/proto/filetransfer.proto">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="48" lean-forward="true" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcDownloadServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="28" column="21" lean-forward="false" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/Downloader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="27" column="6" lean-forward="true" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1241">
-          <caret line="73" column="21" lean-forward="false" selection-start-line="73" selection-start-column="21" selection-end-line="73" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/proto/filetransfer.proto">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="18" lean-forward="false" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcDownloadServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -719,9 +723,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="11" column="39" lean-forward="false" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -767,9 +769,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="20" column="49" lean-forward="true" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -791,16 +791,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/ChunkSeederTest.groovy" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="33" lean-forward="false" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/ChunkData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -812,7 +802,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="658">
           <caret line="102" column="9" lean-forward="true" selection-start-line="97" selection-start-column="8" selection-end-line="102" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -876,23 +865,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
           <caret line="34" column="69" lean-forward="false" selection-start-line="34" selection-start-column="69" selection-end-line="34" selection-end-column="69" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/ChunkSeeder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="8" lean-forward="false" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/SeederPool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="11" column="39" lean-forward="false" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
@@ -1010,24 +982,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/Downloader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="21" column="31" lean-forward="true" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="98" column="28" lean-forward="false" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/proto/filetransfer.proto">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1039,10 +993,100 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcDownloadServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
-          <caret line="28" column="21" lean-forward="false" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
+          <caret line="28" column="25" lean-forward="false" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/Downloader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="21" column="31" lean-forward="false" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../trabblex/client/src/main/java/pt/fcup/FileDownloader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2856">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="14" lean-forward="false" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/SeederPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="18" column="33" lean-forward="false" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/ChunkSeeder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="49" column="50" lean-forward="false" selection-start-line="49" selection-start-column="40" selection-end-line="49" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/DownloaderPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="39" lean-forward="false" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#474#475#0" expanded="true" />
+            <element signature="e#526#527#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../trabblex/client/src/main/java/pt/fcup/Downloader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="63" column="32" lean-forward="false" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/Test chunk ID....">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/ChunkDownloader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="22" column="26" lean-forward="false" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>

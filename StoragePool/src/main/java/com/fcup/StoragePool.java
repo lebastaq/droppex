@@ -15,7 +15,6 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class StoragePool {
-    private Socket socket;
     private final String STORAGE_FOLDER = "storage";
     private io.grpc.Server server;
     private String localIPAdress;
@@ -33,9 +32,11 @@ public class StoragePool {
         startGrpcServer();
         setUpGrpcClient();
         SeederPool seederPool = new SeederPool(STORAGE_FOLDER);
+        DownloaderPool downloaderPool = new DownloaderPool(STORAGE_FOLDER);
 
         registerInStorageController();
         seederPool.run();
+        downloaderPool.run();
 
         // exit when any key is pressed
         System.in.read();
