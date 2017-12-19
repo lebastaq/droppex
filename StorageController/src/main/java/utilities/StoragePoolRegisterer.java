@@ -10,6 +10,6 @@ public class StoragePoolRegisterer extends registererGrpc.registererImplBase {
     @Override
     public void register(PoolInfo request, StreamObserver<com.fcup.generated.PoolRegistrationStatus> responseObserver) {
         System.out.println("Received pool storage registration");
-        // register the pool storage !!
+        // TODO register the pool storage in local (insert in db and send operation in jgroups)!!
     }
 }

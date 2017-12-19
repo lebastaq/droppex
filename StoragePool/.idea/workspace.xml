@@ -4,10 +4,15 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="895aba22-be9a-4d7f-8166-785ff6181618" name="Default" comment="">
+    <list default="true" id="895aba22-be9a-4d7f-8166-785ff6181618" name="Default" comment="Added range of ports to connect to master controller">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../README.md" afterPath="$PROJECT_DIR$/../README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../StorageController/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StoragePoolsManager.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StoragePoolsManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/StoragePoolRegisterer.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/StoragePoolRegisterer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/test/java/com/fcup/StorageControllerTest.java" afterPath="$PROJECT_DIR$/../StorageController/src/test/java/com/fcup/StorageControllerTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -20,11 +25,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="StoragePool.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StorageController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StoragePool.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="100" column="6" lean-forward="false" selection-start-line="100" selection-start-column="6" selection-end-line="100" selection-end-column="6" />
+            <state relative-caret-position="391">
+              <caret line="116" column="24" lean-forward="true" selection-start-line="116" selection-start-column="24" selection-end-line="116" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -183,11 +198,11 @@
         <option value="$PROJECT_DIR$/src/main/proto/poolregister.proto" />
         <option value="$PROJECT_DIR$/src/main/proto/filetransfer.proto" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcDownloadServer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/ChunkDownloader.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/DownloaderPool.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/utilities/ChunkDownloader.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" />
       </list>
     </option>
   </component>
@@ -665,13 +680,13 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32762837" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32762837" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22860636" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22860636" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29217604" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -704,7 +719,8 @@
     <MESSAGE value="better grpc management" />
     <MESSAGE value="Storage pool registration working" />
     <MESSAGE value="added download pool in storage pool" />
-    <option name="LAST_COMMIT_MESSAGE" value="added download pool in storage pool" />
+    <MESSAGE value="Added range of ports to connect to master controller" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added range of ports to connect to master controller" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -713,16 +729,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcDownloadServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="29" column="35" lean-forward="false" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/SeederPool.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -1005,14 +1011,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/Downloader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="21" column="31" lean-forward="false" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../trabblex/client/src/main/java/pt/fcup/FileDownloader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2856">
@@ -1085,13 +1083,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/Downloader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="21" column="31" lean-forward="false" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="100" column="6" lean-forward="false" selection-start-line="100" selection-start-column="6" selection-end-line="100" selection-end-column="6" />
+        <state relative-caret-position="391">
+          <caret line="116" column="24" lean-forward="true" selection-start-line="116" selection-start-column="24" selection-end-line="116" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>

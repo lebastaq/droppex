@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e5f758d-a827-4174-b3c2-73d36543e8af" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../README.md" afterPath="$PROJECT_DIR$/../README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StorageController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StorageController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/utilities/StoragePoolRegisterer.java" afterPath="$PROJECT_DIR$/src/main/java/utilities/StoragePoolRegisterer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/fcup/StorageControllerTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/fcup/StorageControllerTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../StoragePool/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/StoragePool.java" afterPath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/StoragePool.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -20,14 +25,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="StorageController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StorageController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StorageController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="27" column="5" lean-forward="false" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="119">
+              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GrpcServer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/utilities/GrpcServer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="20" lean-forward="false" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StoragePoolRegisterer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/utilities/StoragePoolRegisterer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -57,8 +80,8 @@
       <file leaf-file-name="StoragePoolsManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-13">
-              <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+            <state relative-caret-position="361">
+              <caret line="45" column="5" lean-forward="true" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -66,10 +89,20 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="StorageControllerTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StorageControllerTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="379">
+              <caret line="42" column="18" lean-forward="true" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="ShardManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/ShardManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
+            <state relative-caret-position="369">
               <caret line="82" column="0" lean-forward="true" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
               <folding />
             </state>
@@ -184,26 +217,26 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/generated/PoolRegistrationStatus.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolRegisterer.java" />
         <option value="$PROJECT_DIR$/src/main/java/utilities/downloadStarter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/utilities/StoragePoolRegisterer.java" />
         <option value="$PROJECT_DIR$/src/main/resources/google_config.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/config.xml" />
         <option value="$PROJECT_DIR$/src/main/java/utilities/GrpcServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/StateSynchronizer.java" />
         <option value="$PROJECT_DIR$/src/test/java/utilities/StoragePoolTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/fcup/StorageControllerTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/ChannelStateSynchronizer.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/ChannelStateSynchronizerTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolsManagerTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/OperationManagerTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/DbManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/utilities/StoragePool.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/Operation.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/OperationManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/ShardManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/Shard.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/dbManagerTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/utilities/StoragePoolRegisterer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/StorageController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/fcup/StorageControllerTest.java" />
       </list>
     </option>
   </component>
@@ -890,7 +923,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513703275101</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="deleted useless function that made the storage pool download a file - the storage pool now starts a pool of downloaders that wait for inputs">
+      <created>1513703804209</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1513703804209</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -946,10 +986,10 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27017114" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26772615" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2958435" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.100625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.169375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32885087" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18337408" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Google Cloud Storage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -974,7 +1014,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/../../.." />
     </ignored-roots>
-    <MESSAGE value="Cleaned up JSON building" />
     <MESSAGE value="Cleaned up database creation to acknowledge changes in operation fields" />
     <MESSAGE value="Download server work&#10;Still getting netty errors" />
     <MESSAGE value="Moved everything related to operations into a new class OperationManager&#10;Updated tests in consequence" />
@@ -999,7 +1038,8 @@
     <MESSAGE value="Removed chunk id doubloons" />
     <MESSAGE value="Fixed doubloon pools" />
     <MESSAGE value="updated db and tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated db and tests" />
+    <MESSAGE value="deleted useless function that made the storage pool download a file - the storage pool now starts a pool of downloaders that wait for inputs" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted useless function that made the storage pool download a file - the storage pool now starts a pool of downloaders that wait for inputs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1202,14 +1242,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/utilities/GrpcServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="5" column="20" lean-forward="false" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/utilities/DownloadStarter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1218,16 +1250,6 @@
             <element signature="imports" expanded="false" />
             <element signature="e#784#785#0" expanded="false" />
             <element signature="e#853#854#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/utilities/StoragePoolRegisterer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="39" lean-forward="true" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1255,14 +1277,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1105">
           <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StorageControllerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="18" column="25" lean-forward="false" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -1320,28 +1334,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/ShardManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="82" column="0" lean-forward="true" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-13">
-          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/DbManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1445">
           <caret line="92" column="13" lean-forward="true" selection-start-line="92" selection-start-column="13" selection-end-line="92" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/utilities/StoragePoolRegisterer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/utilities/GrpcServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="20" lean-forward="false" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
           <folding />
         </state>
       </provider>
@@ -1358,11 +1370,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StorageController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="27" column="5" lean-forward="false" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+        <state relative-caret-position="119">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/ShardManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="82" column="0" lean-forward="true" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="45" column="5" lean-forward="true" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StorageControllerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="42" column="18" lean-forward="true" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>

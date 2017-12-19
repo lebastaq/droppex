@@ -8,7 +8,6 @@ import io.grpc.ServerBuilder;
 import io.grpc.StatusRuntimeException;
 
 import java.io.File;
-import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,7 +18,7 @@ public class StoragePool {
     private io.grpc.Server server;
     private String localIPAdress;
     private int localGrpcPort;
-    private int remoteGrpcPort = 50052;
+    private int remoteGrpcPort = 50050;
     private ManagedChannel grpcChannel;
     private registererGrpc.registererBlockingStub blockingStub;
     private String remoteControllerAdress;
@@ -96,17 +95,29 @@ public class StoragePool {
 
     // TODO implement grpc call
     public void registerInStorageController() {
-        System.out.println("Registering as " + localIPAdress + ":" + localGrpcPort);
-        PoolInfo request = PoolInfo.newBuilder().setIp(localIPAdress).setPort(localGrpcPort).build(); // todo host = storage pool - how to get it ?
-        PoolRegistrationStatus response;
-        try {
-            response = blockingStub.register(request);
-        } catch (StatusRuntimeException e) {
-            // TODO manage this
-            System.err.println("Could not register in storage controller");
-            return;
+        int attempts = 0;
+        boolean connected = false;
+        while(attempts < 10 && connected == false) {
+            PoolInfo request = PoolInfo.newBuilder().setIp(localIPAdress).setPort(localGrpcPort).build(); // todo host = storage pool - how to get it ?
+            try {
+                this.grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAdress, remoteGrpcPort)
+                        .usePlaintext(true)
+                        .build();
+                blockingStub = registererGrpc.newBlockingStub(this.grpcChannel);
+                blockingStub.register(request);
+                connected = true;
+            } catch (StatusRuntimeException e) {
+                attempts ++;
+                remoteGrpcPort++;
+            }
         }
-        System.out.println("Response: " + response.getOk());
+
+        if (connected == false) {
+            System.err.println("Could not register in storage controller");
+            System.exit(0);
+        }
+
+        System.out.println("Registered as " + localIPAdress + ":" + localGrpcPort + " to " + remoteControllerAdress + ":" + remoteGrpcPort);
     }
 
 

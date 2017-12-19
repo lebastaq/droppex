@@ -23,17 +23,6 @@ public class StorageControllerTest {
         }
     }
 
-    // should be getAnswer at the same time as a storage pool
-    // TODO finish it...
-    @Test
-    public void startDownloaderInStoragePool()  {
-        try {
-            storageController.makeStoragePoolDownloadAFileFromTheAppServer();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Could not make storage pool download a file");
-        }
-    }
 
     @Test
     public void testElectionOfLeader() throws Exception {

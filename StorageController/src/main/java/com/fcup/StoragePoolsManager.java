@@ -16,7 +16,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
     ShardManager shardManager;
     boolean isLeader = false;
     List<StoragePool> storagePools;
-    static String CONFIG_FILE = "config.xml";
+    static String CONFIG_FILE = "config.xml"; /* google_config.xml */
 
     public StoragePoolsManager() throws Exception {
         this(CONFIG_FILE);

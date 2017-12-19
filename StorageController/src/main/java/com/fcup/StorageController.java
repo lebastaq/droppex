@@ -1,15 +1,10 @@
 package com.fcup;
 
-import io.grpc.StatusRuntimeException;
-
-import com.fcup.generated.*;
 import utilities.GrpcServer;
-import utilities.DownloadStarter;
 
 public class StorageController extends StoragePoolsManager {
     String user_name = System.getProperty("user.name", "n/a");
     GrpcServer grpcServer;
-    private final static String CONFIG_FILE = "config.xml"; /* google_config.xml */
 
     public static void main(String[] args) {
         try {
