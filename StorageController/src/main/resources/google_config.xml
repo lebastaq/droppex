@@ -1,0 +1,29 @@
+
+<!--
+  Default stack using IP multicasting. It is similar to the "udp"
+  stack in stacks.xml, but doesn't use streaming state transfer and flushing
+  author: Bela Ban
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="urn:org:jgroups"
+        xsi:schemaLocation="urn:org:jgroups http://www.jgroups.org/schema/jgroups.xsd">
+    <TCP bind_port="7800"
+         recv_buf_size="${tcp.recv_buf_size:130k}"
+         send_buf_size="${tcp.send_buf_size:130k}"
+         max_bundle_size="64K"
+         sock_conn_timeout="300"
+
+         thread_pool.min_threads="0"
+         thread_pool.max_threads="20"
+         thread_pool.keep_alive_time="30000"/>
+
+    <GOOGLE_PING
+        location="controller-list"
+        access_key="GOOGBUJV5HMG7ABHK6WK"
+        secret_access_key="/zsPHSXmSZF54QMIznp5wnKiSk8S/lmo8nlfcg1y"
+        />
+    <pbcast.NAKACK2 use_mcast_xmit="false"
+                    discard_delivered_msgs="true"/>
+    <pbcast.STATE_TRANSFER />
+</config>
