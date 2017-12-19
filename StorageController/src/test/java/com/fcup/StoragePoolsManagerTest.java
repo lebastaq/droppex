@@ -27,11 +27,11 @@ public class StoragePoolsManagerTest {
     public void syncOperations() throws Exception {
         try{
             storagePoolsManager.connectToChannel();
-            storagePoolsManager.operationManager.syncOperations(new ArrayList<String>());
+            storagePoolsManager.shardManager.syncOperations(new ArrayList<String>());
         }
         catch (Exception e){
             e.printStackTrace();
-            fail("Could not sync operations");
+            fail("Could not sync shards");
         }
     }
 
@@ -46,7 +46,7 @@ public class StoragePoolsManagerTest {
             fail("Could not connect to jgroupsChannel");
         }
 
-        assertEquals(storagePoolsManager.operationManager.operations, expectedNewOperations);
+        assertEquals(storagePoolsManager.shardManager.shards, expectedNewOperations);
     }
 
     @Test
@@ -67,13 +67,13 @@ public class StoragePoolsManagerTest {
 
     @Test
     public void syncLocalStoragePools() throws Exception {
-        Operation operation1 = new Operation();
-        operation1.changeKeyValue("storagePoolIP", "ip1");
-        Operation operation2 = new Operation();
-        operation2.changeKeyValue("storagePoolIP", "ip2");
+        Shard shard1 = new Shard();
+        shard1.changeKeyValue("storagePoolIP", "ip1");
+        Shard shard2 = new Shard();
+        shard2.changeKeyValue("storagePoolIP", "ip2");
 
-        storagePoolsManager.operationManager.syncOperation(operation1.asJSONString());
-        storagePoolsManager.operationManager.syncLocalPoolsWithOperationPool(storagePoolsManager.storagePools, operation1);
+        storagePoolsManager.shardManager.syncOperation(shard1.asJSONString());
+        storagePoolsManager.shardManager.syncLocalPoolsWithOperationPool(storagePoolsManager.storagePools, shard1);
 
         if (storagePoolsManager.storagePools.size() == 1) {
             if (!storagePoolsManager.storagePools.get(0).hasNChunks(1)) {
@@ -83,8 +83,8 @@ public class StoragePoolsManagerTest {
         else
             fail("Did not insert first storage pool: size = " + storagePoolsManager.storagePools.size());
 
-        storagePoolsManager.operationManager.syncOperation(operation2.asJSONString());
-        storagePoolsManager.operationManager.syncLocalPoolsWithOperationPool(storagePoolsManager.storagePools, operation2);
+        storagePoolsManager.shardManager.syncOperation(shard2.asJSONString());
+        storagePoolsManager.shardManager.syncLocalPoolsWithOperationPool(storagePoolsManager.storagePools, shard2);
 
         if (storagePoolsManager.storagePools.size() == 1) {
             if (!storagePoolsManager.storagePools.get(1).hasNChunks(1)) {

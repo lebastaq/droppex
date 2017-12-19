@@ -60,23 +60,23 @@ public class StorageControllerTest {
 
     @Test
     public void doOperationIntoDBAndThenLoadIt() throws Exception {
-        Operation operation = new Operation();
+        Shard shard = new Shard();
         DbManager dbManager = new DbManager();
 
         dbManager.connect();
 
         storageController.connectToChannel();
-        storageController.doOperation(operation);
+        storageController.doOperation(shard);
 
-        storageController.operationManager.operations = new LinkedList<>();
-        storageController.operationManager.loadLocalOperationsFromDB();
+        storageController.shardManager.shards = new LinkedList<>();
+        storageController.shardManager.loadLocalOperationsFromDB();
 
-        List<Operation> operationsExpected;
+        List<Shard> operationsExpected;
         operationsExpected = dbManager.readEntries();
 
-        if(storageController.operationManager.operations.size() != operationsExpected.size())
+        if(storageController.shardManager.shards.size() != operationsExpected.size())
         {
-            fail("Stored " + storageController.operationManager.operations.size() + " operations from db instead of " + operationsExpected.size());
+            fail("Stored " + storageController.shardManager.shards.size() + " shards from db instead of " + operationsExpected.size());
         }
     }
 

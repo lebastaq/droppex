@@ -5,13 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="895aba22-be9a-4d7f-8166-785ff6181618" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/DownloaderPool.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/utilities/ChunkDownloader.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/storage/Test chunk ID...." afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/Operation.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/Shard.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/OperationManager.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/ShardManager.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../StorageController/src/test/java/com/fcup/OperationManagerTest.java" afterPath="$PROJECT_DIR$/../StorageController/src/test/java/com/fcup/ShardManagerTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../StorageController/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/DbManager.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/DbManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StoragePoolsManager.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StoragePoolsManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/test/java/com/fcup/StorageControllerTest.java" afterPath="$PROJECT_DIR$/../StorageController/src/test/java/com/fcup/StorageControllerTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/test/java/com/fcup/StoragePoolsManagerTest.java" afterPath="$PROJECT_DIR$/../StorageController/src/test/java/com/fcup/StoragePoolsManagerTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/test/java/com/fcup/dbManagerTest.java" afterPath="$PROJECT_DIR$/../StorageController/src/test/java/com/fcup/dbManagerTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -36,11 +40,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DownloaderPool.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DownloaderPool.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/DownloaderPool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="39" lean-forward="false" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
+            <state relative-caret-position="255">
+              <caret line="15" column="23" lean-forward="true" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#474#475#0" expanded="true" />
@@ -62,11 +66,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StoragePoolTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StoragePoolTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="22" column="26" lean-forward="false" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
+            <state relative-caret-position="0">
+              <caret line="0" column="17" lean-forward="true" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -621,7 +625,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513354202861</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="added download pool in storage pool">
+      <created>1513702730918</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1513702730918</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -700,7 +711,8 @@
     <MESSAGE value="Download server work&#10;Still getting netty errors" />
     <MESSAGE value="better grpc management" />
     <MESSAGE value="Storage pool registration working" />
-    <option name="LAST_COMMIT_MESSAGE" value="Storage pool registration working" />
+    <MESSAGE value="added download pool in storage pool" />
+    <option name="LAST_COMMIT_MESSAGE" value="added download pool in storage pool" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -802,6 +814,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="658">
           <caret line="102" column="9" lean-forward="true" selection-start-line="97" selection-start-column="8" selection-end-line="102" selection-end-column="9" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1044,18 +1057,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/DownloaderPool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="39" lean-forward="false" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#474#475#0" expanded="true" />
-            <element signature="e#526#527#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../trabblex/client/src/main/java/pt/fcup/Downloader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
@@ -1084,9 +1085,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="22" column="26" lean-forward="false" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
+        <state relative-caret-position="0">
+          <caret line="0" column="17" lean-forward="true" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/DownloaderPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="23" lean-forward="true" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#474#475#0" expanded="true" />
+            <element signature="e#526#527#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

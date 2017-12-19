@@ -13,7 +13,7 @@ import java.util.List;
 public class StoragePoolsManager extends ReceiverAdapter {
 
     JChannel jgroupsChannel;
-    OperationManager operationManager;
+    ShardManager shardManager;
     boolean isLeader = false;
     List<StoragePool> storagePools;
     static String CONFIG_FILE = "config.xml";
@@ -25,7 +25,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
     public StoragePoolsManager(String CONFIG_FILE) throws Exception {
         this.CONFIG_FILE = CONFIG_FILE;
         jgroupsChannel = new JChannel(CONFIG_FILE).setReceiver(this);
-        operationManager = new OperationManager();
+        shardManager = new ShardManager();
         storagePools = new ArrayList<>();
     }
 
@@ -40,7 +40,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
     }
 
     public void sync() throws Exception {
-        operationManager.loadLocalOperationsFromDB();
+        shardManager.loadLocalOperationsFromDB();
         jgroupsChannel.getState(null, 10000); // will callback setState
         System.out.println("Synced!");
     }
@@ -67,9 +67,9 @@ public class StoragePoolsManager extends ReceiverAdapter {
     public void receive(Message msg) {
         String newOperation = msg.getObject();
         System.out.println("Received: " + newOperation);
-        operationManager.storeOperation(Operation.fromJSON(newOperation));
-        operationManager.syncOperation(newOperation);
-        operationManager.syncLocalStoragePools(storagePools);
+        shardManager.storeOperation(Shard.fromJSON(newOperation));
+        shardManager.syncOperation(newOperation);
+        shardManager.syncLocalStoragePools(storagePools);
 
         for(StoragePool storagePool: storagePools) {
             System.out.println("Storage Pool:");
@@ -81,16 +81,16 @@ public class StoragePoolsManager extends ReceiverAdapter {
 
     public void setState(InputStream input) throws Exception {
         List<String> newOperations = Util.objectFromStream(new DataInputStream(input));
-        operationManager.syncOperations(newOperations);
-        operationManager.syncLocalStoragePools(storagePools);
+        shardManager.syncOperations(newOperations);
+        shardManager.syncLocalStoragePools(storagePools);
     }
 
     public void getState(OutputStream output) throws Exception {
-        operationManager.getState(output);
+        shardManager.getState(output);
     }
 
-    public void doOperation(Operation operation) throws Exception {
-        jgroupsChannel.send(null, operation.asJSONString());
-        operationManager.storeOperation(operation);
+    public void doOperation(Shard shard) throws Exception {
+        jgroupsChannel.send(null, shard.asJSONString());
+        shardManager.storeOperation(shard);
     }
 }

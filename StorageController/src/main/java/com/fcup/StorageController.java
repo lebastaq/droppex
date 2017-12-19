@@ -60,11 +60,11 @@ public class StorageController extends StoragePoolsManager {
     }
 
     private void eventLoop() throws Exception {
-        Operation operation = new Operation();
-        operation.changeKeyValue("chunkID", Integer.toString((int)(Math.random()*20)));
-        operation.changeKeyValue("storagePoolIP", "dummy 2");
-        doOperation(operation);
-        System.out.println("Sent operation: " + operation.asJSONString());
+        Shard shard = new Shard();
+        shard.changeKeyValue("chunkID", Integer.toString((int)(Math.random()*20)));
+        shard.changeKeyValue("storagePoolIP", "dummy 2");
+        doOperation(shard);
+        System.out.println("Sent shard: " + shard.asJSONString());
 
         System.in.read();
     }
