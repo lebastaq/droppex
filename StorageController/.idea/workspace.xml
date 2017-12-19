@@ -6,13 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8e5f758d-a827-4174-b3c2-73d36543e8af" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StorageController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StorageController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/utilities/GrpcServer.java" afterPath="$PROJECT_DIR$/src/main/java/utilities/GrpcServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/utilities/StoragePoolRegisterer.java" afterPath="$PROJECT_DIR$/src/main/java/utilities/StoragePoolRegisterer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/fcup/StorageControllerTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/fcup/StorageControllerTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../StoragePool/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/StoragePool.java" afterPath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/StoragePool.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -918,7 +911,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513703804209</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="accepts storagepool registration and propagates it to other storage controllers">
+      <created>1513710124184</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1513710124184</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1002,7 +1002,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/../../.." />
     </ignored-roots>
-    <MESSAGE value="Cleaned up database creation to acknowledge changes in operation fields" />
     <MESSAGE value="Download server work&#10;Still getting netty errors" />
     <MESSAGE value="Moved everything related to operations into a new class OperationManager&#10;Updated tests in consequence" />
     <MESSAGE value="Code clean up" />
@@ -1027,7 +1026,8 @@
     <MESSAGE value="Fixed doubloon pools" />
     <MESSAGE value="updated db and tests" />
     <MESSAGE value="deleted useless function that made the storage pool download a file - the storage pool now starts a pool of downloaders that wait for inputs" />
-    <option name="LAST_COMMIT_MESSAGE" value="deleted useless function that made the storage pool download a file - the storage pool now starts a pool of downloaders that wait for inputs" />
+    <MESSAGE value="accepts storagepool registration and propagates it to other storage controllers" />
+    <option name="LAST_COMMIT_MESSAGE" value="accepts storagepool registration and propagates it to other storage controllers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
