@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package servrpc;
+
+service ShardAllocator {
+    // Bi-directional stream where the app server requests a server for a shard
+    // and the controller replies with an ip/port.
+    rpc SuggestServers(stream Shard) returns (stream Server) {}
+
+    // App server notifies controller of a sucessful placement in a pool
+    // Controller returns an error if it did not store the placement
+    rpc NotifyPlacement(ShardPlacement) returns (Empty) {}
+
+    // App server requests the location of all shards for a given file
+    // Controller replies with the location of each shard ID.
+    rpc GetShards(File) returns (stream ShardPlacement) {}
+
+    // App server notifies controller if a shard doesn't match its original hash
+    // Controller should then attempt to delete shard and return an error if it failed
+    // The app server then calls SuggestServers and the controller needs to return live servers
+    rpc NotifyCorruptShard(stream Shard) returns (Empty) {}
+}
+
+message File {
+    string filename = 1;
+}
+
+// Shard ID of the form: filename.block.shard
+// ie. Movie.mp4.4.2
+message Shard {
+    string shardID = 1;
+}
+
+// Storage pool IP
+message Server {
+    string ip = 1;
+    int32 port = 2;
+}
+
+// Where a given shard was successfully stored
+message ShardPlacement {
+    string shardID = 1;
+    string ip = 2;
+    int32 port = 3;
+}
+
+// Return an error from controller if something went wrong
+message Empty {
+
+}
