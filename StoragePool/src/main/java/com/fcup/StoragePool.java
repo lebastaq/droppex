@@ -18,7 +18,7 @@ public class StoragePool {
     private io.grpc.Server server;
     private String localIPAdress;
     private int localGrpcPort;
-    private int remoteGrpcPort = 50050;
+    private int remoteGrpcPort = 50100;
     private ManagedChannel grpcChannel;
     private registererGrpc.registererBlockingStub blockingStub;
     private String remoteControllerAdress;
@@ -49,10 +49,19 @@ public class StoragePool {
     }
 
     private void startGrpcServer() throws Exception {
-        server = ServerBuilder.forPort(localGrpcPort)
-                .addService(new GrpcDownloadServer(STORAGE_FOLDER))
-                .build()
-                .start();
+        boolean started = false;
+        while(!started) {
+            try {
+                server = ServerBuilder.forPort(localGrpcPort)
+                        .addService(new GrpcDownloadServer(STORAGE_FOLDER))
+                        .build()
+                        .start();
+                started = true;
+            }
+            catch(Exception e){
+                localGrpcPort++;
+            }
+        }
         System.out.println("Grpc server started, listening on " + localGrpcPort);
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override

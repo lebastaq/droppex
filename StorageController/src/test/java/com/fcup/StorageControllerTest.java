@@ -55,7 +55,7 @@ public class StorageControllerTest {
         dbManager.connect();
 
         storageController.connectToChannel();
-        storageController.doOperation(shard);
+        storageController.sendMessage(shard);
 
         storageController.shardManager.shards = new LinkedList<>();
         storageController.shardManager.loadLocalOperationsFromDB();

@@ -23,7 +23,7 @@ public class StorageController extends StoragePoolsManager {
     }
 
     public void start() throws Exception {
-        grpcServer.startGrpcServer();
+        grpcServer.startGrpcServer(this);
         eventLoop();
     }
 
@@ -31,7 +31,7 @@ public class StorageController extends StoragePoolsManager {
         Shard shard = new Shard();
         shard.changeKeyValue("chunkID", Integer.toString((int)(Math.random()*20)));
         shard.changeKeyValue("storagePoolIP", "dummy 2");
-        doOperation(shard);
+        sendMessage(shard);
         System.out.println("Sent shard: " + shard.asJSONString());
 
         System.in.read();

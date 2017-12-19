@@ -65,18 +65,14 @@ public class StoragePoolsManager extends ReceiverAdapter {
     }
 
     public void receive(Message msg) {
-        String newOperation = msg.getObject();
-        System.out.println("Received: " + newOperation);
-        shardManager.storeOperation(Shard.fromJSON(newOperation));
-        shardManager.syncOperation(newOperation);
-        shardManager.syncLocalStoragePools(storagePools);
+        String message = msg.getObject();
+        System.out.println("Received: " + message);
 
-        for(StoragePool storagePool: storagePools) {
-            System.out.println("Storage Pool:");
-            for (String chunk : storagePool.chunks) {
-                System.out.println("Chunk >> " + chunk);
-            }
-        }
+        Shard receivedShard = Shard.fromJSON(message);
+
+        shardManager.storeOperation(Shard.fromJSON(message));
+        shardManager.syncOperation(message);
+        shardManager.syncLocalStoragePools(storagePools);
     }
 
     public void setState(InputStream input) throws Exception {
@@ -89,8 +85,13 @@ public class StoragePoolsManager extends ReceiverAdapter {
         shardManager.getState(output);
     }
 
-    public void doOperation(Shard shard) throws Exception {
-        jgroupsChannel.send(null, shard.asJSONString());
-        shardManager.storeOperation(shard);
+    public void sendMessage(Shard shard) {
+        try {
+            jgroupsChannel.send(null, shard.asJSONString());
+            shardManager.storeOperation(shard);
+        } catch (Exception e) {
+            System.err.println("Could not send shard " + shard.toString() + ":");
+            e.printStackTrace();
+        }
     }
 }
