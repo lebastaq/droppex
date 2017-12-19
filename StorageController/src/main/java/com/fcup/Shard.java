@@ -5,7 +5,7 @@ import utilities.StoragePool;
 
 import java.util.*;
 
-public class Operation {
+public class Shard {
 
     private Map<String, String> params;
 
@@ -13,15 +13,12 @@ public class Operation {
         params.put(key, value);
     }
 
-    public Operation() {
+    public Shard() {
         params = new HashMap<>();
         String dummy = "dummy";
-        changeKeyValue("type", dummy);
-        changeKeyValue("blockID", dummy);
+        changeKeyValue("shardID", dummy);
         changeKeyValue("storagePoolIP", dummy);
         changeKeyValue("storagePoolPort", Integer.toString(0));
-        changeKeyValue("source", dummy);
-        changeKeyValue("chunkID", dummy);
     }
 
     public List<String> getKeys() {
@@ -50,25 +47,24 @@ public class Operation {
         return json.toString();
     }
 
-    public boolean hasChunkIDAndBlockID(String chunkID, String blockID) {
-        return (params.get("chunkID").equals(chunkID)
-                && params.get("blockID").equals(blockID));
+    public boolean hasShardID(String shardID) {
+        return params.get("shardID").equals(shardID);
     }
 
-    public static Operation fromJSON(String operationJSONString) {
-        Operation operation = new Operation();
+    public static Shard fromJSON(String operationJSONString) {
+        Shard shard = new Shard();
         JSONObject operationJSON = new JSONObject(operationJSONString);
 
         for (String key : operationJSON.keySet()) {
             String value = (String)operationJSON.get(key);
-            operation.changeKeyValue(key, value);
+            shard.changeKeyValue(key, value);
         }
 
-        return operation;
+        return shard;
     }
 
     public void addMyselfToStoragePool(StoragePool storagePool) {
-        storagePool.addChunk(params.get("chunkID"));
+        storagePool.addChunk(params.get("shardID"));
     }
 
     public StoragePool operationPoolToStoreMe(List<StoragePool> pools) {

@@ -9,24 +9,24 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class OperationManager {
+public class ShardManager {
     DbManager dbManager;
 
     // TODO clean up double-variable mess
-    List<Operation> operations = new LinkedList<>();
+    List<Shard> shards = new LinkedList<>();
     List<String> operationsAsString = new LinkedList<>();
 
-    public OperationManager() throws SQLException, ClassNotFoundException {
+    public ShardManager() throws SQLException, ClassNotFoundException {
         dbManager = new DbManager();
         dbManager.connect();
     }
 
     public void loadLocalOperationsFromDB() throws SQLException {
         try {
-            List<Operation> operationsFromDB = dbManager.readEntries();
-            for (Operation operation : operationsFromDB) {
-                operations.add(operation);
-                operationsAsString.add(operation.asJSONString());
+            List<Shard> operationsFromDB = dbManager.readEntries();
+            for (Shard shard : operationsFromDB) {
+                shards.add(shard);
+                operationsAsString.add(shard.asJSONString());
             }
         } catch (SQLException e) {
             System.err.println("Could not read operation: ");
@@ -35,15 +35,15 @@ public class OperationManager {
         }
     }
 
-    public void storeOperation(Operation operation) {
-        storeOperationInLocal(operation);
-        writeOperationIntoDB(operation);
+    public void storeOperation(Shard shard) {
+        storeOperationInLocal(shard);
+        writeOperationIntoDB(shard);
     }
 
-    private void storeOperationInLocal(Operation operation) {
+    private void storeOperationInLocal(Shard shard) {
         synchronized (operationsAsString) {
-            operations.add(operation);
-            operationsAsString.add(operation.asJSONString());
+            shards.add(shard);
+            operationsAsString.add(shard.asJSONString());
         }
     }
 
@@ -59,19 +59,19 @@ public class OperationManager {
 
     public void syncOperation(String op) {
         if(!operationsAsString.contains(op)) {
-            final Operation operation = Operation.fromJSON(op);
-            operations.add(operation);
+            final Shard shard = Shard.fromJSON(op);
+            shards.add(shard);
             operationsAsString.add(op);
-            writeOperationIntoDB(operation);
+            writeOperationIntoDB(shard);
             System.out.println("New Operations: " + op);
         }
     }
 
-    private void writeOperationIntoDB(Operation operation) {
+    private void writeOperationIntoDB(Shard shard) {
         try {
-            dbManager.insertOperation(operation);
+            dbManager.insertOperation(shard);
         } catch (Exception e) {
-            System.err.println("Could not insert operation");
+            System.err.println("Could not insert shard");
         }
     }
 
@@ -82,20 +82,20 @@ public class OperationManager {
     }
 
     public void syncLocalStoragePools(List<StoragePool> storagePools) {
-        for (Operation op : operations) {
+        for (Shard op : shards) {
             syncLocalPoolsWithOperationPool(storagePools, op);
         }
     }
 
-    protected void syncLocalPoolsWithOperationPool(List<StoragePool> storagePools, Operation newOperation) {
+    protected void syncLocalPoolsWithOperationPool(List<StoragePool> storagePools, Shard newShard) {
         // create new storage pool if it does not exist
-        StoragePool operationStoragePool = newOperation.operationPoolToStoreMe(storagePools);
+        StoragePool operationStoragePool = newShard.operationPoolToStoreMe(storagePools);
 
         if (!storagePools.contains(operationStoragePool)) {
             storagePools.add(operationStoragePool);
             System.out.println("Registering new storage pool...");
         }
 
-        newOperation.addMyselfToStoragePool(operationStoragePool);
+        newShard.addMyselfToStoragePool(operationStoragePool);
     }
 }

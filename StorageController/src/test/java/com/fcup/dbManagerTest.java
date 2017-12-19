@@ -41,12 +41,12 @@ public class dbManagerTest {
 
     @Test
     public void insertAndReadEntry() {
+        String shardID = "testchunkID";
         try{
             dbManager.connect();
-            Operation operation = new Operation();
-            operation.changeKeyValue("chunkID", "testchunkID");
-            operation.changeKeyValue("blockID", "testblockID");
-            dbManager.insertOperation(operation);
+            Shard shard = new Shard();
+            shard.changeKeyValue("shardID", shardID);
+            dbManager.insertOperation(shard);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Could not insert values into database");
@@ -54,12 +54,11 @@ public class dbManagerTest {
 
         try {
             Map<String, String> queryParams = new HashMap<>();
-            queryParams.put("chunkID", "testchunkID");
-            queryParams.put("blockID", "testblockID");
-            List<Operation> operationsRead = dbManager.readEntries(queryParams);
+            queryParams.put("shardID", shardID);
+            List<Shard> operationsRead = dbManager.readEntries(queryParams);
 
-            if(!operationsRead.get(0).hasChunkIDAndBlockID("testchunkID", "testblockID"))
-                fail("Read bad value from database: " + "should have read " + "testchunkID, read " + operationsRead.get(0).toString());
+            if(!operationsRead.get(0).hasShardID(shardID))
+                fail("Read bad value from database: " + "should have read " + shardID + ", read " + operationsRead.get(0).toString());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,28 +68,28 @@ public class dbManagerTest {
 
     @Test
     public void insertAndReadSingleEntry() {
+        String shardID = "testchunkID";
         try{
             dbManager = new DbManager(db);
             dbManager.connect();
-            Operation operation = new Operation();
-            operation.changeKeyValue("blockID", "testblockID");
-            operation.changeKeyValue("chunkID", "testchunkID");
-            dbManager.insertOperation(operation);
-            System.out.println("Inserted operation: " + operation.toString());
+            Shard shard = new Shard();
+            shard.changeKeyValue("shardID", shardID);
+            dbManager.insertOperation(shard);
+            System.out.println("Inserted shard: " + shard.toString());
         } catch (Exception e) {
             e.printStackTrace();
             fail("Could not insert values into database");
         }
 
         try {
-            List<Operation> operationsRead = dbManager.readEntries();
+            List<Shard> operationsRead = dbManager.readEntries();
 
             if (operationsRead.size() != 1) {
                 fail("Read more than one entry");
             }
 
-            if(!operationsRead.get(0).hasChunkIDAndBlockID("testchunkID", "testblockID"))
-                fail("Read bad value from database: " + "should have read " + "testchunkID, read " + operationsRead.get(0).toString());
+            if(!operationsRead.get(0).hasShardID(shardID))
+                fail("Read bad value from database: " + "should have read " + shardID + ", read " + operationsRead.get(0).toString());
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -13,10 +13,10 @@ import java.util.List;
 public class StoragePoolsManager extends ReceiverAdapter {
 
     JChannel jgroupsChannel;
-    OperationManager operationManager;
+    ShardManager shardManager;
     boolean isLeader = false;
     List<StoragePool> storagePools;
-    static String CONFIG_FILE = "config.xml";
+    static String CONFIG_FILE = "config.xml"; /* google_config.xml */
 
     public StoragePoolsManager() throws Exception {
         this(CONFIG_FILE);
@@ -25,7 +25,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
     public StoragePoolsManager(String CONFIG_FILE) throws Exception {
         this.CONFIG_FILE = CONFIG_FILE;
         jgroupsChannel = new JChannel(CONFIG_FILE).setReceiver(this);
-        operationManager = new OperationManager();
+        shardManager = new ShardManager();
         storagePools = new ArrayList<>();
     }
 
@@ -40,7 +40,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
     }
 
     public void sync() throws Exception {
-        operationManager.loadLocalOperationsFromDB();
+        shardManager.loadLocalOperationsFromDB();
         jgroupsChannel.getState(null, 10000); // will callback setState
         System.out.println("Synced!");
     }
@@ -65,32 +65,33 @@ public class StoragePoolsManager extends ReceiverAdapter {
     }
 
     public void receive(Message msg) {
-        String newOperation = msg.getObject();
-        System.out.println("Received: " + newOperation);
-        operationManager.storeOperation(Operation.fromJSON(newOperation));
-        operationManager.syncOperation(newOperation);
-        operationManager.syncLocalStoragePools(storagePools);
+        String message = msg.getObject();
+        System.out.println("Received: " + message);
 
-        for(StoragePool storagePool: storagePools) {
-            System.out.println("Storage Pool:");
-            for (String chunk : storagePool.chunks) {
-                System.out.println("Chunk >> " + chunk);
-            }
-        }
+        Shard receivedShard = Shard.fromJSON(message);
+
+        shardManager.storeOperation(Shard.fromJSON(message));
+        shardManager.syncOperation(message);
+        shardManager.syncLocalStoragePools(storagePools);
     }
 
     public void setState(InputStream input) throws Exception {
         List<String> newOperations = Util.objectFromStream(new DataInputStream(input));
-        operationManager.syncOperations(newOperations);
-        operationManager.syncLocalStoragePools(storagePools);
+        shardManager.syncOperations(newOperations);
+        shardManager.syncLocalStoragePools(storagePools);
     }
 
     public void getState(OutputStream output) throws Exception {
-        operationManager.getState(output);
+        shardManager.getState(output);
     }
 
-    public void doOperation(Operation operation) throws Exception {
-        jgroupsChannel.send(null, operation.asJSONString());
-        operationManager.storeOperation(operation);
+    public void sendMessage(Shard shard) {
+        try {
+            jgroupsChannel.send(null, shard.asJSONString());
+            shardManager.storeOperation(shard);
+        } catch (Exception e) {
+            System.err.println("Could not send shard " + shard.toString() + ":");
+            e.printStackTrace();
+        }
     }
 }

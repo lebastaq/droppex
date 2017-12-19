@@ -10,11 +10,11 @@ import java.util.Map;
 public class DbManager {
     String dbName;
     private Connection dbConnection;
-    private final String table = "operations";
+    private final String table = "shards";
     private String dbUrl;
 
     public DbManager() {
-        this("operations-db");
+        this("shards-db");
     }
 
     public DbManager(String dbName) {
@@ -60,14 +60,14 @@ public class DbManager {
     }
 
 
-    public List<Operation> readEntries() throws SQLException {
+    public List<Shard> readEntries() throws SQLException {
         Map<String, String> params = new HashMap<>();
         return readEntries(params);
     }
 
 
-    public List<Operation> readEntries(Map<String, String> params) throws SQLException {
-        List<Operation> results = new ArrayList<>();
+    public List<Shard> readEntries(Map<String, String> params) throws SQLException {
+        List<Shard> results = new ArrayList<>();
         String query = "SELECT * FROM " + table;
         if(params.size() > 0)
             query += " WHERE ";
@@ -86,23 +86,23 @@ public class DbManager {
         int columnCount = rsmd.getColumnCount();
 
         while (rs.next()) {
-            Operation operation = new Operation();
+            Shard shard = new Shard();
             for(int i = 1; i <= columnCount; i++) {
                 String colName = rsmd.getColumnName(i);
-                operation.changeKeyValue(colName, rs.getString(colName));
+                shard.changeKeyValue(colName, rs.getString(colName));
             }
-            results.add(operation);
+            results.add(shard);
         }
 
         return results;
     }
 
-    public void insertOperation(Operation operation) throws Exception {
+    public void insertOperation(Shard shard) throws Exception {
         String request = "INSERT INTO " + table + " (";
 
         // TODO tidy this up
         String separator = "";
-        for (String key : operation.getKeys()) {
+        for (String key : shard.getKeys()) {
             request += separator;
             request += "'" + key + "'";
             separator = ",";
@@ -110,7 +110,7 @@ public class DbManager {
         request += ") VALUES(";
 
         separator = "";
-        for (String value : operation.getValues()) {
+        for (String value : shard.getValues()) {
             request += separator;
             request += "'" + value + "'";
             separator = ",";
@@ -127,13 +127,13 @@ public class DbManager {
     }
 
     private String buildCreateTableQuery() {
-        Operation operation = new Operation();
+        Shard shard = new Shard();
         
         String sql = "CREATE TABLE IF NOT EXISTS " + table + "(\n"
                 + "	id integer PRIMARY KEY AUTOINCREMENT,\n";
 
         String separator = "";
-        for(String key: operation.getKeys()){
+        for(String key: shard.getKeys()){
             sql += separator + " " + key + " text";
             separator = ",";
         }

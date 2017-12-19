@@ -8,19 +8,17 @@ import io.grpc.ServerBuilder;
 import io.grpc.StatusRuntimeException;
 
 import java.io.File;
-import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class StoragePool {
-    private Socket socket;
     private final String STORAGE_FOLDER = "storage";
     private io.grpc.Server server;
     private String localIPAdress;
     private int localGrpcPort;
-    private int remoteGrpcPort = 50052;
+    private int remoteGrpcPort = 50100;
     private ManagedChannel grpcChannel;
     private registererGrpc.registererBlockingStub blockingStub;
     private String remoteControllerAdress;
@@ -33,9 +31,11 @@ public class StoragePool {
         startGrpcServer();
         setUpGrpcClient();
         SeederPool seederPool = new SeederPool(STORAGE_FOLDER);
+        DownloaderPool downloaderPool = new DownloaderPool(STORAGE_FOLDER);
 
         registerInStorageController();
         seederPool.run();
+        downloaderPool.run();
 
         // exit when any key is pressed
         System.in.read();
@@ -49,10 +49,19 @@ public class StoragePool {
     }
 
     private void startGrpcServer() throws Exception {
-        server = ServerBuilder.forPort(localGrpcPort)
-                .addService(new GrpcDownloadServer(STORAGE_FOLDER))
-                .build()
-                .start();
+        boolean started = false;
+        while(!started) {
+            try {
+                server = ServerBuilder.forPort(localGrpcPort)
+                        .addService(new GrpcDownloadServer(STORAGE_FOLDER))
+                        .build()
+                        .start();
+                started = true;
+            }
+            catch(Exception e){
+                localGrpcPort++;
+            }
+        }
         System.out.println("Grpc server started, listening on " + localGrpcPort);
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
@@ -95,17 +104,29 @@ public class StoragePool {
 
     // TODO implement grpc call
     public void registerInStorageController() {
-        System.out.println("Registering as " + localIPAdress + ":" + localGrpcPort);
-        PoolInfo request = PoolInfo.newBuilder().setIp(localIPAdress).setPort(localGrpcPort).build(); // todo host = storage pool - how to get it ?
-        PoolRegistrationStatus response;
-        try {
-            response = blockingStub.register(request);
-        } catch (StatusRuntimeException e) {
-            // TODO manage this
-            System.err.println("Could not register in storage controller");
-            return;
+        int attempts = 0;
+        boolean connected = false;
+        while(attempts < 10 && connected == false) {
+            PoolInfo request = PoolInfo.newBuilder().setIp(localIPAdress).setPort(localGrpcPort).build(); // todo host = storage pool - how to get it ?
+            try {
+                this.grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAdress, remoteGrpcPort)
+                        .usePlaintext(true)
+                        .build();
+                blockingStub = registererGrpc.newBlockingStub(this.grpcChannel);
+                blockingStub.register(request);
+                connected = true;
+            } catch (StatusRuntimeException e) {
+                attempts ++;
+                remoteGrpcPort++;
+            }
         }
-        System.out.println("Response: " + response.getOk());
+
+        if (connected == false) {
+            System.err.println("Could not register in storage controller");
+            System.exit(0);
+        }
+
+        System.out.println("Registered as " + localIPAdress + ":" + localGrpcPort + " to " + remoteControllerAdress + ":" + remoteGrpcPort);
     }
 
 

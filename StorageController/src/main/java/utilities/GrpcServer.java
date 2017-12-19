@@ -1,19 +1,20 @@
 package utilities;
 
+import com.fcup.StoragePoolsManager;
 import io.grpc.ServerBuilder;
 
 public class GrpcServer {
-    int port = 50050;
+    int port = 50100;
     private io.grpc.Server server = null;
 
     public GrpcServer() {
     }
 
-    public void startGrpcServer() throws Exception {
+    public void startGrpcServer(StoragePoolsManager storagePoolsManager) throws Exception {
         do {
             try {
                 server = ServerBuilder.forPort(port)
-                        .addService(new StoragePoolRegisterer())
+                        .addService(new StoragePoolRegisterer(storagePoolsManager))
                         .build()
                         .start();
             }
