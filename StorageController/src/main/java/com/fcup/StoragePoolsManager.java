@@ -67,9 +67,6 @@ public class StoragePoolsManager extends ReceiverAdapter {
     public void receive(Message msg) {
         String message = msg.getObject();
         System.out.println("Received: " + message);
-
-        Shard receivedShard = Shard.fromJSON(message);
-
         shardManager.storeOperation(Shard.fromJSON(message));
         shardManager.syncOperation(message);
         shardManager.syncLocalStoragePools(storagePools);

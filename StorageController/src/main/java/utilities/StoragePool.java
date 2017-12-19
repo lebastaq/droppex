@@ -19,10 +19,15 @@ public class StoragePool {
         chunks = new ArrayList<>();
     }
 
-    public void addChunk(String chunkID) {
-        if(!chunks.contains(chunkID)) {
-            chunks.add(chunkID);
-            System.out.println("Adding chunk " + chunkID +" to pool " + ip + ":" + port);
+    public void addChunk(String shardID) {
+        if(!shardID.equals("0"))
+            addChunkNotNull(shardID);
+    }
+
+    public void addChunkNotNull(String shardID) {
+        if(!chunks.contains(shardID)) {
+            chunks.add(shardID);
+            System.out.println("Saving shard " + shardID +" to local storage - pool " + ip + ":" + port);
         }
     }
 

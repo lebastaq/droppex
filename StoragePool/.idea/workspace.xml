@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="895aba22-be9a-4d7f-8166-785ff6181618" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../StorageController/operations-db" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../StorageController/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/ShardManager.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/ShardManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StoragePoolsManager.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StoragePoolsManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/GrpcServer.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/GrpcServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/StoragePoolRegisterer.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/StoragePoolRegisterer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/test/java/com/fcup/StorageControllerTest.java" afterPath="$PROJECT_DIR$/../StorageController/src/test/java/com/fcup/StorageControllerTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/StoragePool.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/StoragePool.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -25,7 +24,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="StoragePool.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StoragePool.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
@@ -75,11 +74,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SeederPool.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SeederPool.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/SeederPool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="18" column="33" lean-forward="false" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+            <state relative-caret-position="408">
+              <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -173,7 +172,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/Downloader.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/ChunkSeederTest.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fcup/SeederPool.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/generated/PoolRegisterProto.java" />
         <option value="$PROJECT_DIR$/src/main/proto/poolregister.proto" />
         <option value="$PROJECT_DIR$/src/main/proto/filetransfer.proto" />
@@ -183,6 +181,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/utilities/ChunkDownloader.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/SeederPool.java" />
       </list>
     </option>
   </component>
@@ -626,7 +625,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513705396664</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Sends registration message to storage controllor">
+      <created>1513710139128</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1513710139128</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -673,10 +679,10 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22860636" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22860636" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29217604" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.168125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Google Cloud Storage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -709,7 +715,8 @@
     <MESSAGE value="Storage pool registration working" />
     <MESSAGE value="added download pool in storage pool" />
     <MESSAGE value="Added range of ports to connect to master controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added range of ports to connect to master controller" />
+    <MESSAGE value="Sends registration message to storage controllor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sends registration message to storage controllor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1054,14 +1061,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/SeederPool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="18" column="33" lean-forward="false" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -1095,6 +1094,14 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/SeederPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

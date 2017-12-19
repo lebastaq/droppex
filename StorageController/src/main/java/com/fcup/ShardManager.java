@@ -72,6 +72,7 @@ public class ShardManager {
             dbManager.insertOperation(shard);
         } catch (Exception e) {
             System.err.println("Could not insert shard");
+            e.printStackTrace();
         }
     }
 
