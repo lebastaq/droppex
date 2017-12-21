@@ -9,13 +9,9 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"strconv"
-	"strings"
 	"time"
 
-	//"github.com/freddygv/droppex/app-server/utils"
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
-	"github.com/boltdb/bolt"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -27,16 +23,8 @@ const (
 )
 
 var signingKey []byte = []byte("fY6k6km3Pw1txgPa7Qc73AYqUNZj6Wg8")
-var db *bolt.DB
 
 func main() {
-	// key-value store for files
-	dbFile := "files.db"
-	os.Remove(dbFile) // Cleanup outdated db before opening
-
-	db, _ = bolt.Open(dbFile, 0600, nil)
-	defer db.Close()
-
 	router := mux.NewRouter()
 
 	router.HandleFunc(Version+"/status", statusHandler).Methods("GET")
@@ -74,14 +62,8 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 var listHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	token := r.Header.Get("Authorization")
 
-	// TODO: Remove
-	dummyData(token)
+	// Send message to Storage Controller asking for files
 
-	files, err := searchDB(token, "")
-	if err != nil {
-		renderError(w, "ERROR_LISTING_FILES", http.StatusInternalServerError)
-		return
-	}
 	json.NewEncoder(w).Encode(files)
 })
 
@@ -90,11 +72,8 @@ var searchHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	token := r.Header.Get("Authorization")
 	params := mux.Vars(r)
 
-	matches, err := searchDB(token, params["pattern"])
-	if err != nil {
-		renderError(w, "ERROR_SEARCHING_FOR_PATTERN", http.StatusInternalServerError)
-		return
-	}
+	// Send message to Storage Controller asking for files that match a pattern
+
 	json.NewEncoder(w).Encode(matches)
 })
 
@@ -130,23 +109,6 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	fileHash := r.PostFormValue("hash")
 	log.Printf("Upload requested for %s (%s Bytes) by token: %s\n", filename, fileSize, token)
 
-	// Verify file doesn't already exist
-	if err := verifyBucket(token); err != nil {
-		renderError(w, "ERROR_CREATING_DB", http.StatusInternalServerError)
-		return
-	}
-	if err := db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket([]byte(token))
-		v := b.Get([]byte(filename))
-		if v != nil {
-			return fmt.Errorf("FILE_ALREADY_EXISTS")
-		}
-		return nil
-	}); err != nil {
-		renderError(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
 	var Buf bytes.Buffer
 
 	file, _, err := r.FormFile("file")
@@ -162,13 +124,6 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	// Make RPC call to controller for target pools
 
 	// Send blocks over RPC to storage pools (pass in buffer)
-
-	// Store name and size in files
-	byteSize, _ := strconv.Atoi(fileSize)
-	fileMetadata := File{filename, byteSize, fileHash, time.Now()}
-	if err := updateDB(token, fileMetadata); err != nil {
-		renderError(w, "DB_UPDATE_FAILED", http.StatusInternalServerError)
-	}
 
 	// Cleanup buffer
 	Buf.Reset()
@@ -201,79 +156,7 @@ func statusHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("API is up and running."))
 }
 
-// Ensures that bucket exists, added because of read-only db.View calls
-func verifyBucket(bucket string) error {
-	if err := db.Update(func(tx *bolt.Tx) error {
-		if _, err := tx.CreateBucketIfNotExists([]byte(bucket)); err != nil {
-			return err
-		}
-		return nil
-
-	}); err != nil {
-		return err
-	}
-	return nil
-}
-
-func searchDB(bucket string, pattern string) ([]File, error) {
-	var files []File
-
-	if err := verifyBucket(bucket); err != nil {
-		return files, err
-	}
-
-	// Loop over all entries in the DB to match a string or list all
-	err := db.View(func(tx *bolt.Tx) error {
-		var file File
-		b := tx.Bucket([]byte(bucket))
-		b.ForEach(func(k, v []byte) error {
-			json.Unmarshal(v, &file)
-			// We only skip if there is a pattern and the pattern doesn't match the name
-			if !(pattern != "" && !strings.Contains(file.Filename, pattern)) {
-				files = append(files, file)
-			}
-			return nil
-		})
-		return nil
-	})
-
-	return files, err
-}
-
-func updateDB(bucket string, f File) error {
-	err := db.Update(func(tx *bolt.Tx) error {
-		b, err := tx.CreateBucketIfNotExists([]byte(bucket))
-		if err != nil {
-			return err
-		}
-
-		encoded, err := json.Marshal(f)
-		if err != nil {
-			return err
-		}
-		b.Put([]byte(f.Filename), []byte(encoded))
-		return nil
-	})
-
-	return err
-}
-
 func renderError(w http.ResponseWriter, message string, statusCode int) {
 	w.WriteHeader(statusCode)
 	w.Write([]byte(message))
-}
-
-// TODO: Remove after testing
-func dummyData(bucket string) error {
-	files := []File{
-		File{"homework1.pdf", 1024 * 1024, "abc", time.Now()},
-		File{"homework2.pdf", 2 * 1024 * 1024, "def", time.Now()}}
-
-	for _, f := range files {
-		if err := updateDB(bucket, f); err != nil {
-			panic(err)
-		}
-
-	}
-	return nil
 }

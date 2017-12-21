@@ -17,7 +17,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/freddygv/droppex/shared"
+	"github.com/freddygv/droppex/client/shared"
 )
 
 // URL for app-server
