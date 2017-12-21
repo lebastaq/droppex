@@ -1,6 +1,7 @@
-package utilities;
+package com.fcup.utilities;
 
 import com.fcup.StoragePoolsManager;
+import com.fcup.generated.storageControllerInfo;
 import io.grpc.ServerBuilder;
 
 public class GrpcServer {
@@ -38,5 +39,10 @@ public class GrpcServer {
         if (server != null) {
             server.shutdown();
         }
+    }
+
+    public storageControllerInfo buildSetIPAndPortRequest(String localIP) {
+        storageControllerInfo request = storageControllerInfo.newBuilder().setIp(localIP).setPort(port).build(); // todo host = storage pool - how to get it ?
+        return request;
     }
 }

@@ -1,18 +1,17 @@
 package com.fcup;
 
-import com.fcup.generated.PoolInfo;
-import com.fcup.generated.registererGrpc;
-import io.grpc.ManagedChannelBuilder;
-import io.grpc.StatusRuntimeException;
 import org.jgroups.*;
 import org.jgroups.util.Util;
-import utilities.StoragePool;
 
 import java.io.DataInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import com.fcup.utilities.*;
+import com.fcup.generated.*;
 
 public class StoragePoolsManager extends ReceiverAdapter {
 
@@ -21,6 +20,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
     boolean isLeader = false;
     List<StoragePool> storagePools;
     static String CONFIG_FILE = "config.xml"; /* google_config.xml */
+    protected String localIP;
 
     public StoragePoolsManager() throws Exception {
         this(CONFIG_FILE);
@@ -31,6 +31,8 @@ public class StoragePoolsManager extends ReceiverAdapter {
         jgroupsChannel = new JChannel(CONFIG_FILE).setReceiver(this);
         shardManager = new ShardManager();
         storagePools = new ArrayList<>();
+
+        askAdminForLocalIP();
     }
 
     public void connectToChannel() throws Exception {
@@ -52,9 +54,6 @@ public class StoragePoolsManager extends ReceiverAdapter {
     public void viewAccepted(View new_view) {
         System.out.println("Joined View: " + new_view);
         electNewLeader();
-
-        if(isLeader)
-            sendNewMasterControllerIPToStoragePools();
     }
 
     public void electNewLeader() {
@@ -70,24 +69,6 @@ public class StoragePoolsManager extends ReceiverAdapter {
         }
     }
 
-    private void sendNewMasterControllerIPToStoragePools() {
-        for (StoragePool storagePool : storagePools) {
-//            storageControllerInfo request = PoolInfo.newBuilder().setIp(localIPAdress).setPort(localGrpcPort).build(); // todo host = storage pool - how to get it ?
-//            try {
-//                this.grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAddress, remoteControllerPort)
-//                        .usePlaintext(true)
-//                        .build();
-//                blockingStub = registererGrpc.newBlockingStub(this.grpcChannel);
-//                blockingStub.register(request);
-//                connected = true;
-//            } catch (StatusRuntimeException e) {
-//                attempts ++;
-//                remoteControllerPort++;
-//            }
-//
-//            System.out.println("Registered as " + localIPAdress + ":" + localGrpcPort + " to " + remoteControllerAddress + ":" + remoteControllerPort);
-        }
-    }
 
     public void receive(Message msg) {
         String message = msg.getObject();
@@ -115,5 +96,12 @@ public class StoragePoolsManager extends ReceiverAdapter {
             System.err.println("Could not send shard " + shard.toString() + ":");
             e.printStackTrace();
         }
+    }
+
+
+    private void askAdminForLocalIP() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please enter local IP:");
+        localIP = sc.nextLine();
     }
 }

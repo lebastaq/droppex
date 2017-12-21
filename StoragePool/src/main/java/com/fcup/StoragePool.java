@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class StoragePool {
     private final String STORAGE_FOLDER = "storage";
@@ -37,7 +38,6 @@ public class StoragePool {
         remoteControllerAddress = getRemoteControllerAddress();
         createStorageFolderIfNotExists();
         startGrpcServer();
-        setUpGrpcClient();
         seederPool = new SeederPool(STORAGE_FOLDER);
         downloaderPool = new DownloaderPool(STORAGE_FOLDER);
 
@@ -53,11 +53,30 @@ public class StoragePool {
     }
 
     private void setUpGrpcClient() {
-        this.grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAddress, remoteControllerPort)
+        shutDownGrpcChannel();
+        grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAddress, remoteControllerPort)
                 .usePlaintext(true)
                 .build();
-        blockingStub = registererGrpc.newBlockingStub(this.grpcChannel);
+        blockingStub = registererGrpc.newBlockingStub(grpcChannel);
     }
+
+    // todo clean up
+    // extract to own class ?
+    private void shutDownGrpcChannel() {
+        if (grpcChannel != null) {
+            if(!grpcChannel.isShutdown()) {
+                grpcChannel.shutdownNow();
+                try {
+                    grpcChannel.awaitTermination(1000, TimeUnit.MICROSECONDS);
+                } catch (InterruptedException e) {
+                    System.out.println("Could not shutdown channel");
+                    e.printStackTrace();
+                }
+            }
+            grpcChannel = null;
+        }
+    }
+
 
     private void startGrpcServer() throws Exception {
         boolean started = false;
@@ -113,17 +132,14 @@ public class StoragePool {
         }
     }
 
-    // TODO implement grpc call
     public void registerInStorageController() {
         int attempts = 0;
         boolean connected = false;
-        while(attempts < 10 && connected == false) {
+        while(attempts < 2 && connected == false) {
             PoolInfo request = PoolInfo.newBuilder().setIp(localIPAdress).setPort(localGrpcPort).build(); // todo host = storage pool - how to get it ?
+            setUpGrpcClient();
+            blockingStub = registererGrpc.newBlockingStub(grpcChannel);
             try {
-                this.grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAddress, remoteControllerPort)
-                        .usePlaintext(true)
-                        .build();
-                blockingStub = registererGrpc.newBlockingStub(this.grpcChannel);
                 blockingStub.register(request);
                 connected = true;
             } catch (StatusRuntimeException e) {

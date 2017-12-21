@@ -9,7 +9,7 @@ option objc_class_prefix = "PRP";
 package com.fcup.generated;
 
 service addressgetter {
-    rpc GetAddress (storageControllerInfo) returns (addressChangedStatus) { }
+    rpc SetAddress (storageControllerInfo) returns (addressChangedStatus) { }
 }
 
 message storageControllerInfo {

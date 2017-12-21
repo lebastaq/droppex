@@ -1,4 +1,4 @@
-package utilities;
+package com.fcup.utilities;
 
 import org.junit.Before;
 import org.junit.Test;

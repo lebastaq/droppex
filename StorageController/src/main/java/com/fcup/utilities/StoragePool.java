@@ -1,4 +1,9 @@
-package utilities;
+package com.fcup.utilities;
+
+import com.fcup.generated.addressgetterGrpc;
+import com.fcup.generated.registererGrpc;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,5 +52,15 @@ public class StoragePool {
 
     public boolean hasIPAndPort(String storagePoolIP, int storagePoolPort) {
         return ((ip.equals(storagePoolIP)) && (port == storagePoolPort));
+    }
+
+    public addressgetterGrpc.addressgetterBlockingStub buildBlockingStub() throws Exception{
+        System.out.println("Contacting " + ip + ":" + port);
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(ip, port)
+                .usePlaintext(true)
+                .build();
+        addressgetterGrpc.addressgetterBlockingStub blockingStub = addressgetterGrpc.newBlockingStub(channel);
+
+        return blockingStub;
     }
 }

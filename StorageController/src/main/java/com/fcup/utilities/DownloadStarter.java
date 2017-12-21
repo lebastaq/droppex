@@ -1,4 +1,4 @@
-package utilities;
+package com.fcup.utilities;
 
 import com.fcup.generated.Info;
 import com.fcup.generated.Status;
