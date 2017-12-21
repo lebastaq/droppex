@@ -5,27 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="895aba22-be9a-4d7f-8166-785ff6181618" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/generated/addressChangedStatus.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/generated/addressChangedStatusOrBuilder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/generated/addressgetterGrpc.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/generated/controllerAddressGetter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/generated/storageControllerInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/generated/storageControllerInfoOrBuilder.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/DownloadStarter.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/utilities/DownloadStarter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/GrpcServer.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/utilities/GrpcServer.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/StoragePool.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/utilities/StoragePool.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/utilities/StoragePoolRegisterer.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/utilities/StoragePoolRegisterer.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../StorageController/src/test/java/utilities/StoragePoolTest.java" afterPath="$PROJECT_DIR$/../StorageController/src/test/java/com/fcup/utilities/StoragePoolTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../StorageController/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/Shard.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/Shard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/ShardManager.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/ShardManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StoragePoolsManager.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StoragePoolsManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/proto/controllerAddressGetter.proto" afterPath="$PROJECT_DIR$/../StorageController/src/main/proto/controllerAddressGetter.proto" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/target/surefire-reports/TEST-com.fcup.StorageControllerTest.xml" afterPath="$PROJECT_DIR$/../StorageController/target/surefire-reports/TEST-com.fcup.StorageControllerTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/target/surefire-reports/com.fcup.StorageControllerTest.txt" afterPath="$PROJECT_DIR$/../StorageController/target/surefire-reports/com.fcup.StorageControllerTest.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/generated/registererGrpc.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/generated/registererGrpc.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/utilities/GrpcServer.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/utilities/GrpcServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/utilities/StoragePool.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/utilities/StoragePool.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/utilities/StoragePoolRegisterer.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/utilities/StoragePoolRegisterer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcControllerAddressGetter.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcControllerAddressGetter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/proto/controllerAddressGetter.proto" afterPath="$PROJECT_DIR$/src/main/proto/controllerAddressGetter.proto" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -77,8 +64,8 @@
       <file leaf-file-name="StoragePool.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1724">
-              <caret line="140" column="48" lean-forward="false" selection-start-line="140" selection-start-column="48" selection-end-line="140" selection-end-column="48" />
+            <state relative-caret-position="570">
+              <caret line="140" column="30" lean-forward="true" selection-start-line="140" selection-start-column="30" selection-end-line="140" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -86,25 +73,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TimeUnit.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///usr/java/jdk1.8.0_144/src.zip!/java/util/concurrent/TimeUnit.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-128">
-              <caret line="70" column="12" lean-forward="false" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="GrpcControllerAddressGetter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcControllerAddressGetter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="45" lean-forward="false" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
+            <state relative-caret-position="272">
+              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#476#477#0" expanded="true" />
-                <element signature="e#522#523#0" expanded="true" />
+                <element signature="e#440#441#0" expanded="true" />
+                <element signature="e#486#487#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -113,18 +90,8 @@
       <file leaf-file-name="controllerAddressGetter.proto" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/proto/controllerAddressGetter.proto">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="1" lean-forward="false" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="poolregister.proto" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/proto/poolregister.proto">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="33" lean-forward="false" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+            <state relative-caret-position="0">
+              <caret line="0" column="62" lean-forward="false" selection-start-line="0" selection-start-column="62" selection-end-line="0" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -166,8 +133,11 @@
       <find>proto</find>
       <find>blockingstub</find>
       <find>build</find>
-      <find>could not register</find>
       <find>could not register in storae</find>
+      <find>blockingStub</find>
+      <find>request</find>
+      <find>could not register</find>
+      <find>getAddress</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -212,12 +182,12 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/generated/Status.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/SeederPool.java" />
         <option value="$PROJECT_DIR$/target/generated-sources/protobuf/java/com/fcup/generated/PoolRegistrationStatus.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcControllerAddressGetter.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/ChunkSeederTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java" />
         <option value="$PROJECT_DIR$/src/main/proto/poolregister.proto" />
-        <option value="$PROJECT_DIR$/src/main/proto/controllerAddressGetter.proto" />
         <option value="$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java" />
+        <option value="$PROJECT_DIR$/src/main/proto/controllerAddressGetter.proto" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcControllerAddressGetter.java" />
       </list>
     </option>
   </component>
@@ -954,13 +924,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/generated/StatusOrBuilder.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/generated/Info.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/generated/Status.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/generated/addressgetterGrpc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="22" column="19" lean-forward="false" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/generated/registererGrpc.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -988,6 +951,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="5" column="19" lean-forward="false" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1024,6 +988,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1060,26 +1025,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/proto/poolregister.proto">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="33" lean-forward="false" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/fcup/StoragePoolTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/proto/controllerAddressGetter.proto">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="1" lean-forward="false" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
           <folding />
         </state>
       </provider>
@@ -1089,24 +1038,6 @@
         <state relative-caret-position="323">
           <caret line="23" column="60" lean-forward="true" selection-start-line="23" selection-start-column="60" selection-end-line="23" selection-end-column="60" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/java/jdk1.8.0_144/src.zip!/java/util/concurrent/TimeUnit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-128">
-          <caret line="70" column="12" lean-forward="false" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1724">
-          <caret line="140" column="48" lean-forward="false" selection-start-line="140" selection-start-column="48" selection-end-line="140" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1121,14 +1052,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcControllerAddressGetter.java">
+    <entry file="jar:///usr/java/jdk1.8.0_144/src.zip!/java/util/concurrent/TimeUnit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="45" lean-forward="false" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
+        <state relative-caret-position="-128">
+          <caret line="70" column="12" lean-forward="false" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/proto/poolregister.proto">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="42" lean-forward="true" selection-start-line="11" selection-start-column="42" selection-end-line="11" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/proto/controllerAddressGetter.proto">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="62" lean-forward="false" selection-start-line="0" selection-start-column="62" selection-end-line="0" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/generated/addressgetterGrpc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1209">
+          <caret line="41" column="22" lean-forward="false" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="140" column="30" lean-forward="true" selection-start-line="140" selection-start-column="30" selection-end-line="140" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#476#477#0" expanded="true" />
-            <element signature="e#522#523#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcControllerAddressGetter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#440#441#0" expanded="true" />
+            <element signature="e#486#487#0" expanded="true" />
           </folding>
         </state>
       </provider>

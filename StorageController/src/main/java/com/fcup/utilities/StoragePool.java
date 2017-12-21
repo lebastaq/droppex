@@ -7,10 +7,12 @@ import io.grpc.ManagedChannelBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class StoragePool {
     String ip;
     int port;
+    ManagedChannel grpcChannel;
 
     public List<String> chunks;
 
@@ -55,12 +57,30 @@ public class StoragePool {
     }
 
     public addressgetterGrpc.addressgetterBlockingStub buildBlockingStub() throws Exception{
+        shutDownGrpcChannel();
         System.out.println("Contacting " + ip + ":" + port);
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(ip, port)
+        grpcChannel = ManagedChannelBuilder.forAddress(ip, port)
                 .usePlaintext(true)
                 .build();
-        addressgetterGrpc.addressgetterBlockingStub blockingStub = addressgetterGrpc.newBlockingStub(channel);
+        addressgetterGrpc.addressgetterBlockingStub blockingStub = addressgetterGrpc.newBlockingStub(grpcChannel);
 
         return blockingStub;
+    }
+
+    // todo clean up
+    // extract to own class ?
+    private void shutDownGrpcChannel() {
+        if (grpcChannel != null) {
+            if(!grpcChannel.isShutdown()) {
+                grpcChannel.shutdownNow();
+                try {
+                    grpcChannel.awaitTermination(1000, TimeUnit.MICROSECONDS);
+                } catch (InterruptedException e) {
+                    System.out.println("Could not shutdown channel");
+                    e.printStackTrace();
+                }
+            }
+            grpcChannel = null;
+        }
     }
 }

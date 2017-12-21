@@ -14,11 +14,14 @@ public class StoragePoolRegisterer extends registererGrpc.registererImplBase {
     }
 
     @Override
-    public void register(PoolInfo request, StreamObserver<com.fcup.generated.PoolRegistrationStatus> responseObserver) {
+    public addressChangedStatus register(PoolInfo request, StreamObserver<PoolRegistrationStatus> responseObserver) {
+        System.out.println("Received new Registration message from pool...");
         Shard shardRegister = new Shard();
         shardRegister.changeKeyValue("shardID", "0");
         shardRegister.changeKeyValue("storagePoolPort", Integer.toString(request.getPort()));
         shardRegister.changeKeyValue("storagePoolIP", request.getIp());
         storagePoolsManager.sendMessage(shardRegister);
+
+        return addressChangedStatus.newBuilder().setOk(true).build();
     }
 }

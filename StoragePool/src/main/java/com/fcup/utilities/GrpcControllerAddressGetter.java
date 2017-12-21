@@ -5,7 +5,6 @@ import com.fcup.generated.*;
 import com.fcup.generated.addressChangedStatus;
 import com.fcup.generated.storageControllerInfo;
 import com.google.protobuf.InvalidProtocolBufferException;
-import io.grpc.stub.StreamObserver;
 
 public class GrpcControllerAddressGetter extends addressgetterGrpc.addressgetterImplBase{
     private StoragePool storagePool;
@@ -15,14 +14,15 @@ public class GrpcControllerAddressGetter extends addressgetterGrpc.addressgetter
         this.storagePool = storagePool;
     }
 
-    @Override
-    public void getAddress(storageControllerInfo request, StreamObserver<addressChangedStatus> responseObserver) {
+
+    public addressChangedStatus getAddress(storageControllerInfo request) {
+        System.out.println("Received request !");
         try {
-            responseObserver.onNext(changeAddress(request));
+            return changeAddress(request);
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
         }
-        responseObserver.onCompleted();
+        return null;
     }
 
     private addressChangedStatus changeAddress(storageControllerInfo request) throws InvalidProtocolBufferException {

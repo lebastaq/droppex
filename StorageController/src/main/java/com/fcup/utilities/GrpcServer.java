@@ -42,7 +42,7 @@ public class GrpcServer {
     }
 
     public storageControllerInfo buildSetIPAndPortRequest(String localIP) {
-        storageControllerInfo request = storageControllerInfo.newBuilder().setIp(localIP).setPort(port).build(); // todo host = storage pool - how to get it ?
+        storageControllerInfo request = storageControllerInfo.newBuilder().setIp(localIP).setPort(port).build();
         return request;
     }
 }

@@ -1,5 +1,7 @@
 package com.fcup.generated;
 
+import io.grpc.stub.StreamObserver;
+
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 import static io.grpc.stub.ClientCalls.asyncUnaryCall;
 import static io.grpc.stub.ClientCalls.blockingUnaryCall;
@@ -81,9 +83,10 @@ public final class registererGrpc {
 
     /**
      */
-    public void register(com.fcup.generated.PoolInfo request,
-        io.grpc.stub.StreamObserver<PoolRegistrationStatus> responseObserver) {
+    public addressChangedStatus register(PoolInfo request,
+                                         StreamObserver<PoolRegistrationStatus> responseObserver) {
       asyncUnimplementedUnaryCall(getRegisterMethod(), responseObserver);
+        return null;
     }
 
     @Override public final io.grpc.ServerServiceDefinition bindService() {
