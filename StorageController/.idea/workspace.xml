@@ -5,24 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e5f758d-a827-4174-b3c2-73d36543e8af" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/PoolInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/PoolInfoOrBuilder.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/PoolRegisterProto.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/PoolRegistrationStatus.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/PoolRegistrationStatusOrBuilder.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/addressChangedStatus.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/addressChangedStatusOrBuilder.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/addressgetterGrpc.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/controllerAddressGetter.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/registererGrpc.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/storageControllerInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/storageControllerInfoOrBuilder.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StorageController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StorageController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../StoragePool/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/StoragePool.iml" afterPath="$PROJECT_DIR$/../StoragePool/StoragePool.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/utilities/GrpcControllerAddressGetter.java" afterPath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/utilities/GrpcControllerAddressGetter.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -132,8 +116,8 @@
       <file leaf-file-name="StoragePoolsManager.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="805">
-              <caret line="95" column="26" lean-forward="false" selection-start-line="95" selection-start-column="26" selection-end-line="95" selection-end-column="26" />
+            <state relative-caret-position="584">
+              <caret line="82" column="57" lean-forward="true" selection-start-line="82" selection-start-column="57" selection-end-line="82" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1139,7 +1123,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3291592" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25849733" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25849733" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29516995" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.184375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1167,7 +1151,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/../../.." />
     </ignored-roots>
-    <MESSAGE value="Google cloud working (can add new instances)" />
     <MESSAGE value="better grpc management" />
     <MESSAGE value="Storage pool registration working" />
     <MESSAGE value="Added ability to run multiple grpc servers on one machine" />
@@ -1192,7 +1175,8 @@
     <MESSAGE value="added exception handling, still can't connect to storage pools" />
     <MESSAGE value="Added return values to grpc" />
     <MESSAGE value="Modified grpc code&#10;Cleaned up useless classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modified grpc code&#10;Cleaned up useless classes" />
+    <MESSAGE value="Master controller now contacts storage pool on new election" />
+    <option name="LAST_COMMIT_MESSAGE" value="Master controller now contacts storage pool on new election" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1550,8 +1534,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fcup/StoragePoolsManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="805">
-          <caret line="95" column="26" lean-forward="false" selection-start-line="95" selection-start-column="26" selection-end-line="95" selection-end-column="26" />
+        <state relative-caret-position="584">
+          <caret line="82" column="57" lean-forward="true" selection-start-line="82" selection-start-column="57" selection-end-line="82" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

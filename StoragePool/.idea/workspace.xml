@@ -5,24 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="895aba22-be9a-4d7f-8166-785ff6181618" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/generated/PoolInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/generated/PoolInfoOrBuilder.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/generated/PoolRegisterProto.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/generated/PoolRegistrationStatus.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/generated/PoolRegistrationStatusOrBuilder.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/generated/addressChangedStatus.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/generated/addressChangedStatusOrBuilder.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/generated/addressgetterGrpc.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/generated/controllerAddressGetter.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/generated/registererGrpc.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/generated/storageControllerInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/generated/storageControllerInfoOrBuilder.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../StorageController/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StorageController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StoragePoolsManager.java" afterPath="$PROJECT_DIR$/../StorageController/src/main/java/com/fcup/StoragePoolsManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StoragePool.iml" afterPath="$PROJECT_DIR$/StoragePool.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcControllerAddressGetter.java" afterPath="$PROJECT_DIR$/src/main/java/com/fcup/utilities/GrpcControllerAddressGetter.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -761,7 +745,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513863670963</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Storage pool now gets contacted by master controller on new election">
+      <created>1513880250752</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1513880250752</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -850,7 +841,8 @@
     <MESSAGE value="Deleted old classes no longer used" />
     <MESSAGE value="deleted old tests - need to rewrite them..." />
     <MESSAGE value="added grpc stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="added grpc stuff" />
+    <MESSAGE value="Storage pool now gets contacted by master controller on new election" />
+    <option name="LAST_COMMIT_MESSAGE" value="Storage pool now gets contacted by master controller on new election" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
