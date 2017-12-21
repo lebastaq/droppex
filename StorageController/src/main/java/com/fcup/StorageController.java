@@ -8,6 +8,8 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import org.jgroups.View;
 
+import java.net.UnknownHostException;
+
 public class StorageController extends StoragePoolsManager {
     String user_name = System.getProperty("user.name", "n/a");
     GrpcServer grpcServer;
@@ -46,6 +48,7 @@ public class StorageController extends StoragePoolsManager {
     }
 
     private void sendMasterIPAndPortToStoragePools() {
+        System.out.println("... will now contact storage pools");
         for (StoragePool storagePool : storagePools) {
             storageControllerInfo request = grpcServer.buildSetIPAndPortRequest(localIP);
             try {
@@ -53,7 +56,7 @@ public class StorageController extends StoragePoolsManager {
 
                 blockingStub.setAddress(request);
                 System.out.println("Sent new address to storage pool !");
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException|UnknownHostException e) {
                 System.out.println("Could not connect: Invalid storage pool name");
             } catch (StatusRuntimeException e) {
                 System.out.println("Could not connect: pool unavailable");

@@ -23,7 +23,6 @@ public class GrpcControllerAddressGetter extends addressgetterGrpc.addressgetter
     }
 
     private addressChangedStatus changeMasterController(storageControllerInfo request) {
-        System.out.println("Received request !");
         try {
             return changeAddress(request);
         } catch (InvalidProtocolBufferException e) {

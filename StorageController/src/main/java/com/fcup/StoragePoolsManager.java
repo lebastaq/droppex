@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.fcup.utilities.*;
-import com.fcup.generated.*;
 
 public class StoragePoolsManager extends ReceiverAdapter {
 
