@@ -1,11 +1,14 @@
 package com.fcup;
 
+import com.fcup.utilities.StoragePool;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.jgroups.util.Util.assertEquals;
 import static org.junit.Assert.*;
@@ -14,13 +17,26 @@ public class StoragePoolsManagerTest {
     private StoragePoolsManager storagePoolsManager;
 
     @Before
-    public void createStateSynchronizer() {
+    public void initStoragePool() {
+        storagePoolsManager = createStoragePool();
+    }
+
+    private StoragePoolsManager createStoragePool() {
+        StoragePoolsManager storagePoolManagerLocal = null;
         try {
-            storagePoolsManager = new StoragePoolsManager();
+            String data = "127.0.0.1";
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+
+            Scanner sc = new Scanner(System.in);
+
+            storagePoolManagerLocal = new StoragePoolsManager(sc);
+            System.out.println("OK");
         } catch (Exception e) {
-            System.err.println("Could not create storagePoolsManager controller:");
+            System.err.println("Could not create storage controller:");
             e.printStackTrace();
         }
+
+        return storagePoolManagerLocal;
     }
 
     @Test
@@ -51,18 +67,18 @@ public class StoragePoolsManagerTest {
 
     @Test
     public void retrieveStateWithoutException() throws Exception {
-        StorageController storageController2 = new StorageController();
+        StoragePoolsManager storagePoolsManager2 = createStoragePool();
         try {
-            storagePoolsManager.connectToChannel();
-            storagePoolsManager.sync();
+            this.storagePoolsManager.connectToChannel();
+            this.storagePoolsManager.sync();
             // TODO something with the IP adress...
-            storageController2.connectToChannel();
-            storageController2.sync();
+            storagePoolsManager2.connectToChannel();
+            storagePoolsManager2.sync();
         } catch (Exception e) {
             e.printStackTrace();
             fail("Could not sync state");
         }
-        storageController2.disconnectFromChannel();
+        storagePoolsManager2.disconnectFromChannel();
     }
 
     @Test
