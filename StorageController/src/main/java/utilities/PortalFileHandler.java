@@ -23,10 +23,10 @@ public class PortalFileHandler implements Runnable {
             String filename = in.readLine();
 
             if (action.equals("upload")) {
-                receiveUpload(in, out, filename);
+                receiveUpload(filename);
 
             } else if (action.equals("download")) {
-                sendDownload(in, os, out, filename);
+                sendDownload(os, filename);
 
             } else {
                 out.println("Error: Operation not supported. Need 'upload' or 'download'");
@@ -38,11 +38,11 @@ public class PortalFileHandler implements Runnable {
         }
     }
 
-    private void receiveUpload(BufferedReader in, PrintWriter out, String filename) throws IOException {
+    private void receiveUpload(String filename) throws IOException {
         try (DataInputStream dis = new DataInputStream(socket.getInputStream());
              FileOutputStream fos = new FileOutputStream(TEMP_FILE_DIR + filename)) {
 
-            byte[] contents = new byte[10*1024*1024];
+            byte[] contents = new byte[1024*1024];
             int bytesRead;
 
             while ((bytesRead = dis.read(contents)) > 0) {
@@ -55,15 +55,13 @@ public class PortalFileHandler implements Runnable {
         }
     }
 
-    private void sendDownload(BufferedReader in, OutputStream os, PrintWriter out, String filename) throws IOException {
-        String fileName = in.readLine();
-
+    private void sendDownload(OutputStream os, String filename) throws IOException {
         /*
         TODO:
         Get the shards from the Storage Pools and encode them before continuing
          */
 
-        File outgoingFile = new File(TEMP_FILE_DIR + fileName);
+        File outgoingFile = new File(TEMP_FILE_DIR + filename);
 
         try(FileInputStream fis = new FileInputStream(outgoingFile);
             FileChannel ch = fis.getChannel()) {

@@ -31,7 +31,7 @@ public class StorageController extends StoragePoolsManager {
         psThread.start();
 
         grpcServer.startGrpcServer(this);
-        eventLoop();
+//        eventLoop();
     }
 
     private void eventLoop() throws Exception {
