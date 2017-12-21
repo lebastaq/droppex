@@ -1,10 +1,12 @@
 package com.fcup;
 
 import utilities.GrpcServer;
+import utilities.PortalServer;
 
 public class StorageController extends StoragePoolsManager {
     String user_name = System.getProperty("user.name", "n/a");
     GrpcServer grpcServer;
+    PortalServer portalServer;
 
     public static void main(String[] args) {
         try {
@@ -20,9 +22,14 @@ public class StorageController extends StoragePoolsManager {
     public StorageController() throws Exception {
         super();
         grpcServer = new GrpcServer();
+        portalServer = new PortalServer();
+
     }
 
     public void start() throws Exception {
+        Thread psThread = new Thread(portalServer, "AppServer File Transfer Thread");
+        psThread.start();
+
         grpcServer.startGrpcServer(this);
         eventLoop();
     }
