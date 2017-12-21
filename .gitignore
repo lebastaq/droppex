@@ -48,3 +48,5 @@ dummy.go
 # intellij
 .idea
 .idea/*
+
+*.lst
