@@ -5,13 +5,13 @@ import com.fcup.generated.storageControllerInfo;
 import io.grpc.ServerBuilder;
 
 public class GrpcServer {
-    int port = 50100;
+    private int port = 50100;
     private io.grpc.Server server = null;
 
     public GrpcServer() {
     }
 
-    public void startGrpcServer(StoragePoolsManager storagePoolsManager) throws Exception {
+    public void startGrpcServer(StoragePoolsManager storagePoolsManager) {
         do {
             try {
                 server = ServerBuilder.forPort(port)
@@ -42,7 +42,6 @@ public class GrpcServer {
     }
 
     public storageControllerInfo buildSetIPAndPortRequest(String localIP) {
-        storageControllerInfo request = storageControllerInfo.newBuilder().setIp(localIP).setPort(port).build();
-        return request;
+        return storageControllerInfo.newBuilder().setIp(localIP).setPort(port).build();
     }
 }

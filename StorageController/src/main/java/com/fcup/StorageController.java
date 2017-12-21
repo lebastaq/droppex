@@ -3,19 +3,14 @@ package com.fcup;
 import com.fcup.generated.addressgetterGrpc;
 import com.fcup.generated.storageControllerInfo;
 import com.fcup.utilities.*;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import org.jgroups.View;
 
 import java.net.UnknownHostException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class StorageController extends StoragePoolsManager {
-    String user_name = System.getProperty("user.name", "n/a");
-    GrpcServer grpcServer;
+    private GrpcServer grpcServer;
 
     public static void main(String[] args) {
         try {
@@ -39,7 +34,7 @@ public class StorageController extends StoragePoolsManager {
         grpcServer = new GrpcServer();
     }
 
-    public void start() throws Exception {
+    private void start() throws Exception {
         grpcServer.startGrpcServer(this);
         eventLoop();
     }
@@ -65,7 +60,7 @@ public class StorageController extends StoragePoolsManager {
 
                 blockingStub.setAddress(request);
                 System.out.println("Sent new address to storage pool !");
-            } catch (IllegalArgumentException|UnknownHostException e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println("Could not connect: Invalid storage pool name");
             } catch (StatusRuntimeException e) {
                 System.out.println("Could not connect: pool unavailable");

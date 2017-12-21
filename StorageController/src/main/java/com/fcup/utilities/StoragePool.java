@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class StoragePool {
-    String ip;
-    int port;
-    ManagedChannel grpcChannel;
+    private String ip;
+    private int port;
+    private ManagedChannel grpcChannel;
 
-    public List<String> chunks;
+    public final List<String> chunks;
 
     public StoragePool(String ip, int port) {
         this();
@@ -30,7 +30,7 @@ public class StoragePool {
             addChunkNotNull(shardID);
     }
 
-    public void addChunkNotNull(String shardID) {
+    private void addChunkNotNull(String shardID) {
         if(!chunks.contains(shardID)) {
             chunks.add(shardID);
             System.out.println("Saving shard " + shardID +" to local storage - pool " + ip + ":" + port);
@@ -47,23 +47,18 @@ public class StoragePool {
         return (n == chunks.size());
     }
 
-    public boolean containsChunk(String chunk) {
-        return chunks.contains(chunk);
-    }
-
     public boolean hasIPAndPort(String storagePoolIP, int storagePoolPort) {
         return ((ip.equals(storagePoolIP)) && (port == storagePoolPort));
     }
 
-    public addressgetterGrpc.addressgetterBlockingStub buildBlockingStub() throws Exception{
+    public addressgetterGrpc.addressgetterBlockingStub buildBlockingStub() {
         shutDownGrpcChannel();
         System.out.println("Contacting " + ip + ":" + port);
         grpcChannel = ManagedChannelBuilder.forAddress(ip, port)
                 .usePlaintext(true)
                 .build();
-        addressgetterGrpc.addressgetterBlockingStub blockingStub = addressgetterGrpc.newBlockingStub(grpcChannel);
 
-        return blockingStub;
+        return addressgetterGrpc.newBlockingStub(grpcChannel);
     }
 
     // todo clean up

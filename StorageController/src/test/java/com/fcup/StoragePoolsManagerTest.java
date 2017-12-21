@@ -1,6 +1,5 @@
 package com.fcup;
 
-import com.fcup.utilities.StoragePool;
 import org.junit.Before;
 import org.junit.Test;
 

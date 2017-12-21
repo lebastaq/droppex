@@ -18,11 +18,11 @@ public class StoragePoolsManager extends ReceiverAdapter {
     ShardManager shardManager;
     boolean isLeader = false;
     List<StoragePool> storagePools;
-    static String CONFIG_FILE = "config.xml"; /* google_config.xml */
-    protected String localIP;
+    private static String CONFIG_FILE = "config.xml"; /* google_config.xml */
+    String localIP;
 
     // todo pattern ?
-    public StoragePoolsManager() throws Exception {
+    StoragePoolsManager() throws Exception {
         this(CONFIG_FILE);
     }
 
@@ -30,12 +30,12 @@ public class StoragePoolsManager extends ReceiverAdapter {
         this(CONFIG_FILE, sc);
     }
 
-    public StoragePoolsManager(String CONFIG_FILE) throws Exception {
+    private StoragePoolsManager(String CONFIG_FILE) throws Exception {
         this(CONFIG_FILE, new Scanner(System.in));
     }
 
-    public StoragePoolsManager(String CONFIG_FILE, Scanner sc) throws Exception {
-        this.CONFIG_FILE = CONFIG_FILE;
+    private StoragePoolsManager(String CONFIG_FILE, Scanner sc) throws Exception {
+        StoragePoolsManager.CONFIG_FILE = CONFIG_FILE;
         jgroupsChannel = new JChannel(CONFIG_FILE).setReceiver(this);
         shardManager = new ShardManager();
         storagePools = new ArrayList<>();
@@ -64,7 +64,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
         electNewLeader();
     }
 
-    public void electNewLeader() {
+    private void electNewLeader() {
         View view = jgroupsChannel.getView();
         Address address = view.getMembers()
                 .get(0);

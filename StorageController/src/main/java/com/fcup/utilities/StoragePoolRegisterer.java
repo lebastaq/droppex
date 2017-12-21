@@ -5,7 +5,7 @@ import com.fcup.generated.*;
 import io.grpc.stub.StreamObserver;
 
 // TODO
-public class StoragePoolRegisterer extends registererGrpc.registererImplBase {
+class StoragePoolRegisterer extends registererGrpc.registererImplBase {
 
     private final StoragePoolsManager storagePoolsManager;
 

@@ -12,13 +12,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-import static org.jgroups.util.Util.assertEquals;
 import static org.junit.Assert.fail;
 
 public class StorageControllerTest {
     private StorageController storageController;
-    DbManager dbManager;
-    String dbName = "dummy-dbName";
+    private DbManager dbManager;
+    private final String dbName = "dummy-dbName";
 
     @Before
     public void initSingleController() {
@@ -55,13 +54,6 @@ public class StorageControllerTest {
         }
 
         return storageControllerLocal;
-    }
-
-
-
-    @Test
-    public void createDBFileIfNotExists() throws Exception {
-
     }
 
 
