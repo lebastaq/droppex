@@ -36,7 +36,7 @@ public final class controllerAddressGetter {
       "\n\035controllerAddressGetter.proto\022\022com.fcu" +
       "p.generated\"1\n\025storageControllerInfo\022\n\n\002" +
       "ip\030\001 \001(\t\022\014\n\004port\030\002 \001(\005\"\"\n\024addressChanged" +
-      "Status\022\n\n\002ok\030\001 \001(\0102t\n\raddressgetter\022c\n\nG" +
+      "Status\022\n\n\002ok\030\001 \001(\0102t\n\raddressgetter\022c\n\nS" +
       "etAddress\022).com.fcup.generated.storageCo" +
       "ntrollerInfo\032(.com.fcup.generated.addres" +
       "sChangedStatus\"\000B!B\027controllerAddressGet" +

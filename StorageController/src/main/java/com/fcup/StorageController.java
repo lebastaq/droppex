@@ -1,7 +1,6 @@
 package com.fcup;
 
 import com.fcup.generated.addressgetterGrpc;
-import com.fcup.generated.registererGrpc;
 import com.fcup.generated.storageControllerInfo;
 import com.fcup.utilities.*;
 import io.grpc.ManagedChannel;
@@ -35,12 +34,6 @@ public class StorageController extends StoragePoolsManager {
     }
 
     private void eventLoop() throws Exception {
-        Shard shard = new Shard();
-        shard.changeKeyValue("shardID", Integer.toString((int)(Math.random()*20)));
-        shard.changeKeyValue("storagePoolIP", "dummy 2");
-        sendMessage(shard);
-        System.out.println("Sent shard: " + shard.asJSONString());
-
         System.in.read();
     }
 

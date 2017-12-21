@@ -1,4 +1,4 @@
-syntax = "proto3";super.getAddress(request, responseObserver);
+syntax = "proto3";
 
 // to build: mvn clean install
 

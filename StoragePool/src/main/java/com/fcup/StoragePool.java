@@ -20,7 +20,7 @@ public class StoragePool {
     private io.grpc.Server server;
     private String localIPAdress;
     private int localGrpcPort;
-    private int remoteControllerPort = 50100;
+    private int remoteControllerPort = 50100; // TODO ask this as well - or keep as default ?...
     private ManagedChannel grpcChannel;
     private registererGrpc.registererBlockingStub blockingStub;
     private String remoteControllerAddress;
@@ -141,7 +141,8 @@ public class StoragePool {
             setUpGrpcClient();
             blockingStub = registererGrpc.newBlockingStub(grpcChannel);
             try {
-                blockingStub.register(request);
+                PoolRegistrationStatus status = blockingStub.register(request);
+                System.out.println("Answer: " + status.getOk());
                 connected = true;
             } catch (StatusRuntimeException e) {
                 System.out.println("Failed registering, will now try again...");

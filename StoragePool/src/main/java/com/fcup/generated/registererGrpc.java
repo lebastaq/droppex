@@ -1,18 +1,10 @@
 package com.fcup.generated;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
-import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
-import static io.grpc.stub.ClientCalls.asyncClientStreamingCall;
-import static io.grpc.stub.ClientCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ClientCalls.asyncUnaryCall;
-import static io.grpc.stub.ClientCalls.blockingServerStreamingCall;
 import static io.grpc.stub.ClientCalls.blockingUnaryCall;
 import static io.grpc.stub.ClientCalls.futureUnaryCall;
-import static io.grpc.stub.ServerCalls.asyncBidiStreamingCall;
-import static io.grpc.stub.ServerCalls.asyncClientStreamingCall;
-import static io.grpc.stub.ServerCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnaryCall;
-import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 /**
@@ -28,30 +20,30 @@ public final class registererGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  @java.lang.Deprecated // Use {@link #getRegisterMethod()} instead. 
-  public static final io.grpc.MethodDescriptor<com.fcup.generated.PoolInfo,
-      com.fcup.generated.PoolRegistrationStatus> METHOD_REGISTER = getRegisterMethod();
+  @Deprecated // Use {@link #getRegisterMethod()} instead.
+  public static final io.grpc.MethodDescriptor<PoolInfo,
+      PoolRegistrationStatus> METHOD_REGISTER = getRegisterMethod();
 
-  private static volatile io.grpc.MethodDescriptor<com.fcup.generated.PoolInfo,
-      com.fcup.generated.PoolRegistrationStatus> getRegisterMethod;
+  private static volatile io.grpc.MethodDescriptor<PoolInfo,
+      PoolRegistrationStatus> getRegisterMethod;
 
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static io.grpc.MethodDescriptor<com.fcup.generated.PoolInfo,
-      com.fcup.generated.PoolRegistrationStatus> getRegisterMethod() {
-    io.grpc.MethodDescriptor<com.fcup.generated.PoolInfo, com.fcup.generated.PoolRegistrationStatus> getRegisterMethod;
+  public static io.grpc.MethodDescriptor<PoolInfo,
+      PoolRegistrationStatus> getRegisterMethod() {
+    io.grpc.MethodDescriptor<PoolInfo, PoolRegistrationStatus> getRegisterMethod;
     if ((getRegisterMethod = registererGrpc.getRegisterMethod) == null) {
       synchronized (registererGrpc.class) {
         if ((getRegisterMethod = registererGrpc.getRegisterMethod) == null) {
-          registererGrpc.getRegisterMethod = getRegisterMethod = 
-              io.grpc.MethodDescriptor.<com.fcup.generated.PoolInfo, com.fcup.generated.PoolRegistrationStatus>newBuilder()
+          registererGrpc.getRegisterMethod = getRegisterMethod =
+              io.grpc.MethodDescriptor.<PoolInfo, PoolRegistrationStatus>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "com.fcup.generated.registerer", "Register"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.fcup.generated.PoolInfo.getDefaultInstance()))
+                  PoolInfo.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.fcup.generated.PoolRegistrationStatus.getDefaultInstance()))
+                  PoolRegistrationStatus.getDefaultInstance()))
                   .setSchemaDescriptor(new registererMethodDescriptorSupplier("Register"))
                   .build();
           }
@@ -89,19 +81,19 @@ public final class registererGrpc {
 
     /**
      */
-    public void register(com.fcup.generated.PoolInfo request,
-        io.grpc.stub.StreamObserver<com.fcup.generated.PoolRegistrationStatus> responseObserver) {
+    public void register(PoolInfo request,
+        io.grpc.stub.StreamObserver<PoolRegistrationStatus> responseObserver) {
       asyncUnimplementedUnaryCall(getRegisterMethod(), responseObserver);
     }
 
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+    @Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             getRegisterMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.fcup.generated.PoolInfo,
-                com.fcup.generated.PoolRegistrationStatus>(
+                PoolInfo,
+                PoolRegistrationStatus>(
                   this, METHODID_REGISTER)))
           .build();
     }
@@ -119,7 +111,7 @@ public final class registererGrpc {
       super(channel, callOptions);
     }
 
-    @java.lang.Override
+    @Override
     protected registererStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new registererStub(channel, callOptions);
@@ -127,8 +119,8 @@ public final class registererGrpc {
 
     /**
      */
-    public void register(com.fcup.generated.PoolInfo request,
-        io.grpc.stub.StreamObserver<com.fcup.generated.PoolRegistrationStatus> responseObserver) {
+    public void register(PoolInfo request,
+        io.grpc.stub.StreamObserver<PoolRegistrationStatus> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getRegisterMethod(), getCallOptions()), request, responseObserver);
     }
@@ -146,7 +138,7 @@ public final class registererGrpc {
       super(channel, callOptions);
     }
 
-    @java.lang.Override
+    @Override
     protected registererBlockingStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new registererBlockingStub(channel, callOptions);
@@ -154,7 +146,7 @@ public final class registererGrpc {
 
     /**
      */
-    public com.fcup.generated.PoolRegistrationStatus register(com.fcup.generated.PoolInfo request) {
+    public PoolRegistrationStatus register(PoolInfo request) {
       return blockingUnaryCall(
           getChannel(), getRegisterMethod(), getCallOptions(), request);
     }
@@ -172,7 +164,7 @@ public final class registererGrpc {
       super(channel, callOptions);
     }
 
-    @java.lang.Override
+    @Override
     protected registererFutureStub build(io.grpc.Channel channel,
         io.grpc.CallOptions callOptions) {
       return new registererFutureStub(channel, callOptions);
@@ -180,8 +172,8 @@ public final class registererGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.fcup.generated.PoolRegistrationStatus> register(
-        com.fcup.generated.PoolInfo request) {
+    public com.google.common.util.concurrent.ListenableFuture<PoolRegistrationStatus> register(
+        PoolInfo request) {
       return futureUnaryCall(
           getChannel().newCall(getRegisterMethod(), getCallOptions()), request);
     }
@@ -202,21 +194,21 @@ public final class registererGrpc {
       this.methodId = methodId;
     }
 
-    @java.lang.Override
-    @java.lang.SuppressWarnings("unchecked")
+    @Override
+    @SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_REGISTER:
-          serviceImpl.register((com.fcup.generated.PoolInfo) request,
-              (io.grpc.stub.StreamObserver<com.fcup.generated.PoolRegistrationStatus>) responseObserver);
+          serviceImpl.register((PoolInfo) request,
+              (io.grpc.stub.StreamObserver<PoolRegistrationStatus>) responseObserver);
           break;
         default:
           throw new AssertionError();
       }
     }
 
-    @java.lang.Override
-    @java.lang.SuppressWarnings("unchecked")
+    @Override
+    @SuppressWarnings("unchecked")
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
@@ -230,12 +222,12 @@ public final class registererGrpc {
       implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
     registererBaseDescriptorSupplier() {}
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return com.fcup.generated.PoolRegisterProto.getDescriptor();
+      return PoolRegisterProto.getDescriptor();
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.ServiceDescriptor getServiceDescriptor() {
       return getFileDescriptor().findServiceByName("registerer");
     }
@@ -255,7 +247,7 @@ public final class registererGrpc {
       this.methodName = methodName;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.MethodDescriptor getMethodDescriptor() {
       return getServiceDescriptor().findMethodByName(methodName);
     }

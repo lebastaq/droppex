@@ -19,7 +19,7 @@ private static final long serialVersionUID = 0L;
     ok_ = false;
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -30,7 +30,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -69,14 +69,14 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.fcup.generated.PoolRegisterProto.internal_static_com_fcup_generated_PoolRegistrationStatus_descriptor;
+    return PoolRegisterProto.internal_static_com_fcup_generated_PoolRegistrationStatus_descriptor;
   }
 
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.fcup.generated.PoolRegisterProto.internal_static_com_fcup_generated_PoolRegistrationStatus_fieldAccessorTable
+    return PoolRegisterProto.internal_static_com_fcup_generated_PoolRegistrationStatus_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.fcup.generated.PoolRegistrationStatus.class, com.fcup.generated.PoolRegistrationStatus.Builder.class);
+            PoolRegistrationStatus.class, PoolRegistrationStatus.Builder.class);
   }
 
   public static final int OK_FIELD_NUMBER = 1;
@@ -120,15 +120,15 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.fcup.generated.PoolRegistrationStatus)) {
+    if (!(obj instanceof PoolRegistrationStatus)) {
       return super.equals(obj);
     }
-    com.fcup.generated.PoolRegistrationStatus other = (com.fcup.generated.PoolRegistrationStatus) obj;
+    PoolRegistrationStatus other = (PoolRegistrationStatus) obj;
 
     boolean result = true;
     result = result && (getOk()
@@ -137,7 +137,7 @@ private static final long serialVersionUID = 0L;
     return result;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -152,69 +152,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.fcup.generated.PoolRegistrationStatus parseFrom(
+  public static PoolRegistrationStatus parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.fcup.generated.PoolRegistrationStatus parseFrom(
+  public static PoolRegistrationStatus parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.fcup.generated.PoolRegistrationStatus parseFrom(
+  public static PoolRegistrationStatus parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.fcup.generated.PoolRegistrationStatus parseFrom(
+  public static PoolRegistrationStatus parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.fcup.generated.PoolRegistrationStatus parseFrom(byte[] data)
+  public static PoolRegistrationStatus parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.fcup.generated.PoolRegistrationStatus parseFrom(
+  public static PoolRegistrationStatus parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.fcup.generated.PoolRegistrationStatus parseFrom(java.io.InputStream input)
+  public static PoolRegistrationStatus parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.fcup.generated.PoolRegistrationStatus parseFrom(
+  public static PoolRegistrationStatus parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.fcup.generated.PoolRegistrationStatus parseDelimitedFrom(java.io.InputStream input)
+  public static PoolRegistrationStatus parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.fcup.generated.PoolRegistrationStatus parseDelimitedFrom(
+  public static PoolRegistrationStatus parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.fcup.generated.PoolRegistrationStatus parseFrom(
+  public static PoolRegistrationStatus parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.fcup.generated.PoolRegistrationStatus parseFrom(
+  public static PoolRegistrationStatus parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -226,7 +226,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.fcup.generated.PoolRegistrationStatus prototype) {
+  public static Builder newBuilder(PoolRegistrationStatus prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   public Builder toBuilder() {
@@ -234,9 +234,9 @@ private static final long serialVersionUID = 0L;
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -246,17 +246,17 @@ private static final long serialVersionUID = 0L;
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
       // @@protoc_insertion_point(builder_implements:com.fcup.generated.PoolRegistrationStatus)
-      com.fcup.generated.PoolRegistrationStatusOrBuilder {
+      PoolRegistrationStatusOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.fcup.generated.PoolRegisterProto.internal_static_com_fcup_generated_PoolRegistrationStatus_descriptor;
+      return PoolRegisterProto.internal_static_com_fcup_generated_PoolRegistrationStatus_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.fcup.generated.PoolRegisterProto.internal_static_com_fcup_generated_PoolRegistrationStatus_fieldAccessorTable
+      return PoolRegisterProto.internal_static_com_fcup_generated_PoolRegistrationStatus_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.fcup.generated.PoolRegistrationStatus.class, com.fcup.generated.PoolRegistrationStatus.Builder.class);
+              PoolRegistrationStatus.class, PoolRegistrationStatus.Builder.class);
     }
 
     // Construct using com.fcup.generated.PoolRegistrationStatus.newBuilder()
@@ -265,7 +265,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -283,23 +283,23 @@ private static final long serialVersionUID = 0L;
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.fcup.generated.PoolRegisterProto.internal_static_com_fcup_generated_PoolRegistrationStatus_descriptor;
+      return PoolRegisterProto.internal_static_com_fcup_generated_PoolRegistrationStatus_descriptor;
     }
 
-    public com.fcup.generated.PoolRegistrationStatus getDefaultInstanceForType() {
-      return com.fcup.generated.PoolRegistrationStatus.getDefaultInstance();
+    public PoolRegistrationStatus getDefaultInstanceForType() {
+      return PoolRegistrationStatus.getDefaultInstance();
     }
 
-    public com.fcup.generated.PoolRegistrationStatus build() {
-      com.fcup.generated.PoolRegistrationStatus result = buildPartial();
+    public PoolRegistrationStatus build() {
+      PoolRegistrationStatus result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    public com.fcup.generated.PoolRegistrationStatus buildPartial() {
-      com.fcup.generated.PoolRegistrationStatus result = new com.fcup.generated.PoolRegistrationStatus(this);
+    public PoolRegistrationStatus buildPartial() {
+      PoolRegistrationStatus result = new PoolRegistrationStatus(this);
       result.ok_ = ok_;
       onBuilt();
       return result;
@@ -310,7 +310,7 @@ private static final long serialVersionUID = 0L;
     }
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
+        Object value) {
       return (Builder) super.setField(field, value);
     }
     public Builder clearField(
@@ -323,25 +323,25 @@ private static final long serialVersionUID = 0L;
     }
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
+        int index, Object value) {
       return (Builder) super.setRepeatedField(field, index, value);
     }
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
+        Object value) {
       return (Builder) super.addRepeatedField(field, value);
     }
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.fcup.generated.PoolRegistrationStatus) {
-        return mergeFrom((com.fcup.generated.PoolRegistrationStatus)other);
+      if (other instanceof PoolRegistrationStatus) {
+        return mergeFrom((PoolRegistrationStatus)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.fcup.generated.PoolRegistrationStatus other) {
-      if (other == com.fcup.generated.PoolRegistrationStatus.getDefaultInstance()) return this;
+    public Builder mergeFrom(PoolRegistrationStatus other) {
+      if (other == PoolRegistrationStatus.getDefaultInstance()) return this;
       if (other.getOk() != false) {
         setOk(other.getOk());
       }
@@ -358,11 +358,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.fcup.generated.PoolRegistrationStatus parsedMessage = null;
+      PoolRegistrationStatus parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.fcup.generated.PoolRegistrationStatus) e.getUnfinishedMessage();
+        parsedMessage = (PoolRegistrationStatus) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -383,7 +383,7 @@ private static final long serialVersionUID = 0L;
      * <code>bool ok = 1;</code>
      */
     public Builder setOk(boolean value) {
-      
+
       ok_ = value;
       onChanged();
       return this;
@@ -392,7 +392,7 @@ private static final long serialVersionUID = 0L;
      * <code>bool ok = 1;</code>
      */
     public Builder clearOk() {
-      
+
       ok_ = false;
       onChanged();
       return this;
@@ -412,12 +412,12 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:com.fcup.generated.PoolRegistrationStatus)
-  private static final com.fcup.generated.PoolRegistrationStatus DEFAULT_INSTANCE;
+  private static final PoolRegistrationStatus DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.fcup.generated.PoolRegistrationStatus();
+    DEFAULT_INSTANCE = new PoolRegistrationStatus();
   }
 
-  public static com.fcup.generated.PoolRegistrationStatus getDefaultInstance() {
+  public static PoolRegistrationStatus getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
@@ -435,12 +435,12 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<PoolRegistrationStatus> getParserForType() {
     return PARSER;
   }
 
-  public com.fcup.generated.PoolRegistrationStatus getDefaultInstanceForType() {
+  public PoolRegistrationStatus getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

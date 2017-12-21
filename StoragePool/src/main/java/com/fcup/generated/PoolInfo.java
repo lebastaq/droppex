@@ -20,7 +20,7 @@ private static final long serialVersionUID = 0L;
     port_ = 0;
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -31,7 +31,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -52,7 +52,7 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             ip_ = s;
             break;
@@ -76,29 +76,29 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.fcup.generated.PoolRegisterProto.internal_static_com_fcup_generated_PoolInfo_descriptor;
+    return PoolRegisterProto.internal_static_com_fcup_generated_PoolInfo_descriptor;
   }
 
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.fcup.generated.PoolRegisterProto.internal_static_com_fcup_generated_PoolInfo_fieldAccessorTable
+    return PoolRegisterProto.internal_static_com_fcup_generated_PoolInfo_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.fcup.generated.PoolInfo.class, com.fcup.generated.PoolInfo.Builder.class);
+            PoolInfo.class, PoolInfo.Builder.class);
   }
 
   public static final int IP_FIELD_NUMBER = 1;
-  private volatile java.lang.Object ip_;
+  private volatile Object ip_;
   /**
    * <code>string ip = 1;</code>
    */
-  public java.lang.String getIp() {
-    java.lang.Object ref = ip_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getIp() {
+    Object ref = ip_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
-      com.google.protobuf.ByteString bs = 
+      com.google.protobuf.ByteString bs =
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       ip_ = s;
       return s;
     }
@@ -108,11 +108,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getIpBytes() {
-    java.lang.Object ref = ip_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
+    Object ref = ip_;
+    if (ref instanceof String) {
+      com.google.protobuf.ByteString b =
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       ip_ = b;
       return b;
     } else {
@@ -167,15 +167,15 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.fcup.generated.PoolInfo)) {
+    if (!(obj instanceof PoolInfo)) {
       return super.equals(obj);
     }
-    com.fcup.generated.PoolInfo other = (com.fcup.generated.PoolInfo) obj;
+    PoolInfo other = (PoolInfo) obj;
 
     boolean result = true;
     result = result && getIp()
@@ -186,7 +186,7 @@ private static final long serialVersionUID = 0L;
     return result;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -202,69 +202,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.fcup.generated.PoolInfo parseFrom(
+  public static PoolInfo parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.fcup.generated.PoolInfo parseFrom(
+  public static PoolInfo parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.fcup.generated.PoolInfo parseFrom(
+  public static PoolInfo parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.fcup.generated.PoolInfo parseFrom(
+  public static PoolInfo parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.fcup.generated.PoolInfo parseFrom(byte[] data)
+  public static PoolInfo parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.fcup.generated.PoolInfo parseFrom(
+  public static PoolInfo parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.fcup.generated.PoolInfo parseFrom(java.io.InputStream input)
+  public static PoolInfo parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.fcup.generated.PoolInfo parseFrom(
+  public static PoolInfo parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.fcup.generated.PoolInfo parseDelimitedFrom(java.io.InputStream input)
+  public static PoolInfo parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.fcup.generated.PoolInfo parseDelimitedFrom(
+  public static PoolInfo parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.fcup.generated.PoolInfo parseFrom(
+  public static PoolInfo parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.fcup.generated.PoolInfo parseFrom(
+  public static PoolInfo parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -276,7 +276,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.fcup.generated.PoolInfo prototype) {
+  public static Builder newBuilder(PoolInfo prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   public Builder toBuilder() {
@@ -284,9 +284,9 @@ private static final long serialVersionUID = 0L;
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -296,17 +296,17 @@ private static final long serialVersionUID = 0L;
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
       // @@protoc_insertion_point(builder_implements:com.fcup.generated.PoolInfo)
-      com.fcup.generated.PoolInfoOrBuilder {
+      PoolInfoOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.fcup.generated.PoolRegisterProto.internal_static_com_fcup_generated_PoolInfo_descriptor;
+      return PoolRegisterProto.internal_static_com_fcup_generated_PoolInfo_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.fcup.generated.PoolRegisterProto.internal_static_com_fcup_generated_PoolInfo_fieldAccessorTable
+      return PoolRegisterProto.internal_static_com_fcup_generated_PoolInfo_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.fcup.generated.PoolInfo.class, com.fcup.generated.PoolInfo.Builder.class);
+              PoolInfo.class, PoolInfo.Builder.class);
     }
 
     // Construct using com.fcup.generated.PoolInfo.newBuilder()
@@ -315,7 +315,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -335,23 +335,23 @@ private static final long serialVersionUID = 0L;
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.fcup.generated.PoolRegisterProto.internal_static_com_fcup_generated_PoolInfo_descriptor;
+      return PoolRegisterProto.internal_static_com_fcup_generated_PoolInfo_descriptor;
     }
 
-    public com.fcup.generated.PoolInfo getDefaultInstanceForType() {
-      return com.fcup.generated.PoolInfo.getDefaultInstance();
+    public PoolInfo getDefaultInstanceForType() {
+      return PoolInfo.getDefaultInstance();
     }
 
-    public com.fcup.generated.PoolInfo build() {
-      com.fcup.generated.PoolInfo result = buildPartial();
+    public PoolInfo build() {
+      PoolInfo result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    public com.fcup.generated.PoolInfo buildPartial() {
-      com.fcup.generated.PoolInfo result = new com.fcup.generated.PoolInfo(this);
+    public PoolInfo buildPartial() {
+      PoolInfo result = new PoolInfo(this);
       result.ip_ = ip_;
       result.port_ = port_;
       onBuilt();
@@ -363,7 +363,7 @@ private static final long serialVersionUID = 0L;
     }
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
+        Object value) {
       return (Builder) super.setField(field, value);
     }
     public Builder clearField(
@@ -376,25 +376,25 @@ private static final long serialVersionUID = 0L;
     }
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
+        int index, Object value) {
       return (Builder) super.setRepeatedField(field, index, value);
     }
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
+        Object value) {
       return (Builder) super.addRepeatedField(field, value);
     }
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.fcup.generated.PoolInfo) {
-        return mergeFrom((com.fcup.generated.PoolInfo)other);
+      if (other instanceof PoolInfo) {
+        return mergeFrom((PoolInfo)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.fcup.generated.PoolInfo other) {
-      if (other == com.fcup.generated.PoolInfo.getDefaultInstance()) return this;
+    public Builder mergeFrom(PoolInfo other) {
+      if (other == PoolInfo.getDefaultInstance()) return this;
       if (!other.getIp().isEmpty()) {
         ip_ = other.ip_;
         onChanged();
@@ -415,11 +415,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.fcup.generated.PoolInfo parsedMessage = null;
+      PoolInfo parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.fcup.generated.PoolInfo) e.getUnfinishedMessage();
+        parsedMessage = (PoolInfo) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -429,20 +429,20 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object ip_ = "";
+    private Object ip_ = "";
     /**
      * <code>string ip = 1;</code>
      */
-    public java.lang.String getIp() {
-      java.lang.Object ref = ip_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getIp() {
+      Object ref = ip_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         ip_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -450,11 +450,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getIpBytes() {
-      java.lang.Object ref = ip_;
+      Object ref = ip_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         ip_ = b;
         return b;
       } else {
@@ -465,11 +465,11 @@ private static final long serialVersionUID = 0L;
      * <code>string ip = 1;</code>
      */
     public Builder setIp(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
-  
+
       ip_ = value;
       onChanged();
       return this;
@@ -478,7 +478,7 @@ private static final long serialVersionUID = 0L;
      * <code>string ip = 1;</code>
      */
     public Builder clearIp() {
-      
+
       ip_ = getDefaultInstance().getIp();
       onChanged();
       return this;
@@ -492,7 +492,7 @@ private static final long serialVersionUID = 0L;
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-      
+
       ip_ = value;
       onChanged();
       return this;
@@ -509,7 +509,7 @@ private static final long serialVersionUID = 0L;
      * <code>int32 port = 2;</code>
      */
     public Builder setPort(int value) {
-      
+
       port_ = value;
       onChanged();
       return this;
@@ -518,7 +518,7 @@ private static final long serialVersionUID = 0L;
      * <code>int32 port = 2;</code>
      */
     public Builder clearPort() {
-      
+
       port_ = 0;
       onChanged();
       return this;
@@ -538,12 +538,12 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:com.fcup.generated.PoolInfo)
-  private static final com.fcup.generated.PoolInfo DEFAULT_INSTANCE;
+  private static final PoolInfo DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.fcup.generated.PoolInfo();
+    DEFAULT_INSTANCE = new PoolInfo();
   }
 
-  public static com.fcup.generated.PoolInfo getDefaultInstance() {
+  public static PoolInfo getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
@@ -561,12 +561,12 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<PoolInfo> getParserForType() {
     return PARSER;
   }
 
-  public com.fcup.generated.PoolInfo getDefaultInstanceForType() {
+  public PoolInfo getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

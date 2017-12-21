@@ -10,7 +10,7 @@ public interface PoolInfoOrBuilder extends
   /**
    * <code>string ip = 1;</code>
    */
-  java.lang.String getIp();
+  String getIp();
   /**
    * <code>string ip = 1;</code>
    */

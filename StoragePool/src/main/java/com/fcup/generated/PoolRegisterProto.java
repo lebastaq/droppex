@@ -32,7 +32,7 @@ public final class PoolRegisterProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\022poolregister.proto\022\022com.fcup.generated" +
       "\"$\n\010PoolInfo\022\n\n\002ip\030\001 \001(\t\022\014\n\004port\030\002 \001(\005\"$" +
       "\n\026PoolRegistrationStatus\022\n\n\002ok\030\001 \001(\0102d\n\n" +
@@ -58,13 +58,13 @@ public final class PoolRegisterProto {
     internal_static_com_fcup_generated_PoolInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_fcup_generated_PoolInfo_descriptor,
-        new java.lang.String[] { "Ip", "Port", });
+        new String[] { "Ip", "Port", });
     internal_static_com_fcup_generated_PoolRegistrationStatus_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_fcup_generated_PoolRegistrationStatus_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_fcup_generated_PoolRegistrationStatus_descriptor,
-        new java.lang.String[] { "Ok", });
+        new String[] { "Ok", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
