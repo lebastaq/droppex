@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
@@ -60,21 +61,21 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 
 // listHandler lists all files or files matching a pattern
 var listHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	token := r.Header.Get("Authorization")
+	// token := r.Header.Get("Authorization")
 
-	// Send message to Storage Controller asking for files
+	// // Send message to Storage Controller asking for files
 
-	json.NewEncoder(w).Encode(files)
+	// json.NewEncoder(w).Encode(files)
 })
 
 // searchHandler lists all files matching a pattern
 var searchHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	token := r.Header.Get("Authorization")
-	params := mux.Vars(r)
+	// token := r.Header.Get("Authorization")
+	// params := mux.Vars(r)
 
-	// Send message to Storage Controller asking for files that match a pattern
+	// // Send message to Storage Controller asking for files that match a pattern
 
-	json.NewEncoder(w).Encode(matches)
+	// json.NewEncoder(w).Encode(matches)
 })
 
 // downloadHandler downloads a file with a given filename
@@ -107,7 +108,7 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	filename := r.PostFormValue("filename")
 	fileSize := r.PostFormValue("filesize")
 	fileHash := r.PostFormValue("hash")
-	log.Printf("Upload requested for %s (%s Bytes) by token: %s\n", filename, fileSize, token)
+	log.Printf("Upload requested for %s (%s Bytes) by token: %s with hash: %s\n", filename, fileSize, token, fileHash)
 
 	var Buf bytes.Buffer
 
@@ -118,12 +119,17 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	}
 	defer file.Close()
 
-	// Read into buffer
-	io.Copy(&Buf, file)
+	conn, err := net.Dial("tcp", "localhost:29200")
+	if err != nil {
+		renderError(w, "STORAGE_CONTROLLER_CONNECTION_FAILED", http.StatusInternalServerError)
+	}
+	defer conn.Close()
 
-	// Make RPC call to controller for target pools
+	// Notify that it's a file upload
+	io.WriteString(conn, "upload\n")
 
-	// Send blocks over RPC to storage pools (pass in buffer)
+	// Upload the file
+	io.Copy(conn, file)
 
 	// Cleanup buffer
 	Buf.Reset()
