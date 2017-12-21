@@ -1,7 +1,8 @@
 package com.fcup;
 
 import com.fcup.generated.*;
-import com.fcup.utilities.GrpcDownloadServer;
+import com.fcup.utilities.GrpcControllerAdressGetter;
+import com.fcup.utilities.GrpcServer;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.ServerBuilder;
@@ -22,6 +23,7 @@ public class StoragePool {
     private ManagedChannel grpcChannel;
     private registererGrpc.registererBlockingStub blockingStub;
     private String remoteControllerAdress;
+//    private GrpcServer storageControllerLink;
 
     public StoragePool() throws Exception {
         localGrpcPort = 50051;
@@ -53,7 +55,7 @@ public class StoragePool {
         while(!started) {
             try {
                 server = ServerBuilder.forPort(localGrpcPort)
-                        .addService(new GrpcDownloadServer(STORAGE_FOLDER))
+                        .addService(new GrpcControllerAdressGetter(STORAGE_FOLDER))
                         .build()
                         .start();
                 started = true;
@@ -92,7 +94,7 @@ public class StoragePool {
     }
 
     // TODO add GRPC call
-    // for sure move this to the GrpcDownloadServer
+    // for sure move this to the GrpcControllerAdressGetter
     private void deleteFile(String chunkName) {
         try {
             Path path = Paths.get(STORAGE_FOLDER + "/" + chunkName);

@@ -1,14 +1,15 @@
 package com.fcup.utilities;
 
+import com.fcup.StoragePool;
 import com.fcup.generated.*;
 import io.grpc.stub.StreamObserver;
 
-public class GrpcDownloadServer extends downloaderGrpc.downloaderImplBase{
-    private String STORAGE_FOLDER;
+public class GrpcControllerAdressGetter extends downloaderGrpc.downloaderImplBase{
+    private StoragePool storagePool;
 
-    public GrpcDownloadServer(String STORAGE_FOLDER)
+    public GrpcControllerAdressGetter(StoragePool storagePool)
     {
-        this.STORAGE_FOLDER = STORAGE_FOLDER;
+        this.storagePool = storagePool;
     }
 
     @Override

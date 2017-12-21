@@ -49,6 +49,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
         System.out.println("Joined View: " + new_view);
         electNewLeader();
         // TODO send new leader's IP to storage controller and app server
+        sendNewMasterControllerIPToStoragePools();
     }
 
     public void electNewLeader() {
@@ -62,6 +63,10 @@ public class StoragePoolsManager extends ReceiverAdapter {
             System.out.println("I'm (" + jgroupsChannel.getAddress() + ") not the leader");
             isLeader = false;
         }
+    }
+
+    private void sendNewMasterControllerIPToStoragePools() {
+
     }
 
     public void receive(Message msg) {
