@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.fcup.StorageControllerTest" time="3.952" tests="7" errors="0" skipped="0" failures="0">
+<testsuite name="com.fcup.StorageControllerTest" time="5.265" tests="2" errors="0" skipped="0" failures="2">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/java/jdk1.8.0_144/jre/lib/amd64"/>
@@ -41,7 +41,7 @@
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/usr/java/jdk1.8.0_144/jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher package"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher install"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -58,11 +58,96 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="syncOperations" classname="com.fcup.StorageControllerTest" time="1.637"/>
-  <testcase name="startDownloaderInStoragePool" classname="com.fcup.StorageControllerTest" time="0.64"/>
-  <testcase name="retrieveStateWithoutException" classname="com.fcup.StorageControllerTest" time="0.567"/>
-  <testcase name="doOperationIntoDBAndThenLoadIt" classname="com.fcup.StorageControllerTest" time="0.459"/>
-  <testcase name="receive" classname="com.fcup.StorageControllerTest" time="0.227"/>
-  <testcase name="setState" classname="com.fcup.StorageControllerTest" time="0.2"/>
-  <testcase name="viewAccepted" classname="com.fcup.StorageControllerTest" time="0.222"/>
+  <testcase name="doOperationIntoDBAndThenLoadIt" classname="com.fcup.StorageControllerTest" time="3.041">
+    <failure message="Stored 22 shards from db instead of 21" type="java.lang.AssertionError">java.lang.AssertionError: Stored 22 shards from db instead of 21
+	at org.junit.Assert.fail(Assert.java:88)
+	at com.fcup.StorageControllerTest.doOperationIntoDBAndThenLoadIt(StorageControllerTest.java:68)
+</failure>
+    <system-out><![CDATA[
+-------------------------------------------------------------------
+GMS: address=qpc-19808, cluster=ChatCluster, physical address=fe80:0:0:0:5d17:e709:d9a:4f49%wlp3s0:7800
+-------------------------------------------------------------------
+Joined View: [qpc-19808|0] (1) [qpc-19808]
+I'm (qpc-19808) the leader
+I'm (qpc-19808) the leader
+Connected to channel
+Received: {"storagePoolIP":"dummy","shardID":"dummy","storagePoolPort":"0"}
+Registering new storage pool...
+Saving shard dummy to local storage - pool dummy:0
+]]></system-out>
+    <system-err><![CDATA[Dec 21, 2017 12:01:38 PM org.jgroups.protocols.SEQUENCER unwrapAndDeliver
+SEVERE: JGRP000240: failure unmarshalling buffer
+java.util.ConcurrentModificationException
+	at java.util.LinkedList$ListItr.checkForComodification(LinkedList.java:966)
+	at java.util.LinkedList$ListItr.next(LinkedList.java:888)
+	at com.fcup.ShardManager.syncLocalStoragePools(ShardManager.java:86)
+	at com.fcup.StoragePoolsManager.receive(StoragePoolsManager.java:97)
+	at org.jgroups.JChannel.up(JChannel.java:819)
+	at org.jgroups.stack.ProtocolStack.up(ProtocolStack.java:893)
+	at org.jgroups.protocols.pbcast.STATE_TRANSFER.up(STATE_TRANSFER.java:128)
+	at org.jgroups.protocols.FRAG2.up(FRAG2.java:177)
+	at org.jgroups.protocols.SEQUENCER.deliver(SEQUENCER.java:493)
+	at org.jgroups.protocols.SEQUENCER.unwrapAndDeliver(SEQUENCER.java:460)
+	at org.jgroups.protocols.SEQUENCER.up(SEQUENCER.java:218)
+	at org.jgroups.protocols.SEQUENCER.up(SEQUENCER.java:233)
+	at org.jgroups.protocols.FlowControl.up(FlowControl.java:416)
+	at org.jgroups.stack.Protocol.up(Protocol.java:372)
+	at org.jgroups.protocols.pbcast.STABLE.up(STABLE.java:293)
+	at org.jgroups.protocols.UNICAST3.up(UNICAST3.java:428)
+	at org.jgroups.protocols.pbcast.NAKACK2.deliverBatch(NAKACK2.java:962)
+	at org.jgroups.protocols.pbcast.NAKACK2.removeAndDeliver(NAKACK2.java:896)
+	at org.jgroups.protocols.pbcast.NAKACK2.handleMessages(NAKACK2.java:870)
+	at org.jgroups.protocols.pbcast.NAKACK2.up(NAKACK2.java:690)
+	at org.jgroups.protocols.BARRIER.up(BARRIER.java:195)
+	at org.jgroups.stack.Protocol.up(Protocol.java:372)
+	at org.jgroups.protocols.FD_ALL.up(FD_ALL.java:212)
+	at org.jgroups.stack.Protocol.up(Protocol.java:372)
+	at org.jgroups.stack.Protocol.up(Protocol.java:372)
+	at org.jgroups.stack.Protocol.up(Protocol.java:372)
+	at org.jgroups.stack.Protocol.up(Protocol.java:372)
+	at org.jgroups.protocols.TP.passBatchUp(TP.java:1255)
+	at org.jgroups.util.MaxOneThreadPerSender$BatchHandlerLoop.passBatchUp(MaxOneThreadPerSender.java:284)
+	at org.jgroups.util.SubmitToThreadPool$BatchHandler.run(SubmitToThreadPool.java:136)
+	at org.jgroups.util.MaxOneThreadPerSender$BatchHandlerLoop.run(MaxOneThreadPerSender.java:273)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+
+]]></system-err>
+  </testcase>
+  <testcase name="testElectionOfLeader" classname="com.fcup.StorageControllerTest" time="2.224">
+    <failure message="Did not change leader correctly" type="java.lang.AssertionError">java.lang.AssertionError: Did not change leader correctly
+	at org.junit.Assert.fail(Assert.java:88)
+	at com.fcup.StorageControllerTest.testElectionOfLeader(StorageControllerTest.java:41)
+</failure>
+    <system-out><![CDATA[
+-------------------------------------------------------------------
+GMS: address=qpc-4684, cluster=ChatCluster, physical address=fe80:0:0:0:5d17:e709:d9a:4f49%wlp3s0:7800
+-------------------------------------------------------------------
+Joined View: [qpc-4684|0] (1) [qpc-4684]
+I'm (qpc-4684) the leader
+I'm (qpc-4684) the leader
+Connected to channel
+Synced!
+
+-------------------------------------------------------------------
+GMS: address=qpc-7548, cluster=ChatCluster, physical address=fe80:0:0:0:5d17:e709:d9a:4f49%wlp3s0:7801
+-------------------------------------------------------------------
+Joined View: [qpc-4684|1] (2) [qpc-4684, qpc-7548]
+I'm (qpc-4684) the leader
+Joined View: [qpc-4684|1] (2) [qpc-4684, qpc-7548]
+I'm (qpc-7548) not the leader
+I'm (qpc-7548) not the leader
+Connected to channel
+Registering new storage pool...
+Saving shard dummy to local storage - pool dummy 2:0
+Registering new storage pool...
+Registering new storage pool...
+Saving shard 10 to local storage - pool dummy 2:0
+Registering new storage pool...
+Registering new storage pool...
+Saving shard dummy to local storage - pool dummy:0
+Synced!
+]]></system-out>
+  </testcase>
 </testsuite>

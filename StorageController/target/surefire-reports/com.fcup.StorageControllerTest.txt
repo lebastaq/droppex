@@ -1,4 +1,14 @@
 -------------------------------------------------------------------------------
 Test set: com.fcup.StorageControllerTest
 -------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.959 sec - in com.fcup.StorageControllerTest
+Tests run: 2, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 5.266 sec <<< FAILURE! - in com.fcup.StorageControllerTest
+doOperationIntoDBAndThenLoadIt(com.fcup.StorageControllerTest)  Time elapsed: 3.041 sec  <<< FAILURE!
+java.lang.AssertionError: Stored 22 shards from db instead of 21
+	at org.junit.Assert.fail(Assert.java:88)
+	at com.fcup.StorageControllerTest.doOperationIntoDBAndThenLoadIt(StorageControllerTest.java:68)
+
+testElectionOfLeader(com.fcup.StorageControllerTest)  Time elapsed: 2.224 sec  <<< FAILURE!
+java.lang.AssertionError: Did not change leader correctly
+	at org.junit.Assert.fail(Assert.java:88)
+	at com.fcup.StorageControllerTest.testElectionOfLeader(StorageControllerTest.java:41)
+

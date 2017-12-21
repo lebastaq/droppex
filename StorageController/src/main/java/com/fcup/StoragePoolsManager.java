@@ -1,5 +1,9 @@
 package com.fcup;
 
+import com.fcup.generated.PoolInfo;
+import com.fcup.generated.registererGrpc;
+import io.grpc.ManagedChannelBuilder;
+import io.grpc.StatusRuntimeException;
 import org.jgroups.*;
 import org.jgroups.util.Util;
 import utilities.StoragePool;
@@ -48,8 +52,9 @@ public class StoragePoolsManager extends ReceiverAdapter {
     public void viewAccepted(View new_view) {
         System.out.println("Joined View: " + new_view);
         electNewLeader();
-        // TODO send new leader's IP to storage controller and app server
-        sendNewMasterControllerIPToStoragePools();
+
+        if(isLeader)
+            sendNewMasterControllerIPToStoragePools();
     }
 
     public void electNewLeader() {
@@ -66,7 +71,22 @@ public class StoragePoolsManager extends ReceiverAdapter {
     }
 
     private void sendNewMasterControllerIPToStoragePools() {
-
+        for (StoragePool storagePool : storagePools) {
+//            storageControllerInfo request = PoolInfo.newBuilder().setIp(localIPAdress).setPort(localGrpcPort).build(); // todo host = storage pool - how to get it ?
+//            try {
+//                this.grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAddress, remoteControllerPort)
+//                        .usePlaintext(true)
+//                        .build();
+//                blockingStub = registererGrpc.newBlockingStub(this.grpcChannel);
+//                blockingStub.register(request);
+//                connected = true;
+//            } catch (StatusRuntimeException e) {
+//                attempts ++;
+//                remoteControllerPort++;
+//            }
+//
+//            System.out.println("Registered as " + localIPAdress + ":" + localGrpcPort + " to " + remoteControllerAddress + ":" + remoteControllerPort);
+        }
     }
 
     public void receive(Message msg) {
