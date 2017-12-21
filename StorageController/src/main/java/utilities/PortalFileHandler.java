@@ -20,12 +20,13 @@ public class PortalFileHandler implements Runnable {
             PrintWriter out = new PrintWriter(os, true)) {
 
             String action = in.readLine();
+            String filename = in.readLine();
 
             if (action.equals("upload")) {
-                receiveUpload(in, out);
+                receiveUpload(in, out, filename);
 
             } else if (action.equals("download")) {
-                sendDownload(in, os, out);
+                sendDownload(in, os, out, filename);
 
             } else {
                 out.println("Error: Operation not supported. Need 'upload' or 'download'");
@@ -37,11 +38,24 @@ public class PortalFileHandler implements Runnable {
         }
     }
 
-    private void receiveUpload(BufferedReader in, PrintWriter out) {
+    private void receiveUpload(BufferedReader in, PrintWriter out, String filename) throws IOException {
+        try (DataInputStream dis = new DataInputStream(socket.getInputStream());
+             FileOutputStream fos = new FileOutputStream(TEMP_FILE_DIR + filename)) {
 
+            byte[] contents = new byte[10*1024*1024];
+            int bytesRead;
+
+            while ((bytesRead = dis.read(contents)) > 0) {
+                fos.write(contents, 0, bytesRead);
+
+            }
+
+        } catch (IOException e) {
+            throw e;
+        }
     }
 
-    private void sendDownload(BufferedReader in, OutputStream os, PrintWriter out) throws IOException {
+    private void sendDownload(BufferedReader in, OutputStream os, PrintWriter out, String filename) throws IOException {
         String fileName = in.readLine();
 
         /*

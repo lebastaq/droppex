@@ -127,6 +127,7 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 
 	// Notify that it's a file upload
 	io.WriteString(conn, "upload\n")
+	io.WriteString(conn, filename + "\n")
 
 	// Upload the file
 	io.Copy(conn, file)
