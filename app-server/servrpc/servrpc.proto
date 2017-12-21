@@ -1,54 +1,29 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_outer_classname = "DownloaderProto";
-option objc_class_prefix = "HLW";
+option java_outer_classname = "PortalRPC";
 
-package servrpc;
-// package com.fcup.generated;
+package com.fcup.generated;
 
-service ShardAllocator {
-    // Bi-directional stream where the app server requests a server for a shard
-    // and the controller replies with an ip/port.
-    rpc SuggestServers(stream Shard) returns (stream Server) {}
+service StorageController {
+    // Forwards file deletion request from client
+    rpc DeleteFile(File) returns (Empty) {}
 
-    // App server notifies controller of a sucessful placement in a pool
-    // Controller returns an error if it did not store the placement
-    rpc NotifyPlacement(ShardPlacement) returns (Empty) {}
-
-    // App server requests the location of all shards for a given file
-    // Controller replies with the location of each shard ID.
-    rpc GetShards(File) returns (stream ShardPlacement) {}
-
-    // App server notifies controller if a shard doesn't match its original hash
-    // Controller should then attempt to delete shard and return an error if it failed
-    // The app server then calls SuggestServers and the controller needs to return live servers
-    rpc NotifyCorruptShard(stream Shard) returns (Empty) {}
+    // Forwards query from Client
+    // If there are multiple files that match the query, return them as a stream
+    rpc FileSearch(File) returns (stream FileMetadata) {}
 }
 
 message File {
     string filename = 1;
 }
 
-// Shard ID of the form: filename.block.shard
-// ie. Movie.mp4.4.2
-message Shard {
-    string shardID = 1;
+message FileMetadata {
+    string filename = 1;
+    int64 fileSize = 2;
 }
 
-// Storage pool IP
-message Server {
-    string ip = 1;
-    int32 port = 2;
-}
-
-// Where a given shard was successfully stored
-message ShardPlacement {
-    string shardID = 1;
-    string ip = 2;
-    int32 port = 3;
-}
-
+// Return Empty if the operation was successful
 // Return an error from controller if something went wrong
 message Empty {
 
