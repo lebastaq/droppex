@@ -19,7 +19,7 @@ public class StoragePool {
     private io.grpc.Server server;
     private String localIPAdress;
     private int localGrpcPort;
-    private int remoteGrpcPort = 50100;
+    private int remoteControllerPort = 50100;
     private ManagedChannel grpcChannel;
     private registererGrpc.registererBlockingStub blockingStub;
     private String remoteControllerAdress;
@@ -44,7 +44,7 @@ public class StoragePool {
     }
 
     private void setUpGrpcClient() {
-        this.grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAdress, remoteGrpcPort)
+        this.grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAdress, remoteControllerPort)
                 .usePlaintext(true)
                 .build();
         blockingStub = registererGrpc.newBlockingStub(this.grpcChannel);
@@ -111,7 +111,7 @@ public class StoragePool {
         while(attempts < 10 && connected == false) {
             PoolInfo request = PoolInfo.newBuilder().setIp(localIPAdress).setPort(localGrpcPort).build(); // todo host = storage pool - how to get it ?
             try {
-                this.grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAdress, remoteGrpcPort)
+                this.grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAdress, remoteControllerPort)
                         .usePlaintext(true)
                         .build();
                 blockingStub = registererGrpc.newBlockingStub(this.grpcChannel);
@@ -119,7 +119,7 @@ public class StoragePool {
                 connected = true;
             } catch (StatusRuntimeException e) {
                 attempts ++;
-                remoteGrpcPort++;
+                remoteControllerPort++;
             }
         }
 
@@ -128,7 +128,7 @@ public class StoragePool {
             System.exit(0);
         }
 
-        System.out.println("Registered as " + localIPAdress + ":" + localGrpcPort + " to " + remoteControllerAdress + ":" + remoteGrpcPort);
+        System.out.println("Registered as " + localIPAdress + ":" + localGrpcPort + " to " + remoteControllerAdress + ":" + remoteControllerPort);
     }
 
 
@@ -146,5 +146,10 @@ public class StoragePool {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter IP address of the master controller:");
         return scanner.nextLine();
+    }
+
+    public void changeMasterController(String ip, int port) {
+        this.remoteControllerAdress = ip;
+        this.remoteControllerPort = port;
     }
 }

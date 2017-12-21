@@ -2,11 +2,12 @@ package com.fcup.utilities;
 
 import com.fcup.StoragePool;
 import com.fcup.generated.*;
-import com.fcup.generated.adressChangedStatus;
+import com.fcup.generated.addressChangedStatus;
 import com.fcup.generated.storageControllerInfo;
+import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.stub.StreamObserver;
 
-public class GrpcControllerAdressGetter extends addressgetterGrpc.adressgetterImplBase{
+public class GrpcControllerAdressGetter extends addressgetterGrpc.addressgetterImplBase{
     private StoragePool storagePool;
 
     public GrpcControllerAdressGetter(StoragePool storagePool)
@@ -15,21 +16,15 @@ public class GrpcControllerAdressGetter extends addressgetterGrpc.adressgetterIm
     }
 
     @Override
-    public void getAdress(storageControllerInfo request, StreamObserver<adressChangedStatus> responseObserver) {
-        responseObserver.onNext(changeAdress(request));
+    public void getAddress(storageControllerInfo request, StreamObserver<addressChangedStatus> responseObserver) throws InvalidProtocolBufferException {
+        responseObserver.onNext(changeAddress(request));
         responseObserver.onCompleted();
     }
 
-    private adressChangedStatus changeAdress(storageControllerInfo request) {
-        DownloadInfo downloadInfo = new DownloadInfo(request.getIp(), request.getPort(), request.getChunkId());
-
-//        System.out.println("Just got a grpc request: " + request.getIp() + ", " + request.getPort() + ", " + request.getChunkId());
-//
-//        Downloader downloader = new Downloader(STORAGE_FOLDER, downloadInfo);
-//        downloader.run();
-//        System.out.println("Started downloader !");
-//
-//        return Status.newBuilder().setOk(true).build();
+    private addressChangedStatus changeAddress(storageControllerInfo request) throws InvalidProtocolBufferException {
+        System.out.println("Just got a new master controller address: " + request.getIp() + ", " + request.getPort());
+        storagePool.changeMasterController(request.getIp(), request.getPort());
+        return addressChangedStatus.newBuilder().setOk(true).build();
     }
 
     @Override
@@ -42,7 +37,7 @@ public class GrpcControllerAdressGetter extends addressgetterGrpc.adressgetterIm
     // called via GRPC by the storage controller (relaying the app server's message,
     // or downloading a file itself to reconstruct after a crash)
     private Status startDownload(Info request) {
-        DownloadInfo downloadInfo = new DownloadInfo(request.getIp(), request.getPort(), request.getChunkId());
+//        DownloadInfo downloadInfo = new DownloadInfo(request.getIp(), request.getPort(), request.getChunkId());
 
 //        System.out.println("Just got a grpc request: " + request.getIp() + ", " + request.getPort() + ", " + request.getChunkId());
 //
