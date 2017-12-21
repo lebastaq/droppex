@@ -177,5 +177,6 @@ public class StoragePool {
         System.out.println("Got new storage controller: " + ip + ":" + port);
         this.remoteControllerAddress = ip;
         this.remoteControllerPort = port;
+        registerInStorageController();
     }
 }

@@ -1,7 +1,6 @@
 package com.fcup.utilities;
 
 import com.fcup.generated.addressgetterGrpc;
-import com.fcup.generated.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 

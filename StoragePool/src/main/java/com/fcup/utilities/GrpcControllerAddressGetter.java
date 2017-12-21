@@ -15,7 +15,6 @@ public class GrpcControllerAddressGetter extends addressgetterGrpc.addressgetter
         this.storagePool = storagePool;
     }
 
-
     @Override
     public void setAddress(storageControllerInfo request, StreamObserver<addressChangedStatus> responseObserver) {
         responseObserver.onNext(changeMasterController(request));

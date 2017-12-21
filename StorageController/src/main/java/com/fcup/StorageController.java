@@ -9,6 +9,9 @@ import io.grpc.StatusRuntimeException;
 import org.jgroups.View;
 
 import java.net.UnknownHostException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StorageController extends StoragePoolsManager {
     String user_name = System.getProperty("user.name", "n/a");
@@ -27,6 +30,12 @@ public class StorageController extends StoragePoolsManager {
 
     public StorageController() throws Exception {
         super();
+        grpcServer = new GrpcServer();
+    }
+
+    // TODO something about these two constructors
+    public StorageController(Scanner sc) throws Exception {
+        super(sc);
         grpcServer = new GrpcServer();
     }
 

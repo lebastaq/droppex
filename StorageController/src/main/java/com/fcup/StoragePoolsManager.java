@@ -21,17 +21,26 @@ public class StoragePoolsManager extends ReceiverAdapter {
     static String CONFIG_FILE = "config.xml"; /* google_config.xml */
     protected String localIP;
 
+    // todo pattern ?
     public StoragePoolsManager() throws Exception {
         this(CONFIG_FILE);
     }
 
+    public StoragePoolsManager(Scanner sc) throws Exception {
+        this(CONFIG_FILE, sc);
+    }
+
     public StoragePoolsManager(String CONFIG_FILE) throws Exception {
+        this(CONFIG_FILE, new Scanner(System.in));
+    }
+
+    public StoragePoolsManager(String CONFIG_FILE, Scanner sc) throws Exception {
         this.CONFIG_FILE = CONFIG_FILE;
         jgroupsChannel = new JChannel(CONFIG_FILE).setReceiver(this);
         shardManager = new ShardManager();
         storagePools = new ArrayList<>();
 
-        askAdminForLocalIP();
+        askAdminForLocalIP(sc);
     }
 
     public void connectToChannel() throws Exception {
@@ -98,8 +107,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
     }
 
 
-    private void askAdminForLocalIP() {
-        Scanner sc = new Scanner(System.in);
+    private void askAdminForLocalIP(Scanner sc) {
         System.out.println("Please enter local IP:");
         localIP = sc.nextLine();
     }
