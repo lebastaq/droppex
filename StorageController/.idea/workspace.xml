@@ -5,12 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e5f758d-a827-4174-b3c2-73d36543e8af" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/utilities/DownloadInfo.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/utilities/Downloader.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/Info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/InfoOrBuilder.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/PoolInfo.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/PoolInfoOrBuilder.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/PoolRegisterProto.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/PoolRegistrationStatus.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/PoolRegistrationStatusOrBuilder.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/Status.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/StatusOrBuilder.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/generated/registererGrpc.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../StoragePool/target/classes/filetransfer.proto" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/utilities/GrpcControllerAdressGetter.java" afterPath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/utilities/GrpcControllerAddressGetter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../StoragePool/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/StoragePool.java" afterPath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/StoragePool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/utilities/GrpcControllerAdressGetter.java" afterPath="$PROJECT_DIR$/../StoragePool/src/main/java/com/fcup/utilities/GrpcControllerAdressGetter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/src/test/java/com/fcup/ChunkSeederTest.java" afterPath="$PROJECT_DIR$/../StoragePool/src/test/java/com/fcup/ChunkSeederTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../StoragePool/src/test/java/com/fcup/StoragePoolTest.java" afterPath="$PROJECT_DIR$/../StoragePool/src/test/java/com/fcup/StoragePoolTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -961,6 +972,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1922" height="1180" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />

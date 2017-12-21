@@ -1,6 +1,5 @@
 package com.fcup;
 
-import com.fcup.utilities.Downloader;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
