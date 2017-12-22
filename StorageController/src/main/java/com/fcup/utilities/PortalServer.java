@@ -41,6 +41,7 @@ public class PortalServer implements Runnable {
             } catch (java.net.BindException e) {
                 port++;
             } catch (IOException e) {
+                port++;
                 e.printStackTrace();
             }
         }
