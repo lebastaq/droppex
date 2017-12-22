@@ -1,39 +1,50 @@
 package com.fcup;
 
 import com.fcup.generated.*;
-import com.fcup.utilities.GrpcDownloadServer;
+import com.fcup.utilities.GrpcControllerAddressGetter;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.ServerBuilder;
 import io.grpc.StatusRuntimeException;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class StoragePool {
     private final String STORAGE_FOLDER = "storage";
     private io.grpc.Server server;
     private String localIPAdress;
     private int localGrpcPort;
-    private int remoteGrpcPort = 50100;
+    private int remoteControllerPort = 50100; // TODO ask this as well - or keep as default ?...
     private ManagedChannel grpcChannel;
     private registererGrpc.registererBlockingStub blockingStub;
-    private String remoteControllerAdress;
+    private String remoteControllerAddress;
+    SeederPool seederPool;
+    DownloaderPool downloaderPool;
+
+    public static void main(String[] args) throws Exception {
+        StoragePool storagePool = new StoragePool();
+        storagePool.run();
+    }
 
     public StoragePool() throws Exception {
         localGrpcPort = 50051;
         localIPAdress = getLocalIP();
-        remoteControllerAdress = getRemoteControllerAdress();
+        remoteControllerAddress = getRemoteControllerAddress();
         createStorageFolderIfNotExists();
         startGrpcServer();
-        setUpGrpcClient();
-        SeederPool seederPool = new SeederPool(STORAGE_FOLDER);
-        DownloaderPool downloaderPool = new DownloaderPool(STORAGE_FOLDER);
+        seederPool = new SeederPool(STORAGE_FOLDER);
+        downloaderPool = new DownloaderPool(STORAGE_FOLDER);
 
         registerInStorageController();
+    }
+
+    public void run() throws IOException {
         seederPool.run();
         downloaderPool.run();
 
@@ -42,18 +53,37 @@ public class StoragePool {
     }
 
     private void setUpGrpcClient() {
-        this.grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAdress, remoteGrpcPort)
+        shutDownGrpcChannel();
+        grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAddress, remoteControllerPort)
                 .usePlaintext(true)
                 .build();
-        blockingStub = registererGrpc.newBlockingStub(this.grpcChannel);
+        blockingStub = registererGrpc.newBlockingStub(grpcChannel);
     }
+
+    // todo clean up
+    // extract to own class ?
+    private void shutDownGrpcChannel() {
+        if (grpcChannel != null) {
+            if(!grpcChannel.isShutdown()) {
+                grpcChannel.shutdownNow();
+                try {
+                    grpcChannel.awaitTermination(1000, TimeUnit.MICROSECONDS);
+                } catch (InterruptedException e) {
+                    System.out.println("Could not shutdown channel");
+                    e.printStackTrace();
+                }
+            }
+            grpcChannel = null;
+        }
+    }
+
 
     private void startGrpcServer() throws Exception {
         boolean started = false;
         while(!started) {
             try {
                 server = ServerBuilder.forPort(localGrpcPort)
-                        .addService(new GrpcDownloadServer(STORAGE_FOLDER))
+                        .addService(new GrpcControllerAddressGetter(this))
                         .build()
                         .start();
                 started = true;
@@ -92,7 +122,7 @@ public class StoragePool {
     }
 
     // TODO add GRPC call
-    // for sure move this to the GrpcDownloadServer
+    // for sure move this to the GrpcControllerAddressGetter
     private void deleteFile(String chunkName) {
         try {
             Path path = Paths.get(STORAGE_FOLDER + "/" + chunkName);
@@ -102,22 +132,22 @@ public class StoragePool {
         }
     }
 
-    // TODO implement grpc call
     public void registerInStorageController() {
         int attempts = 0;
         boolean connected = false;
-        while(attempts < 10 && connected == false) {
+        while(attempts < 2 && connected == false) {
+            System.out.println("Registering with storage controller...");
             PoolInfo request = PoolInfo.newBuilder().setIp(localIPAdress).setPort(localGrpcPort).build(); // todo host = storage pool - how to get it ?
+            setUpGrpcClient();
+            blockingStub = registererGrpc.newBlockingStub(grpcChannel);
             try {
-                this.grpcChannel = ManagedChannelBuilder.forAddress(remoteControllerAdress, remoteGrpcPort)
-                        .usePlaintext(true)
-                        .build();
-                blockingStub = registererGrpc.newBlockingStub(this.grpcChannel);
-                blockingStub.register(request);
+                PoolRegistrationStatus status = blockingStub.register(request);
+                System.out.println("Answer: " + status.getOk());
                 connected = true;
             } catch (StatusRuntimeException e) {
+                System.out.println("Failed registering, will now try again...");
                 attempts ++;
-                remoteGrpcPort++;
+                remoteControllerPort++;
             }
         }
 
@@ -126,13 +156,10 @@ public class StoragePool {
             System.exit(0);
         }
 
-        System.out.println("Registered as " + localIPAdress + ":" + localGrpcPort + " to " + remoteControllerAdress + ":" + remoteGrpcPort);
+        System.out.println("Registered as " + localIPAdress + ":" + localGrpcPort + " to " + remoteControllerAddress + ":" + remoteControllerPort);
     }
 
 
-    public static void main(String[] args) throws Exception {
-        StoragePool storagePool = new StoragePool();
-    }
 
     public String getLocalIP() {
         Scanner scanner = new Scanner(System.in);
@@ -140,9 +167,16 @@ public class StoragePool {
         return scanner.nextLine();
     }
 
-    public String getRemoteControllerAdress() {
+    public String getRemoteControllerAddress() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter IP address of the master controller:");
         return scanner.nextLine();
+    }
+
+    public void changeMasterController(String ip, int port) {
+        System.out.println("Got new storage controller: " + ip + ":" + port);
+        this.remoteControllerAddress = ip;
+        this.remoteControllerPort = port;
+        registerInStorageController();
     }
 }

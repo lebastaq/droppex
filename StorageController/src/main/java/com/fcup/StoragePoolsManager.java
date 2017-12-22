@@ -2,13 +2,15 @@ package com.fcup;
 
 import org.jgroups.*;
 import org.jgroups.util.Util;
-import utilities.StoragePool;
 
 import java.io.DataInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import com.fcup.utilities.*;
 
 public class StoragePoolsManager extends ReceiverAdapter {
 
@@ -16,17 +18,29 @@ public class StoragePoolsManager extends ReceiverAdapter {
     ShardManager shardManager;
     boolean isLeader = false;
     List<StoragePool> storagePools;
-    static String CONFIG_FILE = "config.xml"; /* google_config.xml */
+    private static String CONFIG_FILE = "config.xml"; /* google_config.xml */
+    String localIP;
 
-    public StoragePoolsManager() throws Exception {
+    // todo pattern ?
+    StoragePoolsManager() throws Exception {
         this(CONFIG_FILE);
     }
 
-    public StoragePoolsManager(String CONFIG_FILE) throws Exception {
-        this.CONFIG_FILE = CONFIG_FILE;
+    public StoragePoolsManager(Scanner sc) throws Exception {
+        this(CONFIG_FILE, sc);
+    }
+
+    private StoragePoolsManager(String CONFIG_FILE) throws Exception {
+        this(CONFIG_FILE, new Scanner(System.in));
+    }
+
+    private StoragePoolsManager(String CONFIG_FILE, Scanner sc) throws Exception {
+        StoragePoolsManager.CONFIG_FILE = CONFIG_FILE;
         jgroupsChannel = new JChannel(CONFIG_FILE).setReceiver(this);
         shardManager = new ShardManager();
         storagePools = new ArrayList<>();
+
+        askAdminForLocalIP(sc);
     }
 
     public void connectToChannel() throws Exception {
@@ -48,10 +62,9 @@ public class StoragePoolsManager extends ReceiverAdapter {
     public void viewAccepted(View new_view) {
         System.out.println("Joined View: " + new_view);
         electNewLeader();
-        // TODO send new leader's IP to storage controller and app server
     }
 
-    public void electNewLeader() {
+    private void electNewLeader() {
         View view = jgroupsChannel.getView();
         Address address = view.getMembers()
                 .get(0);
@@ -64,12 +77,10 @@ public class StoragePoolsManager extends ReceiverAdapter {
         }
     }
 
+
     public void receive(Message msg) {
         String message = msg.getObject();
         System.out.println("Received: " + message);
-
-        Shard receivedShard = Shard.fromJSON(message);
-
         shardManager.storeOperation(Shard.fromJSON(message));
         shardManager.syncOperation(message);
         shardManager.syncLocalStoragePools(storagePools);
@@ -93,5 +104,11 @@ public class StoragePoolsManager extends ReceiverAdapter {
             System.err.println("Could not send shard " + shard.toString() + ":");
             e.printStackTrace();
         }
+    }
+
+
+    private void askAdminForLocalIP(Scanner sc) {
+        System.out.println("Please enter local IP:");
+        localIP = sc.nextLine();
     }
 }

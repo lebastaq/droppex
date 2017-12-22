@@ -1,7 +1,7 @@
 package com.fcup;
 
 import org.jgroups.util.Util;
-import utilities.StoragePool;
+import com.fcup.utilities.*;
 
 import java.io.DataOutputStream;
 import java.io.OutputStream;
@@ -9,12 +9,12 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ShardManager {
-    DbManager dbManager;
+class ShardManager {
+    private final DbManager dbManager;
 
     // TODO clean up double-variable mess
     List<Shard> shards = new LinkedList<>();
-    List<String> operationsAsString = new LinkedList<>();
+    private final List<String> operationsAsString = new LinkedList<>();
 
     public ShardManager() throws SQLException, ClassNotFoundException {
         dbManager = new DbManager();
@@ -47,7 +47,7 @@ public class ShardManager {
         }
     }
 
-    public void syncOperations(final List<String> newOperations) throws SQLException {
+    public void syncOperations(final List<String> newOperations) {
         synchronized (operationsAsString) {
             for (String op : newOperations)
             {
@@ -72,6 +72,7 @@ public class ShardManager {
             dbManager.insertOperation(shard);
         } catch (Exception e) {
             System.err.println("Could not insert shard");
+            e.printStackTrace();
         }
     }
 
@@ -87,7 +88,7 @@ public class ShardManager {
         }
     }
 
-    protected void syncLocalPoolsWithOperationPool(List<StoragePool> storagePools, Shard newShard) {
+    void syncLocalPoolsWithOperationPool(List<StoragePool> storagePools, Shard newShard) {
         // create new storage pool if it does not exist
         StoragePool operationStoragePool = newShard.operationPoolToStoreMe(storagePools);
 

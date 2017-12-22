@@ -35,7 +35,7 @@ public class ShardManagerTest {
 
         if(shardManager.shards.size() != operationsExpected.size())
         {
-            fail("Stored " + shardManager.shards.size() + " shards from db instead of " + operationsExpected.size());
+            fail("Stored " + shardManager.shards.size() + " shards from dbName instead of " + operationsExpected.size());
         }
     }
 

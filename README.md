@@ -28,3 +28,17 @@ Multiple solutions evaluated:
 * Have the app server try to download all the chunks. If some are missing, reconstruct them and ask the storage controller where to put them
 
 Chosen solution: 3
+
+## File deletion and synchronicity
+I'm storing the shards in a database, but not the operations. 
+
+That means that if a storage controller goes down, and a file is deleted, when it gets back up it will not know that the file was deleted 
+(eg. the other controllers would need to store in the database that the file was deleted)
+
+That means that it will try to sync with the others and **send them the file info again to store in database**
+
+There are two options to solve that:
+- add an operation type, and log the PUT(shard).. then DELETE(shard), with a timestamp so that the storage controller knows which operation comes first
+- consider that when a storage controller goes down, it will not come back up again, and don't do anything considering the deletion of the file
+
+At the moment I'm only going to implement the second solution as I'm short on time

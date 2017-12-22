@@ -44,3 +44,9 @@ dummy.go
 **/*.csr
 **/*.pdf
 **/*.mp4
+
+# intellij
+.idea
+.idea/*
+
+*.lst

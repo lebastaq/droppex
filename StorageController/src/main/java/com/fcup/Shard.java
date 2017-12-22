@@ -1,13 +1,13 @@
 package com.fcup;
 
 import org.json.JSONObject;
-import utilities.StoragePool;
+import com.fcup.utilities.*;
 
 import java.util.*;
 
 public class Shard {
 
-    private Map<String, String> params;
+    private final Map<String, String> params;
 
     public void changeKeyValue(String key, String value) {
         params.put(key, value);

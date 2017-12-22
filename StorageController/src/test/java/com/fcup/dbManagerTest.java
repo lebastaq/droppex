@@ -15,8 +15,8 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 public class dbManagerTest {
-    String db = "non-existent-database";
-    DbManager dbManager;
+    private final String db = "non-existent-database";
+    private DbManager dbManager;
 
     @Before
     public void initDBManagerForTests() {
@@ -33,10 +33,6 @@ public class dbManagerTest {
             e.printStackTrace();
             fail("Couldn't create database file");
         }
-    }
-
-    @Test
-    public void createOperationsTable() throws Exception {
     }
 
     @Test

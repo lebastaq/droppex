@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DbManager {
-    String dbName;
+class DbManager {
+    private final String dbName;
     private Connection dbConnection;
     private final String table = "shards";
-    private String dbUrl;
+    private final String dbUrl;
 
     public DbManager() {
         this("shards-db");
@@ -39,7 +39,7 @@ public class DbManager {
         Class.forName(sDriverName);
     }
 
-    void createDBFileIfNotExists() throws SQLException {
+    void createDBFileIfNotExists() {
         File f = new File(dbName);
         if(!f.exists()) {
             createDBFile();
@@ -68,20 +68,20 @@ public class DbManager {
 
     public List<Shard> readEntries(Map<String, String> params) throws SQLException {
         List<Shard> results = new ArrayList<>();
-        String query = "SELECT * FROM " + table;
+        StringBuilder query = new StringBuilder("SELECT * FROM " + table);
         if(params.size() > 0)
-            query += " WHERE ";
+            query.append(" WHERE ");
         String separator = "";
         // TODO tidy this up
         for(Map.Entry<String, String> param :params.entrySet()){
-            query += separator;
-            query += param.getKey() + "=";
-            query += "'" + param.getValue() + "'";
+            query.append(separator);
+            query.append(param.getKey()).append("=");
+            query.append("'").append(param.getValue()).append("'");
             separator = " AND ";
         }
-        query += ";";
+        query.append(";");
         Statement statement = dbConnection.createStatement();
-        ResultSet rs = statement.executeQuery(query);
+        ResultSet rs = statement.executeQuery(query.toString());
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnCount = rsmd.getColumnCount();
 
@@ -98,29 +98,29 @@ public class DbManager {
     }
 
     public void insertOperation(Shard shard) throws Exception {
-        String request = "INSERT INTO " + table + " (";
+        StringBuilder request = new StringBuilder("INSERT INTO " + table + " (");
 
         // TODO tidy this up
         String separator = "";
         for (String key : shard.getKeys()) {
-            request += separator;
-            request += "'" + key + "'";
+            request.append(separator);
+            request.append("'").append(key).append("'");
             separator = ",";
         }
-        request += ") VALUES(";
+        request.append(") VALUES(");
 
         separator = "";
         for (String value : shard.getValues()) {
-            request += separator;
-            request += "'" + value + "'";
+            request.append(separator);
+            request.append("'").append(value).append("'");
             separator = ",";
         }
-        request += ")";
+        request.append(")");
         Statement statement = dbConnection.createStatement();
-        statement.executeUpdate( request );
+        statement.executeUpdate(request.toString());
     }
 
-    public void createOperationsTableIfNotExists() throws SQLException {
+    private void createOperationsTableIfNotExists() throws SQLException {
         String sql = buildCreateTableQuery();
         Statement statement = dbConnection.createStatement();
         statement.execute(sql);
@@ -129,15 +129,15 @@ public class DbManager {
     private String buildCreateTableQuery() {
         Shard shard = new Shard();
         
-        String sql = "CREATE TABLE IF NOT EXISTS " + table + "(\n"
-                + "	id integer PRIMARY KEY AUTOINCREMENT,\n";
+        StringBuilder sql = new StringBuilder("CREATE TABLE IF NOT EXISTS " + table + "(\n"
+                + "	id integer PRIMARY KEY AUTOINCREMENT,\n");
 
         String separator = "";
         for(String key: shard.getKeys()){
-            sql += separator + " " + key + " text";
+            sql.append(separator).append(" ").append(key).append(" text");
             separator = ",";
         }
-        sql += ");";
-        return sql;
+        sql.append(");");
+        return sql.toString();
     }
 }
