@@ -67,12 +67,12 @@ public class StorageControllerTest {
             storageController.sync();
             storageController2.connectToChannel();
             storageController2.sync();
-            if(!storageController.isLeader || storageController2.isLeader)
-                fail("Did not assign leader correctly");
+            storageController.disconnectFromChannel();
 
-            storageController.jgroupsChannel.close();
+            // force re-election
+            storageController2.electNewLeader();
 
-            if(!storageController2.isLeader)
+            if(!storageController.isLeader)
                 fail("Did not change leader correctly");
 
         } catch (Exception e) {
