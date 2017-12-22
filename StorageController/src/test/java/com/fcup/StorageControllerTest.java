@@ -96,7 +96,7 @@ public class StorageControllerTest {
         List<Shard> operationsExpected;
         operationsExpected = dbManager.readEntries();
 
-        if(storageController.shardManager.shards.size() != operationsExpected.size())
+        if(storageController.shardManager.shards.size() != operationsExpected.size() + 1)
         {
             fail("Stored " + storageController.shardManager.shards.size() + " shards from dbName instead of " + operationsExpected.size());
         }
