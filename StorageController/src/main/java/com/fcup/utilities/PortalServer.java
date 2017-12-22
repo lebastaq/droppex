@@ -37,6 +37,7 @@ public class PortalServer implements Runnable {
         while (connected == false) {
             try {
                 serverSocket = new ServerSocket(port);
+                connected = true;
             } catch (java.net.BindException e) {
                 port++;
             } catch (IOException e) {
