@@ -126,6 +126,14 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	}
 	defer file.Close()
 
+	// Save the file
+	infile, err := os.Create(filename)
+	if err != nil {
+		renderError(w, "IO_ERROR", http.StatusInternalServerError)
+	}
+	io.Copy(infile, file)
+	infile.Close()
+
 	conn, err := net.Dial("tcp", "localhost:29200")
 	if err != nil {
 		renderError(w, "STORAGE_CONTROLLER_CONNECTION_FAILED", http.StatusInternalServerError)
@@ -136,20 +144,14 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	io.WriteString(conn, "upload\n")
 	io.WriteString(conn, filename + "\n")
 
-	infile, err := os.Create(filename)
-	if err != nil {
-		renderError(w, "IO_ERROR", http.StatusInternalServerError)
-	}
-	io.Copy(infile, file)
-	infile.Close()
-
+	// Open the file to send
 	outfile, err := os.Open(filename)
 	if err != nil {
 		renderError(w, "IO_ERROR", http.StatusInternalServerError)
 	}
 	defer outfile.Close()
 
-	// Upload the file
+	// Forward the file to StorageController
 	io.Copy(conn, outfile)
 
 	os.Remove(filename)
