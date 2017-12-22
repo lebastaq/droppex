@@ -42,9 +42,9 @@ public class PortalFileHandler implements Runnable {
         try (DataInputStream dis = new DataInputStream(socket.getInputStream());
              FileOutputStream fos = new FileOutputStream(TEMP_FILE_DIR + filename)) {
 
-            byte[] contents = new byte[1024*1024];
-            int bytesRead;
+            byte[] contents = new byte[16*1024];
 
+            int bytesRead;
             while ((bytesRead = dis.read(contents)) > 0) {
                 fos.write(contents, 0, bytesRead);
 
@@ -59,6 +59,7 @@ public class PortalFileHandler implements Runnable {
         /*
         TODO:
         Get the shards from the Storage Pools and encode them before continuing
+        Save the encoded file to TEMP_FILE_DIR
          */
 
         File outgoingFile = new File(TEMP_FILE_DIR + filename);
