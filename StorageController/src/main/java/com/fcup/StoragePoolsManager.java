@@ -64,7 +64,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
         electNewLeader();
     }
 
-    private void electNewLeader() {
+    void electNewLeader() {
         View view = jgroupsChannel.getView();
         Address address = view.getMembers()
                 .get(0);
