@@ -1,11 +1,11 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
@@ -60,21 +60,21 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 
 // listHandler lists all files or files matching a pattern
 var listHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	token := r.Header.Get("Authorization")
+	// token := r.Header.Get("Authorization")
 
-	// Send message to Storage Controller asking for files
+	// // Send message to Storage Controller asking for files
 
-	json.NewEncoder(w).Encode(files)
+	// json.NewEncoder(w).Encode(files)
 })
 
 // searchHandler lists all files matching a pattern
 var searchHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	token := r.Header.Get("Authorization")
-	params := mux.Vars(r)
+	// token := r.Header.Get("Authorization")
+	// params := mux.Vars(r)
 
-	// Send message to Storage Controller asking for files that match a pattern
+	// // Send message to Storage Controller asking for files that match a pattern
 
-	json.NewEncoder(w).Encode(matches)
+	// json.NewEncoder(w).Encode(matches)
 })
 
 // downloadHandler downloads a file with a given filename
@@ -87,9 +87,19 @@ var downloadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
+	conn, err := net.Dial("tcp", "localhost:29200")
+	if err != nil {
+		renderError(w, "STORAGE_CONTROLLER_CONNECTION_FAILED", http.StatusInternalServerError)
+	}
+	defer conn.Close()
+
 	log.Printf("Request to download %s from %s", filename, token)
 
-	http.ServeFile(w, r, filename)
+	// Notify that it's a file download
+	io.WriteString(conn, "download\n")
+	io.WriteString(conn, filename + "\n")
+
+	io.Copy(w, conn)
 
 })
 
@@ -107,9 +117,7 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	filename := r.PostFormValue("filename")
 	fileSize := r.PostFormValue("filesize")
 	fileHash := r.PostFormValue("hash")
-	log.Printf("Upload requested for %s (%s Bytes) by token: %s\n", filename, fileSize, token)
-
-	var Buf bytes.Buffer
+	log.Printf("Upload requested for %s (%s Bytes) by token: %s with hash: %s\n", filename, fileSize, token, fileHash)
 
 	file, _, err := r.FormFile("file")
 	if err != nil {
@@ -118,17 +126,36 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	}
 	defer file.Close()
 
-	// Read into buffer
-	io.Copy(&Buf, file)
+	// Save the file
+	infile, err := os.Create(filename)
+	if err != nil {
+		renderError(w, "IO_ERROR", http.StatusInternalServerError)
+	}
+	io.Copy(infile, file)
+	infile.Close()
 
-	// Make RPC call to controller for target pools
+	conn, err := net.Dial("tcp", "localhost:29200")
+	if err != nil {
+		renderError(w, "STORAGE_CONTROLLER_CONNECTION_FAILED", http.StatusInternalServerError)
+	}
+	defer conn.Close()
 
-	// Send blocks over RPC to storage pools (pass in buffer)
+	// Notify that it's a file upload
+	io.WriteString(conn, "upload\n")
+	io.WriteString(conn, filename + "\n")
 
-	// Cleanup buffer
-	Buf.Reset()
+	// Open the file to send
+	outfile, err := os.Open(filename)
+	if err != nil {
+		renderError(w, "IO_ERROR", http.StatusInternalServerError)
+	}
+	defer outfile.Close()
 
-	// Only reply success if the RPC to storage pool is successful
+	// Forward the file to StorageController
+	io.Copy(conn, outfile)
+
+	os.Remove(filename)
+	
 	w.Write([]byte("File upload success."))
 })
 

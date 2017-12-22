@@ -4,13 +4,13 @@ import com.fcup.generated.addressgetterGrpc;
 import com.fcup.generated.storageControllerInfo;
 import com.fcup.utilities.*;
 import io.grpc.StatusRuntimeException;
+import java.util.Scanner;
 import org.jgroups.View;
 
-import java.net.UnknownHostException;
-import java.util.Scanner;
-
 public class StorageController extends StoragePoolsManager {
+    String user_name = System.getProperty("user.name", "n/a");
     private GrpcServer grpcServer;
+    private PortalServer portalServer;
 
     public static void main(String[] args) {
         try {
@@ -26,6 +26,8 @@ public class StorageController extends StoragePoolsManager {
     public StorageController() throws Exception {
         super();
         grpcServer = new GrpcServer();
+        portalServer = new PortalServer();
+
     }
 
     // TODO something about these two constructors
@@ -34,9 +36,12 @@ public class StorageController extends StoragePoolsManager {
         grpcServer = new GrpcServer();
     }
 
-    private void start() throws Exception {
+    public void start() throws Exception {
+        Thread psThread = new Thread(portalServer, "AppServer File Transfer Thread");
+        psThread.start();
+
         grpcServer.startGrpcServer(this);
-        eventLoop();
+//        eventLoop();
     }
 
     private void eventLoop() throws Exception {

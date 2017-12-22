@@ -3,6 +3,10 @@
 # Compiled class file
 *.class
 
+# IntelliJ
+**/.idea/*
+**/target/*
+
 # Log file
 *.log
 
