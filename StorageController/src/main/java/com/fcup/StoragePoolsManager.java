@@ -86,12 +86,17 @@ public class StoragePoolsManager extends ReceiverAdapter {
         shardManager.syncLocalStoragePools(storagePools);
     }
 
-    public void setState(InputStream input) throws Exception {
-        List<String> newOperations = Util.objectFromStream(new DataInputStream(input));
-        System.out.println("SETTING THE STAAAAAAAAAAAAAAAAAAAATE");
-//        shardManager.emptyShardDatabase();
-        shardManager.syncOperations(newOperations);
-        shardManager.syncLocalStoragePools(storagePools);
+    public void setState(InputStream input) {
+        try {
+            shardManager.emptyShardDatabase();
+            List<String> newOperations = Util.objectFromStream(new DataInputStream(input));
+            shardManager.syncOperations(newOperations);
+            shardManager.syncLocalStoragePools(storagePools);
+        } catch (Exception e) {
+            System.out.println("Could not sync database from other controllers !");
+            e.printStackTrace();
+            System.exit(0);
+        }
     }
 
     public void getState(OutputStream output) throws Exception {

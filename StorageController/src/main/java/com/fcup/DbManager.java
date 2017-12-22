@@ -140,4 +140,11 @@ class DbManager {
         sql.append(");");
         return sql.toString();
     }
+
+    public void emptyDatabase() throws SQLException {
+        String sql = "DROP TABLE `" + table + "`;";
+        Statement statement = dbConnection.createStatement();
+        statement.execute(sql);
+        createDBFileIfNotExists();
+    }
 }

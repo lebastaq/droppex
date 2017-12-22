@@ -21,10 +21,10 @@ public class StorageControllerTest {
 
     @Before
     public void initSingleController() {
-        storageController = createStorageController();
+        initDBManagerForTests();
+        storageController = createStorageController(dbManager);
     }
 
-    @Before
     public void initDBManagerForTests() {
         dbManager = new DbManager(dbName);
 
@@ -38,7 +38,7 @@ public class StorageControllerTest {
         }
     }
 
-    private StorageController createStorageController() {
+    private StorageController createStorageController(DbManager dbManager) {
         StorageController storageControllerLocal = null;
         try {
             String data = "127.0.0.1";
@@ -47,7 +47,9 @@ public class StorageControllerTest {
             Scanner sc = new Scanner(System.in);
 
             storageControllerLocal = new StorageController(sc);
-            System.out.println("OK");
+
+            // custom local database
+            storageControllerLocal.shardManager = new ShardManager(dbManager);
         } catch (Exception e) {
             System.err.println("Could not create storage controller:");
             e.printStackTrace();
@@ -59,7 +61,7 @@ public class StorageControllerTest {
 
     @Test
     public void testElectionOfLeader() throws Exception {
-        StorageController storageController2 = createStorageController();
+        StorageController storageController2 = createStorageController(dbManager);
         try {
             storageController.connectToChannel();
             storageController.sync();
@@ -83,7 +85,6 @@ public class StorageControllerTest {
     @Test
     public void doOperationIntoDBAndThenLoadIt() throws Exception {
         Shard shard = new Shard();
-        DbManager dbManager = new DbManager();
 
         dbManager.connect();
 
@@ -96,9 +97,9 @@ public class StorageControllerTest {
         List<Shard> operationsExpected;
         operationsExpected = dbManager.readEntries();
 
-        if(storageController.shardManager.shards.size() != operationsExpected.size() + 1)
+        if(storageController.shardManager.shards.size() != operationsExpected.size())
         {
-            fail("Stored " + storageController.shardManager.shards.size() + " shards from dbName instead of " + operationsExpected.size());
+            fail("Loaded " + storageController.shardManager.shards.size() + " shards from db instead of " + operationsExpected.size());
         }
     }
 

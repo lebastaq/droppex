@@ -21,6 +21,11 @@ class ShardManager {
         dbManager.connect();
     }
 
+    public ShardManager(DbManager dbManager) throws SQLException, ClassNotFoundException {
+        this.dbManager = dbManager;
+        dbManager.connect();
+    }
+
     public void loadLocalOperationsFromDB() throws SQLException {
         try {
             List<Shard> operationsFromDB = dbManager.readEntries();
@@ -98,5 +103,9 @@ class ShardManager {
         }
 
         newShard.addMyselfToStoragePool(operationStoragePool);
+    }
+
+    public void emptyShardDatabase() throws SQLException {
+        dbManager.emptyDatabase();
     }
 }
