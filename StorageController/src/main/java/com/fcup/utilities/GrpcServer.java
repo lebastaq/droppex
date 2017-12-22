@@ -35,7 +35,7 @@ public class GrpcServer {
         });
     }
 
-    private void stopServer() {
+    public void stopServer() {
         if (server != null) {
             server.shutdown();
         }

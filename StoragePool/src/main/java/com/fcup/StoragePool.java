@@ -135,8 +135,9 @@ public class StoragePool {
 
     public void registerInStorageController() {
         int attempts = 0;
+        int totalAttempts = 0;
         boolean connected = false;
-        while(attempts < 2 && connected == false) {
+        while(connected == false && totalAttempts < 100) {
             System.out.println("Registering with storage controller...");
             PoolInfo request = PoolInfo.newBuilder().setIp(localIPAdress).setPort(localGrpcPort).build(); // todo host = storage pool - how to get it ?
             setUpGrpcClient();
@@ -148,7 +149,11 @@ public class StoragePool {
             } catch (StatusRuntimeException e) {
                 System.out.println("Failed registering, will now try again...");
                 attempts ++;
-                remoteControllerPort++;
+                totalAttempts++;
+                if(attempts > 5){
+                    remoteControllerPort++;
+                    attempts = 0;
+                }
             }
         }
 

@@ -40,39 +40,43 @@ public class StorageController extends StoragePoolsManager {
         Thread psThread = new Thread(portalServer, "AppServer File Transfer Thread");
         psThread.start();
 
-        grpcServer.startGrpcServer(this);
+//        grpcServer.startGrpcServer(this);
 //        eventLoop();
-    }
-
-    private void eventLoop() throws Exception {
-        System.in.read();
     }
 
     @Override
     public void viewAccepted(View new_view) {
         super.viewAccepted(new_view);
 
-        if(isLeader)
+        if(isLeader) {
+            grpcServer.startGrpcServer(this);
             sendMasterIPAndPortToStoragePools();
+        }
+        else{
+            grpcServer.stopServer();
+        }
     }
 
     private void sendMasterIPAndPortToStoragePools() {
-        System.out.println("... will now contact storage pools");
-        for (StoragePool storagePool : storagePools) {
-            storageControllerInfo request = grpcServer.buildSetIPAndPortRequest(localIP);
-            try {
-                addressgetterGrpc.addressgetterBlockingStub blockingStub = storagePool.buildBlockingStub();
+        if (isLeader) {
+            System.out.println("... will now contact storage pools to update master controller ip and port");
+            for (StoragePool storagePool : storagePools) {
+                storageControllerInfo request = grpcServer.buildSetIPAndPortRequest(localIP);
+                try {
+                    addressgetterGrpc.addressgetterBlockingStub blockingStub = storagePool.buildBlockingStub();
 
-                blockingStub.setAddress(request);
-                System.out.println("Sent new address to storage pool !");
-            } catch (IllegalArgumentException e) {
-                System.out.println("Could not connect: Invalid storage pool name");
-            } catch (StatusRuntimeException e) {
-                System.out.println("Could not connect: pool unavailable");
-            } catch (Exception e) {
-                System.out.println("Unhandled exception");
-                e.printStackTrace();
+                    blockingStub.setAddress(request);
+                    System.out.println("Sent new address to storage pool !");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Could not connect: Invalid storage pool name");
+                } catch (StatusRuntimeException e) {
+                    System.out.println("Could not connect: pool unavailable");
+                } catch (Exception e) {
+                    System.out.println("Unhandled exception");
+                    e.printStackTrace();
+                }
             }
         }
+
     }
 }

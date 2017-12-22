@@ -138,13 +138,13 @@ public class StoragePoolsManager extends ReceiverAdapter {
     }
 
     private void askAdminForLocalIP(Scanner sc) {
-        System.out.println("Default IP is: " + localIP + ". Do you want to change it ? (enter to accept default ip)");
-        String in = sc.nextLine();
-
-        if(!in.isEmpty()){
+//        System.out.println("Default IP is: " + localIP + ". Do you want to change it ? (enter to accept default ip)");
+//        String in = sc.nextLine();
+//
+//        if(!in.isEmpty()){
             System.out.println("Please enter local IP:");
             localIP = sc.nextLine();
-        }
+//        }
     }
 
 }
