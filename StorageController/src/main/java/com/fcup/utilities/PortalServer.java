@@ -7,26 +7,41 @@ import java.util.concurrent.Executors;
 
 public class PortalServer implements Runnable {
     private static final int MAX_THREADS = Runtime.getRuntime().availableProcessors();
-    private final int PORT = 29200;
+    private int port = 29200;
+    private ServerSocket serverSocket;
 
     @Override
     public void run() {
         ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS);
 
         boolean listening = true;
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+        bindPort();
+
+        try {
             while (listening) {
-                PortalFileHandler fh = new PortalFileHandler(serverSocket.accept());
+                PortalFileHandler fh = null;
+                    fh = new PortalFileHandler(serverSocket.accept());
                 executor.execute(fh);
 
             }
-
         } catch (IOException e) {
             e.printStackTrace();
-
         }
 
         executor.shutdown();
 
+    }
+
+    private void bindPort() {
+        boolean connected = false;
+        while (connected == false) {
+            try {
+                serverSocket = new ServerSocket(port);
+            } catch (java.net.BindException e) {
+                port++;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -88,6 +88,8 @@ public class StoragePoolsManager extends ReceiverAdapter {
 
     public void setState(InputStream input) throws Exception {
         List<String> newOperations = Util.objectFromStream(new DataInputStream(input));
+        System.out.println("SETTING THE STAAAAAAAAAAAAAAAAAAAATE");
+//        shardManager.emptyShardDatabase();
         shardManager.syncOperations(newOperations);
         shardManager.syncLocalStoragePools(storagePools);
     }
