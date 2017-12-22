@@ -42,7 +42,7 @@ public class dbManagerTest {
             dbManager.connect();
             Shard shard = new Shard();
             shard.changeKeyValue("shardID", shardID);
-            dbManager.insertOperation(shard);
+            dbManager.insertShard(shard);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Could not insert values into database");
@@ -70,7 +70,7 @@ public class dbManagerTest {
             dbManager.connect();
             Shard shard = new Shard();
             shard.changeKeyValue("shardID", shardID);
-            dbManager.insertOperation(shard);
+            dbManager.insertShard(shard);
             System.out.println("Inserted shard: " + shard.toString());
         } catch (Exception e) {
             e.printStackTrace();

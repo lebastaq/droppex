@@ -2,6 +2,7 @@ package com.fcup;
 
 import com.fcup.generated.*;
 import com.fcup.utilities.GrpcControllerAddressGetter;
+import com.google.gson.JsonObject;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.ServerBuilder;
@@ -162,6 +163,9 @@ public class StoragePool {
 
 
     public String getLocalIP() {
+//        JsonObject ip = (JsonObject) parser.parse(new FileReader("F:\\test.json"));
+//        JSONObject jsonObject = (JSONObject) obj;
+//        JsonObject ip = (JsonObject) parser.parse(new FileReader("c:\\exer4-courses.json"));
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter IP address of the machine:");
         return scanner.nextLine();

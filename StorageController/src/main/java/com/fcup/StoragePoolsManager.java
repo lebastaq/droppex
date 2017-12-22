@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.fcup.utilities.*;
+import org.json.JSONObject;
 
 public class StoragePoolsManager extends ReceiverAdapter {
 
@@ -18,8 +19,8 @@ public class StoragePoolsManager extends ReceiverAdapter {
     ShardManager shardManager;
     boolean isLeader = false;
     List<StoragePool> storagePools;
-    private static String CONFIG_FILE = "config.xml"; /* google_config.xml */
-    String localIP;
+    private static String CONFIG_FILE = "config.xml";
+    String localIP = null;
 
     // todo pattern ?
     StoragePoolsManager() throws Exception {
@@ -35,12 +36,12 @@ public class StoragePoolsManager extends ReceiverAdapter {
     }
 
     private StoragePoolsManager(String CONFIG_FILE, Scanner sc) throws Exception {
+        getParameters(sc);
         StoragePoolsManager.CONFIG_FILE = CONFIG_FILE;
         jgroupsChannel = new JChannel(CONFIG_FILE).setReceiver(this);
         shardManager = new ShardManager();
         storagePools = new ArrayList<>();
 
-        askAdminForLocalIP(sc);
     }
 
     public void connectToChannel() throws Exception {
@@ -76,7 +77,6 @@ public class StoragePoolsManager extends ReceiverAdapter {
             isLeader = false;
         }
     }
-
 
     public void receive(Message msg) {
         String message = msg.getObject();
@@ -114,8 +114,37 @@ public class StoragePoolsManager extends ReceiverAdapter {
     }
 
 
-    private void askAdminForLocalIP(Scanner sc) {
-        System.out.println("Please enter local IP:");
-        localIP = sc.nextLine();
+    // todo reformat...
+    private void getParameters(Scanner sc) {
+//        ParametersReader parametersReader = new ParametersReader();
+//        JSONObject parameters = parametersReader.readFromFile();
+//
+//        if(parameters.has("Config-file")) {
+//            CONFIG_FILE = parameters.getString("Config-file");
+//        }
+//
+//        if(parameters.has("IP")) {
+//            localIP = parameters.getString("IP");
+//            System.out.println("OK");
+//        }
+//        else{
+//            System.out.println("Not ok");
+//        }
+
+        askAdminForLocalIP(sc);
+
+        System.out.println("Config:" + CONFIG_FILE);
+        System.out.println("IP: " + localIP);
     }
+
+    private void askAdminForLocalIP(Scanner sc) {
+        System.out.println("Default IP is: " + localIP + ". Do you want to change it ? (enter to accept default ip)");
+        String in = sc.nextLine();
+
+        if(!in.isEmpty()){
+            System.out.println("Please enter local IP:");
+            localIP = sc.nextLine();
+        }
+    }
+
 }

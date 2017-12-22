@@ -97,7 +97,7 @@ class DbManager {
         return results;
     }
 
-    public void insertOperation(Shard shard) throws Exception {
+    public void insertShard(Shard shard) throws Exception {
         StringBuilder request = new StringBuilder("INSERT INTO " + table + " (");
 
         // TODO tidy this up
@@ -124,6 +124,7 @@ class DbManager {
         String sql = buildCreateTableQuery();
         Statement statement = dbConnection.createStatement();
         statement.execute(sql);
+        System.out.println("Created database table");
     }
 
     private String buildCreateTableQuery() {
