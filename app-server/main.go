@@ -114,17 +114,18 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 
 	token := r.Header.Get("Authorization")
 
-	filename := r.PostFormValue("filename")
-	fileSize := r.PostFormValue("filesize")
-	fileHash := r.PostFormValue("hash")
-	log.Printf("Upload requested for %s (%s Bytes) by token: %s with hash: %s\n", filename, fileSize, token, fileHash)
-
-	file, _, err := r.FormFile("file")
+	file, header, err := r.FormFile("file")
 	if err != nil {
 		renderError(w, "INVALID_FILE", http.StatusBadRequest)
 		return
 	}
 	defer file.Close()
+
+	fileSize := r.PostFormValue("filesize")
+	fileHash := r.PostFormValue("hash")
+	filename := header.Filename
+
+	log.Printf("Upload requested for %s (%s Bytes) by token: %s with hash: %s\n", filename, fileSize, token, fileHash)
 
 	conn, err := net.Dial("tcp", "localhost:29200")
 	if err != nil {
