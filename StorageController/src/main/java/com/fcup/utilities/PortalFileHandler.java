@@ -15,15 +15,15 @@ public class PortalFileHandler implements Runnable {
 
     @Override
     public void run() {
-        try(BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        try(DataInputStream dis = new DataInputStream(socket.getInputStream());
             OutputStream os = socket.getOutputStream();
             PrintWriter out = new PrintWriter(os, true)) {
 
-            String action = in.readLine();
-            String filename = in.readLine();
+            String action = dis.readLine();
+            String filename = dis.readLine();
 
             if (action.equals("upload")) {
-                receiveUpload(filename);
+                receiveUpload(filename, dis);
 
             } else if (action.equals("download")) {
                 sendDownload(os, filename);
@@ -38,11 +38,11 @@ public class PortalFileHandler implements Runnable {
         }
     }
 
-    private void receiveUpload(String filename) throws IOException {
-        try (DataInputStream dis = new DataInputStream(socket.getInputStream());
-             FileOutputStream fos = new FileOutputStream(TEMP_FILE_DIR + filename)) {
+    private void receiveUpload(String filename, DataInputStream dis) throws IOException {
 
-            byte[] contents = new byte[16*1024];
+        try (FileOutputStream fos = new FileOutputStream(TEMP_FILE_DIR + filename)) {
+
+            byte[] contents = new byte[1024];
 
             int bytesRead;
             while ((bytesRead = dis.read(contents)) > 0) {

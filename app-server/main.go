@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"strconv"
 	"time"
 
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
@@ -136,15 +135,6 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	// Notify that it's a file upload
 	io.WriteString(conn, "upload\n")
 	io.WriteString(conn, filename+"\n")
-
-	// Save the file
-	tempName := strconv.Itoa(int(time.Now().Nanosecond()))
-	infile, err := os.Create(tempName)
-	if err != nil {
-		renderError(w, "IO_ERROR", http.StatusInternalServerError)
-	}
-	os.Remove(tempName)
-	infile.Close()
 
 	// Forward the file to StorageController
 	io.Copy(conn, file)
