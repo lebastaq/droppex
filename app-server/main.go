@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strconv"
 	"time"
 
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
@@ -97,7 +98,7 @@ var downloadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Reque
 
 	// Notify that it's a file download
 	io.WriteString(conn, "download\n")
-	io.WriteString(conn, filename + "\n")
+	io.WriteString(conn, filename+"\n")
 
 	io.Copy(w, conn)
 
@@ -126,14 +127,6 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	}
 	defer file.Close()
 
-	// Save the file
-	infile, err := os.Create(filename)
-	if err != nil {
-		renderError(w, "IO_ERROR", http.StatusInternalServerError)
-	}
-	io.Copy(infile, file)
-	infile.Close()
-
 	conn, err := net.Dial("tcp", "localhost:29200")
 	if err != nil {
 		renderError(w, "STORAGE_CONTROLLER_CONNECTION_FAILED", http.StatusInternalServerError)
@@ -142,20 +135,20 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 
 	// Notify that it's a file upload
 	io.WriteString(conn, "upload\n")
-	io.WriteString(conn, filename + "\n")
+	io.WriteString(conn, filename+"\n")
 
-	// Open the file to send
-	outfile, err := os.Open(filename)
+	// Save the file
+	tempName := strconv.Itoa(int(time.Now().Nanosecond()))
+	infile, err := os.Create(tempName)
 	if err != nil {
 		renderError(w, "IO_ERROR", http.StatusInternalServerError)
 	}
-	defer outfile.Close()
+	os.Remove(tempName)
+	infile.Close()
 
 	// Forward the file to StorageController
-	io.Copy(conn, outfile)
+	io.Copy(conn, file)
 
-	os.Remove(filename)
-	
 	w.Write([]byte("File upload success."))
 })
 
