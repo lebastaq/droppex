@@ -21,6 +21,7 @@ public class PortalFileHandler implements Runnable {
 
             String action = dis.readLine();
             String filename = dis.readLine();
+            String fileHash = dis.readLine();
 
             if (action.equals("upload")) {
                 receiveUpload(filename, dis);
@@ -52,6 +53,7 @@ public class PortalFileHandler implements Runnable {
 
         } catch (IOException e) {
             throw e;
+
         }
     }
 
