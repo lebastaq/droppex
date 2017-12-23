@@ -137,6 +137,7 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	io.WriteString(conn, "upload\n")
 	io.WriteString(conn, filename+"\n")
 	io.WriteString(conn, fileHash+"\n")
+	io.WriteString(conn, token+"\n")
 
 	// Forward the file to StorageController
 	io.Copy(conn, file)

@@ -6,6 +6,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 public class PortalFileHandler implements Runnable {
+    // TODO: Increase block size to 10MB
+    private final int BLOCK_SIZE_BYTES = 1024 * 1024;
     private final String TEMP_FILE_DIR = "tmp/";
     private final Socket socket;
 
@@ -22,9 +24,11 @@ public class PortalFileHandler implements Runnable {
             String action = dis.readLine();
             String filename = dis.readLine();
             String fileHash = dis.readLine();
+            String token = dis.readLine();
 
             if (action.equals("upload")) {
                 receiveUpload(filename, dis);
+                splitFile(filename, fileHash, token);
 
             } else if (action.equals("download")) {
                 sendDownload(os, filename);
@@ -84,6 +88,51 @@ public class PortalFileHandler implements Runnable {
             throw e;
 
         }
+    }
+
+    /**
+     * Reads files with a buffer set to the max block size
+     * and writes them out to the original video directory
+     * https://stackoverflow.com/questions/10864317/how-to-break-a-file-into-pieces-using-java
+     * @throws IOException
+     */
+    private void splitFile(String filename, String filehash, String token) throws IOException {
+        byte[] blockBuffer = new byte[BLOCK_SIZE_BYTES];
+
+        File baseFile = new File(TEMP_FILE_DIR + filename);
+        try (FileInputStream fi = new FileInputStream(baseFile);
+             BufferedInputStream bi = new BufferedInputStream(fi)) {
+
+            System.out.println(filehash);
+            System.out.println(System.currentTimeMillis());
+
+            // Make a temp directory for shards
+            String blockPath = TEMP_FILE_DIR + filehash + token.substring(8,18) + Long.toString(System.currentTimeMillis());
+            System.out.println(blockPath);
+            File pathFile = new File(blockPath);
+            pathFile.mkdir();
+
+            int blockIndex = 0;
+            int bytesRead = 0;
+            while ((bytesRead = bi.read(blockBuffer)) > 0) {
+                String blockName = blockPath + "/" + filename +  "." +  blockIndex;
+
+                File currentBlock = new File(blockName);
+
+                try (FileOutputStream fo = new FileOutputStream(currentBlock)) {
+                    fo.write(blockBuffer, 0, bytesRead);
+                    fo.close();
+
+                    blockIndex++;
+                }
+            }
+
+            // TODO: Clean up temp folder after successful transfer
+//            pathFile.delete();
+        }
+
+        baseFile.delete();
+
     }
 
 }
