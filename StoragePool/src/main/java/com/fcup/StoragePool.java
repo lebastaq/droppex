@@ -3,7 +3,6 @@ package com.fcup;
 import com.fcup.generated.*;
 import com.fcup.utilities.GrpcControllerAddressGetter;
 import com.fcup.utilities.ParametersReader;
-import com.google.gson.JsonObject;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.ServerBuilder;
@@ -63,8 +62,6 @@ public class StoragePool {
         blockingStub = registererGrpc.newBlockingStub(grpcChannel);
     }
 
-    // todo clean up
-    // extract to own class ?
     private void shutDownGrpcChannel() {
         if (grpcChannel != null) {
             if(!grpcChannel.isShutdown()) {
@@ -180,7 +177,6 @@ public class StoragePool {
 
         if(parameters.has("IP")) {
             localIPAdress = parameters.getString("IP");
-            System.out.println("Local IP: " + localIPAdress);
         }
         else{
             localIPAdress = askAdminForLocalIP();
@@ -188,11 +184,13 @@ public class StoragePool {
 
         if(parameters.has("master")) {
             remoteControllerAddress = parameters.getString("master");
-            System.out.println("Master controller: " + localIPAdress);
         }
         else{
             remoteControllerAddress = askAdminForRemoteControllerAddress();
         }
+
+        System.out.println("Local IP: " + localIPAdress);
+        System.out.println("Master controller: " + remoteControllerAddress);
 
     }
 

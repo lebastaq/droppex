@@ -6,9 +6,6 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-
 public class ParametersReader {
 
     private String CONFIG_FILE  = "networkconf.json";
