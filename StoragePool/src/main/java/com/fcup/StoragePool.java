@@ -137,16 +137,11 @@ public class StoragePool {
         int attempts = 0;
         int totalAttempts = 0;
         boolean connected = false;
+
         while(connected == false && totalAttempts < 100) {
-            System.out.println("Registering with storage controller...");
-            PoolInfo request = PoolInfo.newBuilder().setIp(localIPAdress).setPort(localGrpcPort).build(); // todo host = storage pool - how to get it ?
-            setUpGrpcClient();
-            blockingStub = registererGrpc.newBlockingStub(grpcChannel);
             try {
-                PoolRegistrationStatus status = blockingStub.register(request);
-                System.out.println("Answer: " + status.getOk());
-                connected = true;
-            } catch (StatusRuntimeException e) {
+                connected = tryToRegisterInStorageController();
+            } catch (StatusRuntimeException) {
                 System.out.println("Failed registering, will now try again...");
                 attempts ++;
                 totalAttempts++;
@@ -163,6 +158,16 @@ public class StoragePool {
         }
 
         System.out.println("Registered as " + localIPAdress + ":" + localGrpcPort + " to " + remoteControllerAddress + ":" + remoteControllerPort);
+    }
+
+    public boolean tryToRegisterInStorageController() throws StatusRuntimeException{
+        System.out.println("Registering with storage controller " + remoteControllerAddress + ":" + remoteControllerPort + "...");
+        PoolInfo request = PoolInfo.newBuilder().setIp(localIPAdress).setPort(localGrpcPort).build(); // todo host = storage pool - how to get it ?
+        setUpGrpcClient();
+        blockingStub = registererGrpc.newBlockingStub(grpcChannel);
+        PoolRegistrationStatus status = blockingStub.register(request);
+        System.out.println("Answer: " + status.getOk());
+        return true;
     }
 
 
@@ -183,9 +188,11 @@ public class StoragePool {
     }
 
     public void changeMasterController(String ip, int port) {
-        System.out.println("Got new storage controller: " + ip + ":" + port);
-        this.remoteControllerAddress = ip;
-        this.remoteControllerPort = port;
-        registerInStorageController();
+        if((!ip.equals(this.remoteControllerAddress)) || (port !=remoteControllerPort)) {
+            System.out.println("Got new storage controller: " + ip + ":" + port);
+            this.remoteControllerAddress = ip;
+            this.remoteControllerPort = port;
+            registerInStorageController();
+        }
     }
 }

@@ -31,7 +31,6 @@ public class GrpcControllerAddressGetter extends addressgetterGrpc.addressgetter
     }
 
     private addressChangedStatus changeAddress(storageControllerInfo request) throws InvalidProtocolBufferException {
-        System.out.println("Just got a new master controller address: " + request.getIp() + ", " + request.getPort());
         storagePool.changeMasterController(request.getIp(), request.getPort());
         return addressChangedStatus.newBuilder().setOk(true).build();
     }
