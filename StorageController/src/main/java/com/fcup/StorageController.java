@@ -30,7 +30,6 @@ public class StorageController extends StoragePoolsManager {
 
     }
 
-    // TODO something about these two constructors
     public StorageController(Scanner sc) throws Exception {
         super(sc);
         grpcServer = new GrpcServer();
@@ -39,9 +38,6 @@ public class StorageController extends StoragePoolsManager {
     public void start() throws Exception {
         Thread psThread = new Thread(portalServer, "AppServer File Transfer Thread");
         psThread.start();
-
-//        grpcServer.startGrpcServer(this);
-//        eventLoop();
     }
 
     @Override
