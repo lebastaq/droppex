@@ -116,25 +116,23 @@ public class StoragePoolsManager extends ReceiverAdapter {
 
     // todo reformat...
     private void getParameters(Scanner sc) {
-//        ParametersReader parametersReader = new ParametersReader();
-//        JSONObject parameters = parametersReader.readFromFile();
-//
-//        if(parameters.has("Config-file")) {
-//            CONFIG_FILE = parameters.getString("Config-file");
-//        }
-//
-//        if(parameters.has("IP")) {
-//            localIP = parameters.getString("IP");
-//            System.out.println("OK");
-//        }
-//        else{
-//            System.out.println("Not ok");
-//        }
+        ParametersReader parametersReader = new ParametersReader();
+        JSONObject parameters = parametersReader.readFromFile();
 
-        askAdminForLocalIP(sc);
+        System.out.println("Reading from defaults file....");
+        if(parameters.has("Config-file")) {
+            CONFIG_FILE = parameters.getString("Config-file");
+            System.out.println("Jgroups config file: " + CONFIG_FILE);
+        }
 
-        System.out.println("Config:" + CONFIG_FILE);
-        System.out.println("IP: " + localIP);
+        if(parameters.has("IP")) {
+            localIP = parameters.getString("IP");
+            System.out.println("Local IP: " + localIP);
+        }
+        else{
+            askAdminForLocalIP(sc);
+        }
+
     }
 
     private void askAdminForLocalIP(Scanner sc) {

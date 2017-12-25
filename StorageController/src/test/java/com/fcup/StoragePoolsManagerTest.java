@@ -23,12 +23,7 @@ public class StoragePoolsManagerTest {
     private StoragePoolsManager createStoragePool() {
         StoragePoolsManager storagePoolManagerLocal = null;
         try {
-            String data = "127.0.0.1";
-            System.setIn(new ByteArrayInputStream(data.getBytes()));
-
-            Scanner sc = new Scanner(System.in);
-
-            storagePoolManagerLocal = new StoragePoolsManager(sc);
+            storagePoolManagerLocal = new StoragePoolsManager();
             System.out.println("OK");
         } catch (Exception e) {
             System.err.println("Could not create storage controller:");
