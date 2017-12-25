@@ -2,11 +2,13 @@ package com.fcup;
 
 import com.fcup.generated.*;
 import com.fcup.utilities.GrpcControllerAddressGetter;
+import com.fcup.utilities.ParametersReader;
 import com.google.gson.JsonObject;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.ServerBuilder;
 import io.grpc.StatusRuntimeException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +29,7 @@ public class StoragePool {
     private String remoteControllerAddress;
     SeederPool seederPool;
     DownloaderPool downloaderPool;
+    private String CONFIG_FILE = "networkconf.json";
 
     public static void main(String[] args) throws Exception {
         StoragePool storagePool = new StoragePool();
@@ -35,8 +38,7 @@ public class StoragePool {
 
     public StoragePool() throws Exception {
         localGrpcPort = 50051;
-        localIPAdress = getLocalIP();
-        remoteControllerAddress = getRemoteControllerAddress();
+        getParameters();
         createStorageFolderIfNotExists();
         startGrpcServer();
         seederPool = new SeederPool(STORAGE_FOLDER);
@@ -170,18 +172,37 @@ public class StoragePool {
         return true;
     }
 
+    public void getParameters() {
+        ParametersReader parametersReader = new ParametersReader(CONFIG_FILE);
+        JSONObject parameters = parametersReader.readParameters();
 
+        System.out.println("Reading from defaults file....");
 
-    public String getLocalIP() {
-//        JsonObject ip = (JsonObject) parser.parse(new FileReader("F:\\test.json"));
-//        JSONObject jsonObject = (JSONObject) obj;
-//        JsonObject ip = (JsonObject) parser.parse(new FileReader("c:\\exer4-courses.json"));
+        if(parameters.has("IP")) {
+            localIPAdress = parameters.getString("IP");
+            System.out.println("Local IP: " + localIPAdress);
+        }
+        else{
+            localIPAdress = askAdminForLocalIP();
+        }
+
+        if(parameters.has("master")) {
+            remoteControllerAddress = parameters.getString("master");
+            System.out.println("Master controller: " + localIPAdress);
+        }
+        else{
+            remoteControllerAddress = askAdminForRemoteControllerAddress();
+        }
+
+    }
+
+    public String askAdminForLocalIP() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter IP address of the machine:");
         return scanner.nextLine();
     }
 
-    public String getRemoteControllerAddress() {
+    public String askAdminForRemoteControllerAddress() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter IP address of the master controller:");
         return scanner.nextLine();
