@@ -67,7 +67,7 @@ public class Shard {
         storagePool.addChunk(params.get("shardID"));
     }
 
-    public StoragePool operationPoolToStoreMe(List<StoragePool> pools) {
+    public StoragePool creatoOperationPoolToStoreMe(List<StoragePool> pools) {
         for (StoragePool pool : pools) {
             if(pool.hasIPAndPort(params.get("storagePoolIP"), Integer.parseInt(params.get("storagePoolPort")))) {
                 return pool;

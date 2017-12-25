@@ -94,8 +94,7 @@ class ShardManager {
     }
 
     void syncLocalPoolsWithOperationPool(List<StoragePool> storagePools, Shard newShard) {
-        // create new storage pool if it does not exist
-        StoragePool operationStoragePool = newShard.operationPoolToStoreMe(storagePools);
+        StoragePool operationStoragePool = newShard.creatoOperationPoolToStoreMe(storagePools);
 
         if (!storagePools.contains(operationStoragePool)) {
             storagePools.add(operationStoragePool);

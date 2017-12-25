@@ -19,26 +19,27 @@ public class StoragePoolsManager extends ReceiverAdapter {
     ShardManager shardManager;
     boolean isLeader = false;
     List<StoragePool> storagePools;
-    private static String CONFIG_FILE = "config.xml";
+    private static String JGROUPS_CONFIG = "config.xml";
+    private String CONFIG_FILE = "networkconf.json";
     String localIP = null;
 
     // todo pattern ?
     StoragePoolsManager() throws Exception {
-        this(CONFIG_FILE);
+        this(JGROUPS_CONFIG);
     }
 
     public StoragePoolsManager(Scanner sc) throws Exception {
-        this(CONFIG_FILE, sc);
+        this(JGROUPS_CONFIG, sc);
     }
 
-    private StoragePoolsManager(String CONFIG_FILE) throws Exception {
-        this(CONFIG_FILE, new Scanner(System.in));
+    private StoragePoolsManager(String JGROUPS_CONFIG) throws Exception {
+        this(JGROUPS_CONFIG, new Scanner(System.in));
     }
 
-    private StoragePoolsManager(String CONFIG_FILE, Scanner sc) throws Exception {
+    private StoragePoolsManager(String JGROUPS_CONFIG, Scanner sc) throws Exception {
         getParameters(sc);
-        StoragePoolsManager.CONFIG_FILE = CONFIG_FILE;
-        jgroupsChannel = new JChannel(CONFIG_FILE).setReceiver(this);
+        StoragePoolsManager.JGROUPS_CONFIG = JGROUPS_CONFIG;
+        jgroupsChannel = new JChannel(JGROUPS_CONFIG).setReceiver(this);
         shardManager = new ShardManager();
         storagePools = new ArrayList<>();
 
@@ -114,15 +115,14 @@ public class StoragePoolsManager extends ReceiverAdapter {
     }
 
 
-    // todo reformat...
     private void getParameters(Scanner sc) {
-        ParametersReader parametersReader = new ParametersReader();
-        JSONObject parameters = parametersReader.readFromFile();
+        ParametersReader parametersReader = new ParametersReader(CONFIG_FILE);
+        JSONObject parameters = parametersReader.readParameters();
 
         System.out.println("Reading from defaults file....");
         if(parameters.has("Config-file")) {
-            CONFIG_FILE = parameters.getString("Config-file");
-            System.out.println("Jgroups config file: " + CONFIG_FILE);
+            JGROUPS_CONFIG = parameters.getString("Config-file");
+            System.out.println("Jgroups config file: " + JGROUPS_CONFIG);
         }
 
         if(parameters.has("IP")) {
@@ -136,10 +136,6 @@ public class StoragePoolsManager extends ReceiverAdapter {
     }
 
     private void askAdminForLocalIP(Scanner sc) {
-//        System.out.println("Default IP is: " + localIP + ". Do you want to change it ? (enter to accept default ip)");
-//        String in = sc.nextLine();
-//
-//        if(!in.isEmpty()){
             System.out.println("Please enter local IP:");
             localIP = sc.nextLine();
 //        }
