@@ -141,7 +141,7 @@ public class StoragePool {
         while(connected == false && totalAttempts < 100) {
             try {
                 connected = tryToRegisterInStorageController();
-            } catch (StatusRuntimeException) {
+            } catch (StatusRuntimeException e) {
                 System.out.println("Failed registering, will now try again...");
                 attempts ++;
                 totalAttempts++;

@@ -28,6 +28,7 @@ class DbManager {
         loadDriver();
         connectToDB();
         createOperationsTableIfNotExists();
+        System.out.println("Connected to db");
     }
 
     void connectToDB() throws SQLException {
@@ -122,10 +123,10 @@ class DbManager {
         statement.executeUpdate(request.toString());
     }
 
-    private void createOperationsTableIfNotExists() throws SQLException {
-        String sql = buildCreateTableQuery();
+    void createOperationsTableIfNotExists() throws SQLException {
+        String query = buildCreateTableQuery();
         Statement statement = dbConnection.createStatement();
-        statement.execute(sql);
+        statement.execute(query);
         System.out.println("Created database table");
     }
 

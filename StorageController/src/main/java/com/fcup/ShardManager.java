@@ -76,7 +76,7 @@ class ShardManager {
         try {
             dbManager.insertShard(shard);
         } catch (Exception e) {
-            System.err.println("Could not insert shard");
+            System.err.println("Could not insert shard: ");
             e.printStackTrace();
         }
     }
@@ -107,5 +107,6 @@ class ShardManager {
 
     public void emptyShardDatabase() throws SQLException {
         dbManager.emptyDatabase();
+        dbManager.createOperationsTableIfNotExists();
     }
 }
