@@ -15,9 +15,9 @@ public class StoragePoolTest {
     @Test
     public void addChunk() throws Exception {
         String chunk = "test";
-        storagePool.addChunk(chunk);
+        storagePool.addShard(chunk);
 
-        if (!storagePool.chunks.get(0).equals(chunk)) {
+        if (!storagePool.shards.get(0).equals(chunk)) {
             fail("Did not insert chunk correctly");
         }
 
@@ -26,10 +26,10 @@ public class StoragePoolTest {
     @Test
     public void removeChunk() throws Exception {
         String chunk = "test";
-        storagePool.addChunk(chunk);
+        storagePool.addShard(chunk);
         storagePool.removeChunk(chunk);
 
-        if (storagePool.chunks.size() != 0) {
+        if (storagePool.shards.size() != 0) {
             fail("Did not remove chunk correctly");
         }
 

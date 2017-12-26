@@ -64,7 +64,7 @@ public class Shard {
     }
 
     public void addMyselfToStoragePool(StoragePool storagePool) {
-        storagePool.addChunk(params.get("shardID"));
+        storagePool.addShard(params.get("shardID"));
     }
 
     public StoragePool creatoOperationPoolToStoreMe(List<StoragePool> pools) {

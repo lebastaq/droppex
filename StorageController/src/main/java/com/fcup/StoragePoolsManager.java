@@ -48,7 +48,6 @@ public class StoragePoolsManager extends ReceiverAdapter {
     public void connectToChannel() throws Exception {
         jgroupsChannel.connect("ChatCluster");
         electNewLeader();
-        System.out.println("Connected to channel");
     }
 
     public void disconnectFromChannel() {
@@ -58,7 +57,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
     public void sync() throws Exception {
         shardManager.loadLocalOperationsFromDB();
         jgroupsChannel.getState(null, 10000); // will callback setState
-        System.out.println("Synced!");
+        System.out.println("Synced");
     }
 
     public void viewAccepted(View new_view) {
@@ -68,8 +67,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
 
     void electNewLeader() {
         View view = jgroupsChannel.getView();
-        Address address = view.getMembers()
-                .get(0);
+        Address address = view.getMembers().get(0);
         if (address.equals(jgroupsChannel.getAddress())) {
             System.out.println("I'm (" + jgroupsChannel.getAddress() + ") the leader");
             isLeader = true;
@@ -138,7 +136,6 @@ public class StoragePoolsManager extends ReceiverAdapter {
     private void askAdminForLocalIP(Scanner sc) {
             System.out.println("Please enter local IP:");
             localIP = sc.nextLine();
-//        }
     }
 
 }
