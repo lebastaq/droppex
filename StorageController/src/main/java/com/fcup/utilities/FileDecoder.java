@@ -1,6 +1,10 @@
 package com.fcup.utilities;
 
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.util.Arrays;
+
 import com.backblaze.erasure.*;
 
 public class FileDecoder {
@@ -9,32 +13,67 @@ public class FileDecoder {
     private final int TOTAL_SHARDS = 6;
     private final int BYTES_IN_INT = 4;
     private final String filename;
+    private final File shardsDir;
 
-    private byte[][] shards;
-    private boolean[] shardPresent;
+    private final byte[][] shards = new byte [TOTAL_SHARDS][];
+    private final boolean [] shardPresent = new boolean [TOTAL_SHARDS];
     private int shardSize;
-    private int shardCount;
 
-    public FileDecoder(String filename) {
+    public FileDecoder(String filename, File shardsDir) {
         this.filename = filename;
+        this.shardsDir = shardsDir;
     }
 
-    public void run() {
+    public void run() throws IOException {
+        assembleBlocks();
+        assembleFile();
 
     }
 
-    private void readShards(String filename, File shardsDir, int blockID) throws IOException {
-        shards = new byte [TOTAL_SHARDS][];
-        shardPresent = new boolean [TOTAL_SHARDS];
-        shardSize = 0;
-        shardCount = 0;
+    private void assembleFile() throws IOException {
+        File[] directoryFiles = shardsDir.listFiles();
+        Arrays.sort(directoryFiles);
 
-        // Read in any of the shards that are present.
+        try (FileOutputStream fos = new FileOutputStream(shardsDir.getPath() + "/" + filename);
+             BufferedOutputStream mergingStream = new BufferedOutputStream(fos)) {
+
+            for (File block : directoryFiles) {
+                Files.copy(block.toPath(), mergingStream);
+                block.delete();
+
+            }
+
+        } catch (IOException e) {
+            throw e;
+        }
+    }
+
+    private void assembleBlocks() throws IOException {
+        int numBlocks = shardsDir.list().length / (DATA_SHARDS + PARITY_SHARDS);
+
+        for (int i = 0; i < numBlocks; i++) {
+            assembleSublocks(filename + "." + Integer.toString(i));
+
+        }
+    }
+
+    private void assembleSublocks(String blockName) throws IOException {
+        readShards(blockName);
+
+        // Fill in missing shards
+        ReedSolomon reedSolomon = ReedSolomon.create(DATA_SHARDS, PARITY_SHARDS);
+        reedSolomon.decodeMissing(shards, shardPresent, 0, shardSize);
+
+        saveFiles(blockName);
+    }
+
+    private void readShards(String blockName) throws IOException {
+        int shardCount = 0;
         for (int i = 0; i < TOTAL_SHARDS; i++) {
-            File shardFile = new File(shardsDir,
-                    filename + "." + blockID + "." +  i);
 
+            File shardFile = new File(shardsDir,blockName + "." + i);
             if (shardFile.exists()) {
+
                 // Store the size of the first shard
                 if (i == 0)  {
                     shardSize = (int) shardFile.length();
@@ -50,34 +89,25 @@ public class FileDecoder {
 
                 try (InputStream in = new FileInputStream(shardFile)) {
                     in.read(shards[i], 0, shardSize);
-                    shardCount++;
                 }
+
+                shardCount++;
+                shardFile.delete();
             }
         }
 
-        fillEmpty();
-
-    }
-
-    private void reconstructFromParity(String filename, File shardsDir, int blockID) throws IOException {
-        readShards(filename, shardsDir, blockID);
-
         // We need at least DATA_SHARDS to be able to reconstruct the file.
-        if (shardCount < DATA_SHARDS) {
-            throw new RuntimeException("Not enough shards to decode the file.");
-        }
-
-        // Use Reed-Solomon to fill in the missing shards
-        ReedSolomon reedSolomon = ReedSolomon.create(DATA_SHARDS, PARITY_SHARDS);
-        reedSolomon.decodeMissing(shards, shardPresent, 0, shardSize);
-
-        saveDecoded(shardsDir, filename);
+        checkShardCount(shardCount);
+        fillEmptyShardBuffers();
     }
 
-    /**
-     * Make empty buffers for the missing shards.
-     */
-    private void fillEmpty() {
+    private void checkShardCount(int shardCount) throws IOException {
+        if (shardCount < DATA_SHARDS) {
+            throw new IOException("Not enough shards present");
+        }
+    }
+
+    private void fillEmptyShardBuffers() {
         for (int i = 0; i < TOTAL_SHARDS; i++) {
             if (!shardPresent[i]) {
                 shards[i] = new byte [shardSize];
@@ -85,20 +115,20 @@ public class FileDecoder {
         }
     }
 
-    private void saveDecoded(File shardsDir, String filename) throws IOException {
-        // Write the decoded file
-        File decoded = new File(shardsDir, filename);
-        try (OutputStream out = new FileOutputStream(decoded)) {
-            for (int i = 0; i < DATA_SHARDS; i++) {
-                out.write(shards[i], BYTES_IN_INT, shardSize);
-
-            }
-
-            out.flush();
-
+    private void saveFiles(String blockName) throws IOException {
+        // Combine the data shards into one buffer for convenience.
+        byte[] allBytes = new byte [shardSize * DATA_SHARDS];
+        for (int i = 0; i < DATA_SHARDS; i++) {
+            System.arraycopy(shards[i], 0, allBytes, shardSize * i, shardSize);
         }
-        // TODO: Print the hash, but make sure the name you're getting is the right one
-        //System.out.println(hashFile(decoded.getName()));
-        System.out.println(decoded.getName());
+
+        // Extract the file length
+        int fileSize = ByteBuffer.wrap(allBytes).getInt();
+
+        // Write the decoded file
+        String outputPath = shardsDir.getPath() + "/" + blockName;
+        try (OutputStream out = new FileOutputStream(outputPath)) {
+            out.write(allBytes, BYTES_IN_INT, fileSize);
+        }
     }
 }

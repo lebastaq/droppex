@@ -8,13 +8,17 @@ import com.backblaze.erasure.*;
 public class FileEncoder {
 
     // TODO: Extract later, duplicated
-    public static final int DATA_SHARDS = 4;
-    public static final int PARITY_SHARDS = 2;
-    public static final int TOTAL_SHARDS = 6;
-    public static final int BYTES_IN_INT = 4;
+    public final int DATA_SHARDS = 4;
+    public final int PARITY_SHARDS = 2;
+    public final int TOTAL_SHARDS = 6;
+    public final int BYTES_IN_INT = 4;
+
+    private byte [][] shards;
+    private int shardSize;
 
     // TODO: Increase block size to 10MB
     private final int BLOCK_SIZE_BYTES = 1024 * 1024;
+    
     private final String fileDirectory;
     private final String filename;
     private final String token;
@@ -28,28 +32,30 @@ public class FileEncoder {
 
     }
 
-    public boolean run() {
+    public File run() {
+        blockDirectory = makeTempDirectory();
+
         try {
-            blockDirectory = splitFile();
+            splitFile();
             encodeBlocks();
-            return true;
+            return blockDirectory;
 
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
 
-        } finally {
-            // TODO: Uncomment when done testing
-//            // Clean up temp directory
-//            if (blockDirectory != null && blockDirectory.exists()) {
-//                String[] files = blockDirectory.list();
-//                for(String f: files){
-//                    File currentFile = new File(blockDirectory.getPath(), f);
-//                    currentFile.delete();
-//                }
-//
-//                blockDirectory.delete();
-//            }
+            // Clean up temp directory
+            if (blockDirectory != null && blockDirectory.exists()) {
+                String[] files = blockDirectory.list();
+                for(String f: files){
+                    File currentFile = new File(blockDirectory.getPath(), f);
+                    currentFile.delete();
+                }
+
+                blockDirectory.delete();
+            }
+
+            return null;
+
         }
     }
 
@@ -59,8 +65,6 @@ public class FileEncoder {
      */
     private File splitFile() throws IOException {
         byte[] blockBuffer = new byte[BLOCK_SIZE_BYTES];
-
-        File blockDirectory = makeTempDirectory();
 
         File originalFile = new File(fileDirectory + filename);
         try (FileInputStream fi = new FileInputStream(originalFile);
@@ -110,74 +114,58 @@ public class FileEncoder {
         int blockCount = blockDirectory.list().length;
         for (int i = 0; i < blockCount; i++) {
             String blockPath = blockDirectory.getPath() + "/" + filename + "." + i;
-            File blockFile = new File(blockPath);
-            System.out.println(blockPath);
-            encodeBlock(blockFile);
+            encodeBlock(blockPath);
 
         }
     }
 
-    private void encodeBlock(File blockFile) throws IOException {
-        int blockSize = (int)blockFile.length();
-        int shardSize = (blockSize + BYTES_IN_INT + DATA_SHARDS - 1) / DATA_SHARDS;
-
-        // Make the buffers to hold the shards.
-        byte[][] shards = generateShards(blockFile, blockSize, shardSize);
+    private void encodeBlock(String blockName) throws IOException {
+        File block = new File(blockName);
+        generateShards(block);
 
         // Use Reed-Solomon to calculate the parity.
         ReedSolomon reedSolomon = ReedSolomon.create(DATA_SHARDS, PARITY_SHARDS);
         reedSolomon.encodeParity(shards, 0, shardSize);
 
-        // Save them to disk
-        saveShards(shards, blockFile);
-
+        saveShards(block);
     }
 
-    private byte[][] generateShards(File blockFile, int blockSize, int shardSize) throws IOException {
-        byte[][] shards  = new byte [TOTAL_SHARDS][shardSize];
+    private void generateShards(File block) throws IOException {
+        int blockSize = (int)block.length();
+        int storedSize = blockSize + BYTES_IN_INT;
 
-        try (InputStream in = new FileInputStream(blockFile)) {
-            int bytesRead = 0;
-            for (int i = 0; i < DATA_SHARDS; i++) {
-                ByteBuffer.wrap(shards[i]).putInt(shardSize);
-                bytesRead += in.read(shards[i], 0, shardSize);
+        shardSize = (storedSize + DATA_SHARDS - 1) / DATA_SHARDS;
+        shards = new byte [TOTAL_SHARDS][shardSize];
 
-            }
+        final int bufferSize = shardSize * DATA_SHARDS;
+        final byte [] allBytes = new byte[bufferSize];
+        ByteBuffer.wrap(allBytes).putInt(blockSize);
+
+        try (InputStream in = new FileInputStream(block)) {
+            int bytesRead = in.read(allBytes, BYTES_IN_INT, blockSize);
 
             if (bytesRead != blockSize) {
-                throw new IOException("Not enough bytes read");
+                throw new IOException("Not all bytes read from block: " + block.getName());
             }
         }
 
-        // TODO: Remove once decode works
-//        final int bufferSize = shardSize * DATA_SHARDS;
-//        final byte[] allBytes = new byte[bufferSize];
-
-//        ByteBuffer.wrap(allBytes).putInt(blockSize);
-//        InputStream in = new FileInputStream(blockFile);
-//        int bytesRead = in.read(allBytes, BYTES_IN_INT, blockSize);
-//        if (bytesRead != blockSize) {
-//            throw new IOException("not enough bytes read");
-//        }
-//        in.close();
-//
-//        // Fill in the data shards
-//        for (int i = 0; i < DATA_SHARDS; i++) {
-//            System.arraycopy(allBytes, i * shardSize, shards[i], 0, shardSize);
-//        }
-
-        return shards;
+        // Fill in the data shards
+        for (int i = 0; i < DATA_SHARDS; i++) {
+            System.arraycopy(allBytes, i * shardSize, shards[i], 0, shardSize);
+        }
     }
 
-    private void saveShards(byte[][] shards, File blockFile) throws IOException {
+    private void saveShards(File block) throws IOException {
+        // Write out the resulting files.
         for (int i = 0; i < TOTAL_SHARDS; i++) {
 
-            File outputFile = new File(blockFile.getParentFile(),blockFile.getName() + "." + i);
-
+            File outputFile = new File(block.getParentFile(), block.getName() + "." + i);
             try(OutputStream out = new FileOutputStream(outputFile)) {
                 out.write(shards[i]);
 
             }
         }
+
+        block.delete();
     }
 }

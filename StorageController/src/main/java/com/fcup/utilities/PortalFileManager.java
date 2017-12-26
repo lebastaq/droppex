@@ -33,19 +33,22 @@ public class PortalFileManager implements Runnable {
 
                 if (validUpload()) {
                     FileEncoder uh = new FileEncoder(TEMP_FILE_DIR, filename, token);
-
-                    boolean success = uh.run();
+                    File shardDirectory = uh.run();
 
                     // TODO: Handle on the other side
-                    String output = (success) ? "SUCCESS"
-                                              : "FAILED";
+                    String output = (shardDirectory != null) ? "SUCCESS"
+                                                             : "FAILED";
 
                     out.println(output);
+
+                    FileDecoder dh = new FileDecoder(filename, shardDirectory);
+                    dh.run();
 
                 }
 
             } else if (action.equals("download")) {
-                FileDecoder dh = new FileDecoder(filename);
+                // TODO: This needs a real file path rather than "." Will be where the storage pool dumps.
+                FileDecoder dh = new FileDecoder(filename, new File("."));
                 dh.run();
 
                 sendDownload(os);
