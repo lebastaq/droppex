@@ -35,20 +35,17 @@ public class PortalFileManager implements Runnable {
                     FileEncoder uh = new FileEncoder(TEMP_FILE_DIR, filename, token);
                     File shardDirectory = uh.run();
 
-                    // TODO: Handle on the other side
+                    // TODO: Handle this output on the App server side
                     String output = (shardDirectory != null) ? "SUCCESS"
                                                              : "FAILED";
 
                     out.println(output);
 
-                    FileDecoder dh = new FileDecoder(filename, shardDirectory);
-                    dh.run();
-
                 }
 
             } else if (action.equals("download")) {
-                // TODO: This needs a real file path rather than "." Will be where the storage pool dumps.
-                FileDecoder dh = new FileDecoder(filename, new File("."));
+                // TODO: This needs a real directory path rather than "." (Where we receive shards from pools)
+                FileDecoder dh = new FileDecoder(filename, new File ("."));
                 dh.run();
 
                 sendDownload(os);
