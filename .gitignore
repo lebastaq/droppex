@@ -48,6 +48,7 @@ dummy.go
 **/*.csr
 **/*.pdf
 **/*.mp4
+**/*.ipynb
 
 # intellij
 .idea
