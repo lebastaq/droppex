@@ -99,8 +99,6 @@ class DbManager {
     }
 
     public void insertShard(Shard shard) throws Exception {
-        // TODO find out why we need this... table seems to not get created...
-        //createOperationsTableIfNotExists();
         StringBuilder request = new StringBuilder("INSERT INTO " + table + " (");
 
         // TODO tidy this up
