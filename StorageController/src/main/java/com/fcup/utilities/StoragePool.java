@@ -38,9 +38,10 @@ public class StoragePool {
         }
     }
 
-    public void removeChunk(String shardID) {
+    public void removeShard(String shardID) {
         if(shards.contains(shardID)){
             shards.remove(shardID);
+            System.out.println("Removed shard " + shardID);
         }
     }
 

@@ -149,4 +149,9 @@ class DbManager {
         statement.execute(sql);
         createDBFileIfNotExists();
     }
+
+    // TODO...
+    public void removeShard(String shard) {
+//        String sql = "DELETE FROM " + table
+    }
 }

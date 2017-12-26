@@ -94,7 +94,7 @@ class ShardManager {
     }
 
     void syncLocalPoolsWithOperationPool(List<StoragePool> storagePools, Shard newShard) {
-        StoragePool operationStoragePool = newShard.creatoOperationPoolToStoreMe(storagePools);
+        StoragePool operationStoragePool = newShard.findOrCreateStoragePoolToStoreMe(storagePools);
 
         if (!storagePools.contains(operationStoragePool)) {
             storagePools.add(operationStoragePool);
@@ -107,5 +107,18 @@ class ShardManager {
     public void emptyShardDatabase() throws SQLException {
         dbManager.emptyDatabase();
         dbManager.createOperationsTableIfNotExists();
+    }
+
+    public void deleteShard(List<StoragePool> storagePools, String shardId) {
+        dbManager.removeShard(shardId);
+
+        // also delete from local storage pool
+        for (Shard shard : shards) {
+            if (shard.getId().equals(shardId)) {
+                StoragePool operationStoragePool = shard.findOrCreateStoragePoolToStoreMe(storagePools);
+                operationStoragePool.removeShard(shardId);
+                break;
+            }
+        }
     }
 }

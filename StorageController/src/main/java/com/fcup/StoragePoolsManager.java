@@ -77,12 +77,25 @@ public class StoragePoolsManager extends ReceiverAdapter {
         }
     }
 
+
+    public void sendGroupMessageToDeleteShard(String shardId) {
+        Shard shardToDelete = new Shard();
+        shardToDelete.changeKeyValue("shardID", shardId);
+        shardToDelete.changeKeyValue("operationType", "DEL");
+    }
+
     public void receive(Message msg) {
         String message = msg.getObject();
         System.out.println("Received: " + message);
-        shardManager.storeOperation(Shard.fromJSON(message));
-        shardManager.syncOperation(message);
-        shardManager.syncLocalStoragePools(storagePools);
+        Shard shard = Shard.fromJSON(message);
+
+        if (shard.isDeletionOperation()) {
+            shardManager.deleteShard(storagePools, shard.getId());
+        } else{
+            shardManager.storeOperation(shard);
+            shardManager.syncOperation(message);
+            shardManager.syncLocalStoragePools(storagePools);
+        }
     }
 
     public void setState(InputStream input) {

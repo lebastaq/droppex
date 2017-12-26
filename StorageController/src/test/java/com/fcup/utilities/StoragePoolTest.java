@@ -27,7 +27,7 @@ public class StoragePoolTest {
     public void removeChunk() throws Exception {
         String chunk = "test";
         storagePool.addShard(chunk);
-        storagePool.removeChunk(chunk);
+        storagePool.removeShard(chunk);
 
         if (storagePool.shards.size() != 0) {
             fail("Did not remove chunk correctly");

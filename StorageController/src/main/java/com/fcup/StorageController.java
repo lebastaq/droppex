@@ -42,9 +42,10 @@ public class StorageController extends StoragePoolsManager {
     }
 
     // TODO add grpc call from app server (freddy)
-    public void deleteShard(String shard) {
+    public void sendGroupMessageToDeleteShard(String shardId) {
+        super.sendGroupMessageToDeleteShard(shardId);
         if (isLeader) {
-            findPoolAndSendDeletionMessage(shard);
+            findPoolAndSendDeletionMessage(shardId);
         } else {
             System.err.println("Received grpc message asking to delete file. I am not the master controller, this should not happen");
         }
