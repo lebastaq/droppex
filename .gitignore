@@ -41,7 +41,6 @@ hs_err_pid*
 *.out
 
 #
-**/tmp/
 dummy.go
 *.db
 **/*.key
