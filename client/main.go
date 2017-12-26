@@ -207,13 +207,6 @@ func uploadFile(filepath string) error {
 		return err
 	}
 
-	if fw, err = mpw.CreateFormField("filename"); err != nil {
-		return err
-	}
-	if _, err = fw.Write([]byte(filepath)); err != nil {
-		return err
-	}
-
 	fileStats, err := file.Stat()
 	if err != nil {
 		return err

@@ -92,6 +92,13 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>com.backblaze</groupId>
+            <artifactId>java-reedsolomon</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/repo/JavaReedSolomon.jar</systemPath>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.jgroups/jgroups -->
         <dependency>
             <groupId>org.jgroups</groupId>
@@ -111,7 +118,6 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
         <dependency>
             <groupId>org.xerial</groupId>
@@ -148,6 +154,7 @@
             <artifactId>commons-io</artifactId>
             <version>1.3.2</version>
         </dependency>
+
 
 
     </dependencies>
