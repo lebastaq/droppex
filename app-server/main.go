@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"time"
 
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	jwt "github.com/dgrijalva/jwt-go"
@@ -18,36 +17,28 @@ import (
 )
 
 const (
-	Version       string = "/api/1"
+	version       string = "/api/1"
 	maxUploadSize int64  = 500 * 1024 * 1024 // 500 MB
 )
 
-var signingKey []byte = []byte("fY6k6km3Pw1txgPa7Qc73AYqUNZj6Wg8")
+var signingKey = []byte("fY6k6km3Pw1txgPa7Qc73AYqUNZj6Wg8")
 
 func main() {
 	router := mux.NewRouter()
 
-	router.HandleFunc(Version+"/status", statusHandler).Methods("GET")
-	router.HandleFunc(Version+"/auth", authHandler).Methods("GET")
+	router.HandleFunc(version+"/status", statusHandler).Methods("GET")
+	router.HandleFunc(version+"/auth", authHandler).Methods("GET")
 
-	router.Handle(Version+"/list", jwtMiddleware.Handler(listHandler)).Methods("GET")
-	router.Handle(Version+"/search/{pattern}", jwtMiddleware.Handler(searchHandler)).Methods("GET")
-	router.Handle(Version+"/files/{filename}", jwtMiddleware.Handler(downloadHandler)).Methods("GET")
-	router.Handle(Version+"/files_post", jwtMiddleware.Handler(uploadHandler)).Methods("POST")
-	router.Handle(Version+"/delete/{filename}", jwtMiddleware.Handler(deleteHandler)).Methods("POST")
+	router.Handle(version+"/list", jwtMiddleware.Handler(listHandler)).Methods("GET")
+	router.Handle(version+"/search/{pattern}", jwtMiddleware.Handler(searchHandler)).Methods("GET")
+	router.Handle(version+"/files/{filename}", jwtMiddleware.Handler(downloadHandler)).Methods("GET")
+	router.Handle(version+"/files_post", jwtMiddleware.Handler(uploadHandler)).Methods("POST")
+	router.Handle(version+"/delete/{filename}", jwtMiddleware.Handler(deleteHandler)).Methods("POST")
 
 	log.Fatal(http.ListenAndServeTLS(":8000", "domain.crt", "domain.key", handlers.LoggingHandler(os.Stdout, router)))
 }
 
-// File struct holds file name, size, and upload date
-type File struct {
-	Filename    string    `json:"filename,omitempty"`
-	SizeInBytes int       `json:"size,omitempty"`
-	Hash        string    `json:"hash,omitempty"`
-	Created     time.Time `json:"time,omitempty"`
-}
-
-type JwtToken struct {
+type jwtToken struct {
 	Token string `json:"token"`
 }
 
@@ -161,7 +152,7 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 
 	tokenString, _ := token.SignedString(signingKey)
 
-	json.NewEncoder(w).Encode(JwtToken{Token: tokenString})
+	json.NewEncoder(w).Encode(jwtToken{Token: tokenString})
 	return
 }
 
