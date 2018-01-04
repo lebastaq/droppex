@@ -3,11 +3,9 @@ package com.fcup;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.jgroups.util.Util.assertEquals;
 import static org.junit.Assert.*;
@@ -86,8 +84,8 @@ public class StoragePoolsManagerTest {
         storagePoolsManager.shardManager.syncLocalPoolsWithOperationPool(storagePoolsManager.storagePools, shard1);
 
         if (storagePoolsManager.storagePools.size() == 1) {
-            if (!storagePoolsManager.storagePools.get(0).hasNChunks(1)) {
-                fail("Did not insert correct number of chunks!");
+            if (!storagePoolsManager.storagePools.get(0).hasNShards(1)) {
+                fail("Did not insert correct number of shards!");
             }
         }
         else
@@ -97,8 +95,8 @@ public class StoragePoolsManagerTest {
         storagePoolsManager.shardManager.syncLocalPoolsWithOperationPool(storagePoolsManager.storagePools, shard2);
 
         if (storagePoolsManager.storagePools.size() == 1) {
-            if (!storagePoolsManager.storagePools.get(1).hasNChunks(1)) {
-                fail("Did not insert correct number of chunks!");
+            if (!storagePoolsManager.storagePools.get(1).hasNShards(1)) {
+                fail("Did not insert correct number of shards!");
             }
         }
     }

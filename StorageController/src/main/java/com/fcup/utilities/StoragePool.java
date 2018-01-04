@@ -1,6 +1,7 @@
 package com.fcup.utilities;
 
 import com.fcup.generated.addressgetterGrpc;
+import com.fcup.generated.deleterGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
@@ -13,7 +14,7 @@ public class StoragePool {
     private int port;
     private ManagedChannel grpcChannel;
 
-    public final List<String> chunks;
+    public final List<String> shards;
 
     public StoragePool(String ip, int port) {
         this();
@@ -22,36 +23,38 @@ public class StoragePool {
     }
 
     public StoragePool() {
-        chunks = new ArrayList<>();
+        shards = new ArrayList<>();
     }
 
-    public void addChunk(String shardID) {
+    public void addShard(String shardID) {
         if(!shardID.equals("0"))
-            addChunkNotNull(shardID);
+            addShardNotNull(shardID);
     }
 
-    private void addChunkNotNull(String shardID) {
-        if(!chunks.contains(shardID)) {
-            chunks.add(shardID);
+    private void addShardNotNull(String shardID) {
+        if(!shards.contains(shardID)) {
+            shards.add(shardID);
             System.out.println("Saving shard " + shardID +" to local storage - pool " + ip + ":" + port);
         }
     }
 
-    public void removeChunk(String chunkID) {
-        if(chunks.contains(chunkID)){
-            chunks.remove(chunkID);
+    public void removeShard(String shardID) {
+        if(shards.contains(shardID)){
+            shards.remove(shardID);
+            System.out.println("Removed shard " + shardID);
         }
     }
 
-    public boolean hasNChunks(int n) {
-        return (n == chunks.size());
+    public boolean hasNShards(int n) {
+        return (n == shards.size());
     }
 
     public boolean hasIPAndPort(String storagePoolIP, int storagePoolPort) {
         return ((ip.equals(storagePoolIP)) && (port == storagePoolPort));
     }
 
-    public addressgetterGrpc.addressgetterBlockingStub buildBlockingStub() {
+    // TODO point of this function not super clear
+    public addressgetterGrpc.addressgetterBlockingStub buildMasterSetterBlockingStubAndConnect() {
         shutDownGrpcChannel();
         System.out.println("Contacting " + ip + ":" + port);
         grpcChannel = ManagedChannelBuilder.forAddress(ip, port)
@@ -61,8 +64,6 @@ public class StoragePool {
         return addressgetterGrpc.newBlockingStub(grpcChannel);
     }
 
-    // todo clean up
-    // extract to own class ?
     private void shutDownGrpcChannel() {
         if (grpcChannel != null) {
             if(!grpcChannel.isShutdown()) {
@@ -76,5 +77,13 @@ public class StoragePool {
             }
             grpcChannel = null;
         }
+    }
+
+    public boolean containsShard(String shardId) {
+        return shards.contains(shardId);
+    }
+
+    public deleterGrpc.deleterBlockingStub buildDeleterBlockingStub() {
+        return deleterGrpc.newBlockingStub(grpcChannel);
     }
 }

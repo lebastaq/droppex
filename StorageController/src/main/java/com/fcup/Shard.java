@@ -13,9 +13,11 @@ public class Shard {
         params.put(key, value);
     }
 
+
     public Shard() {
         params = new HashMap<>();
         String dummy = "dummy";
+        changeKeyValue("operationType", dummy);
         changeKeyValue("shardID", dummy);
         changeKeyValue("storagePoolIP", dummy);
         changeKeyValue("storagePoolPort", Integer.toString(0));
@@ -35,6 +37,10 @@ public class Shard {
             values.add(param.getValue());
         }
         return values;
+    }
+
+    public boolean isDeletionOperation() {
+        return params.get("operationType").equals("DEL");
     }
 
     public String asJSONString() {
@@ -64,10 +70,10 @@ public class Shard {
     }
 
     public void addMyselfToStoragePool(StoragePool storagePool) {
-        storagePool.addChunk(params.get("shardID"));
+        storagePool.addShard(params.get("shardID"));
     }
 
-    public StoragePool creatoOperationPoolToStoreMe(List<StoragePool> pools) {
+    public StoragePool findOrCreateStoragePoolToStoreMe(List<StoragePool> pools) {
         for (StoragePool pool : pools) {
             if(pool.hasIPAndPort(params.get("storagePoolIP"), Integer.parseInt(params.get("storagePoolPort")))) {
                 return pool;
@@ -79,5 +85,9 @@ public class Shard {
     @Override
     public String toString() {
         return asJSONString();
+    }
+
+    public String getId() {
+        return params.get("shardID");
     }
 }

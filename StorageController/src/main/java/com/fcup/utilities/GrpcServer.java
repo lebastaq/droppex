@@ -1,6 +1,7 @@
 package com.fcup.utilities;
 
 import com.fcup.StoragePoolsManager;
+import com.fcup.generated.ShardId;
 import com.fcup.generated.storageControllerInfo;
 import io.grpc.ServerBuilder;
 
@@ -50,5 +51,9 @@ public class GrpcServer {
 
     public storageControllerInfo buildSetIPAndPortRequest(String localIP) {
         return storageControllerInfo.newBuilder().setIp(localIP).setPort(port).build();
+    }
+
+    public ShardId buildDeleteShardRequest(String shard) {
+        return ShardId.newBuilder().setId(shard).build();
     }
 }

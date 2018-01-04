@@ -84,6 +84,7 @@ public class StoragePool {
             try {
                 server = ServerBuilder.forPort(localGrpcPort)
                         .addService(new GrpcControllerAddressGetter(this))
+                        .addService(new GrpcShardDeleter(this))
                         .build()
                         .start();
                 started = true;
@@ -121,16 +122,6 @@ public class StoragePool {
         }
     }
 
-    // TODO add GRPC call
-    // for sure move this to the GrpcControllerAddressGetter
-    private void deleteFile(String chunkName) {
-        try {
-            Path path = Paths.get(STORAGE_FOLDER + "/" + chunkName);
-            Files.delete(path);
-        } catch (Exception e) {
-            System.err.println("Couldn't erase file" + chunkName);
-        }
-    }
 
     public void registerInStorageController() {
         int attempts = 0;
@@ -213,5 +204,11 @@ public class StoragePool {
             this.remoteControllerPort = port;
             registerInStorageController();
         }
+    }
+
+    public void deleteShard(String id) throws IOException {
+        System.out.println("Deleting shard " + id);
+        Path path = Paths.get(STORAGE_FOLDER + "/" + id);
+        Files.delete(path);
     }
 }
