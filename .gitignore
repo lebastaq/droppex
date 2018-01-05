@@ -5,7 +5,7 @@
 
 # IntelliJ
 **/.idea/*
-**/target/*
+**/target/surfire-reports/*
 
 # Log file
 *.log
