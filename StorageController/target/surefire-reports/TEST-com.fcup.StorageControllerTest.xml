@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="2" failures="2" name="com.fcup.StorageControllerTest" time="8.692" errors="0" skipped="0">
+  <properties>
+    <property name="os.detected.version" value="10.13"/>
+    <property name="idea.version" value="2017.2.5"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib"/>
+    <property name="java.vm.version" value="25.144-b01"/>
+    <property name="user.country.format" value="PT"/>
+    <property name="gopherProxySet" value="false"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="/Users/freddy/Class/u-porto/distributed-systems/droppex/StorageController"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="os.detected.version.minor" value="13"/>
+    <property name="path.separator" value=":"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/Users/freddy/Class/u-porto/distributed-systems/droppex/StorageController"/>
+    <property name="java.runtime.version" value="1.8.0_144-b01"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/endorsed"/>
+    <property name="os.arch" value="x86_64"/>
+    <property name="java.io.tmpdir" value="/var/folders/qd/z_5yr1x525xdfhrr70p3h3qm0000gn/T/"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="os.detected.version.major" value="10"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="os.detected.classifier" value="osx-x86_64"/>
+    <property name="classworlds.conf" value="/Applications/IntelliJ IDEA.app/Contents/plugins/maven/lib/maven3/bin/m2.conf"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/Users/freddy/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="os.detected.arch" value="x86_64"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.detected.name" value="osx"/>
+    <property name="os.version" value="10.13"/>
+    <property name="user.home" value="/Users/freddy"/>
+    <property name="user.timezone" value="Europe/Lisbon"/>
+    <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="user.name" value="freddy"/>
+    <property name="java.class.path" value="/Applications/IntelliJ IDEA.app/Contents/plugins/maven/lib/maven3/boot/plexus-classworlds-2.5.2.jar:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre"/>
+    <property name="sun.java.command" value="org.codehaus.classworlds.Launcher -Didea.version=2017.2.5 package"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="en"/>
+    <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_144"/>
+    <property name="java.ext.dirs" value="/Users/freddy/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java"/>
+    <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="/Applications/IntelliJ IDEA.app/Contents/plugins/maven/lib/maven3"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase classname="com.fcup.StorageControllerTest" name="doOperationIntoDBAndThenLoadIt" time="2.093">
+    <failure message="Stored 196 shards from dbName instead of 196" type="java.lang.AssertionError">java.lang.AssertionError: Stored 196 shards from dbName instead of 196
+	at org.junit.Assert.fail(Assert.java:88)
+	at com.fcup.StorageControllerTest.doOperationIntoDBAndThenLoadIt(StorageControllerTest.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+</failure>
+    <system-out>Please enter local IP:
+OK
+
+-------------------------------------------------------------------
+GMS: address=Freddys-MBP-10085, cluster=ChatCluster, physical address=fe80:0:0:0:840f:efcd:3e37:36a7%utun1:7803
+-------------------------------------------------------------------
+Joined View: [Freddys-MBP-10085|0] (1) [Freddys-MBP-10085]
+I&apos;m (Freddys-MBP-10085) the leader
+... will now contact storage pools
+I&apos;m (Freddys-MBP-10085) the leader
+Connected to channel
+Received: {&quot;storagePoolIP&quot;:&quot;dummy&quot;,&quot;shardID&quot;:&quot;dummy&quot;,&quot;storagePoolPort&quot;:&quot;0&quot;}
+Registering new storage pool...
+Saving shard 6 to local storage - pool dummy 2:0
+</system-out>
+    <system-err>Dec 22, 2017 2:13:33 PM org.jgroups.stack.DiagnosticsHandler bindToInterfaces
+WARNING: failed to join /ff0e:0:0:0:0:0:75:75:7500 on en1: java.net.SocketException: Address family not supported by protocol family
+Dec 22, 2017 2:13:34 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-55109: failed sending message to Freddys-MBP-10085 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:34 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-52275: failed sending message to Freddys-MBP-10085 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:34 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-4659: failed sending message to Freddys-MBP-10085 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:35 PM org.jgroups.protocols.SEQUENCER unwrapAndDeliver
+SEVERE: JGRP000240: failure unmarshalling buffer
+java.util.ConcurrentModificationException
+	at java.util.LinkedList$ListItr.checkForComodification(LinkedList.java:966)
+	at java.util.LinkedList$ListItr.next(LinkedList.java:888)
+	at com.fcup.ShardManager.syncLocalStoragePools(ShardManager.java:86)
+	at com.fcup.StoragePoolsManager.receive(StoragePoolsManager.java:86)
+	at org.jgroups.JChannel.up(JChannel.java:795)
+	at org.jgroups.stack.ProtocolStack.up(ProtocolStack.java:893)
+	at org.jgroups.protocols.pbcast.STATE_TRANSFER.up(STATE_TRANSFER.java:128)
+	at org.jgroups.protocols.FRAG2.up(FRAG2.java:177)
+	at org.jgroups.protocols.SEQUENCER.deliver(SEQUENCER.java:496)
+	at org.jgroups.protocols.SEQUENCER.unwrapAndDeliver(SEQUENCER.java:463)
+	at org.jgroups.protocols.SEQUENCER.up(SEQUENCER.java:218)
+	at org.jgroups.protocols.SEQUENCER.up(SEQUENCER.java:233)
+	at org.jgroups.protocols.FlowControl.up(FlowControl.java:418)
+	at org.jgroups.stack.Protocol.up(Protocol.java:344)
+	at org.jgroups.protocols.pbcast.STABLE.up(STABLE.java:293)
+	at org.jgroups.protocols.UNICAST3.up(UNICAST3.java:485)
+	at org.jgroups.protocols.pbcast.NAKACK2.deliverBatch(NAKACK2.java:960)
+	at org.jgroups.protocols.pbcast.NAKACK2.removeAndDeliver(NAKACK2.java:894)
+	at org.jgroups.protocols.pbcast.NAKACK2.handleMessages(NAKACK2.java:868)
+	at org.jgroups.protocols.pbcast.NAKACK2.up(NAKACK2.java:688)
+	at org.jgroups.protocols.BARRIER.up(BARRIER.java:195)
+	at org.jgroups.stack.Protocol.up(Protocol.java:344)
+	at org.jgroups.protocols.FD_ALL.up(FD_ALL.java:210)
+	at org.jgroups.stack.Protocol.up(Protocol.java:344)
+	at org.jgroups.stack.Protocol.up(Protocol.java:344)
+	at org.jgroups.stack.Protocol.up(Protocol.java:344)
+	at org.jgroups.stack.Protocol.up(Protocol.java:344)
+	at org.jgroups.protocols.TP.passBatchUp(TP.java:1227)
+	at org.jgroups.util.MaxOneThreadPerSender$BatchHandlerLoop.passBatchUp(MaxOneThreadPerSender.java:277)
+	at org.jgroups.util.SubmitToThreadPool$BatchHandler.run(SubmitToThreadPool.java:136)
+	at org.jgroups.util.MaxOneThreadPerSender$BatchHandlerLoop.run(MaxOneThreadPerSender.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+
+</system-err>
+  </testcase>
+  <testcase classname="com.fcup.StorageControllerTest" name="testElectionOfLeader" time="6.599">
+    <failure message="Did not assign leader correctly" type="java.lang.AssertionError">java.lang.AssertionError: Did not assign leader correctly
+	at org.junit.Assert.fail(Assert.java:88)
+	at com.fcup.StorageControllerTest.testElectionOfLeader(StorageControllerTest.java:69)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+</failure>
+    <system-out>Please enter local IP:
+OK
+Please enter local IP:
+OK
+
+-------------------------------------------------------------------
+GMS: address=Freddys-MBP-1714, cluster=ChatCluster, physical address=fe80:0:0:0:840f:efcd:3e37:36a7%utun1:7803
+-------------------------------------------------------------------
+Joined View: [Freddys-MBP-1714|0] (1) [Freddys-MBP-1714]
+I&apos;m (Freddys-MBP-1714) the leader
+... will now contact storage pools
+I&apos;m (Freddys-MBP-1714) the leader
+Connected to channel
+Synced!
+
+-------------------------------------------------------------------
+GMS: address=Freddys-MBP-26731, cluster=ChatCluster, physical address=fe80:0:0:0:840f:efcd:3e37:36a7%utun1:7804
+-------------------------------------------------------------------
+Joined View: [Freddys-MBP-26731|0] (1) [Freddys-MBP-26731]
+I&apos;m (Freddys-MBP-26731) the leader
+... will now contact storage pools
+I&apos;m (Freddys-MBP-26731) the leader
+Connected to channel
+Synced!
+</system-out>
+    <system-err>Dec 22, 2017 2:13:36 PM org.jgroups.stack.DiagnosticsHandler bindToInterfaces
+WARNING: failed to join /ff0e:0:0:0:0:0:75:75:7500 on en1: java.net.SocketException: Address family not supported by protocol family
+Dec 22, 2017 2:13:36 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-52275: failed sending message to Freddys-MBP-1714 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:36 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-55109: failed sending message to Freddys-MBP-1714 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:36 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-4659: failed sending message to Freddys-MBP-1714 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:38 PM org.jgroups.stack.DiagnosticsHandler bindToInterfaces
+WARNING: failed to join /ff0e:0:0:0:0:0:75:75:7500 on en1: java.net.SocketException: Address family not supported by protocol family
+Dec 22, 2017 2:13:38 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-52275: failed sending message to Freddys-MBP-26731 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:38 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-55109: failed sending message to Freddys-MBP-26731 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:38 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-4659: failed sending message to Freddys-MBP-26731 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:38 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-1714: failed sending message to Freddys-MBP-26731 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:39 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-26731: failed sending message to Freddys-MBP-52275 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:39 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-4659: failed sending message to Freddys-MBP-52275 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:39 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-1714: failed sending message to Freddys-MBP-52275 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:39 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-55109: failed sending message to Freddys-MBP-52275 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:40 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-55109: failed sending message to Freddys-MBP-26731 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:40 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-52275: failed sending message to Freddys-MBP-26731 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:40 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-4659: failed sending message to Freddys-MBP-26731 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:40 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-1714: failed sending message to Freddys-MBP-26731 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:41 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-52275: failed sending message to Freddys-MBP-55109 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:41 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-26731: failed sending message to Freddys-MBP-55109 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:41 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-4659: failed sending message to Freddys-MBP-55109 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:41 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-1714: failed sending message to Freddys-MBP-55109 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:42 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-1714: failed sending message to Freddys-MBP-4659 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:42 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-55109: failed sending message to Freddys-MBP-4659 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:42 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-26731: failed sending message to Freddys-MBP-4659 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Dec 22, 2017 2:13:42 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-52275: failed sending message to Freddys-MBP-4659 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+</system-err>
+  </testcase>
+</testsuite>
