@@ -14,11 +14,20 @@ service StorageController {
 
     // Forwards query from Client
     // If there are multiple files that match the query, return them as a stream
-    rpc FileSearch(File) returns (stream FileMetadata) {}
+    rpc FileSearch(Query) returns (stream FileMetadata) {}
 }
 
 message File {
     string filename = 1;
+}
+
+// Return an error from controller if something went wrong
+message Empty {
+
+}
+
+message Query {
+    string pattern = 1;
 }
 
 message FileMetadata {
@@ -26,8 +35,3 @@ message FileMetadata {
     int64 fileSize = 2;
 }
 
-// Return Empty if the operation was successful
-// Return an error from controller if something went wrong
-message Empty {
-
-}
