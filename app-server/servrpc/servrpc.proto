@@ -1,9 +1,12 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
+option java_package = "com.fcup.generated";
 option java_outer_classname = "PortalRPC";
 
-package com.fcup.generated;
+package main;
+
+// protoc servrpc.proto --go_out=. --java_out=.
 
 service StorageController {
     // Forwards file deletion request from client
