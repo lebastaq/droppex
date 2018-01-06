@@ -8,11 +8,11 @@ package main;
 
 // protoc servrpc.proto --go_out=. --java_out=.
 
-service StorageController {
+service PortalController {
     // Forwards file deletion request from client
     rpc DeleteFile(File) returns (Empty) {}
 
-    // Forwards query from Client
+    // Forwards search query from Client
     // If there are multiple files that match the query, return them as a stream
     rpc FileSearch(Query) returns (stream FileMetadata) {}
 }

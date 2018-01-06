@@ -12,13 +12,18 @@ import (
 
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	jwt "github.com/dgrijalva/jwt-go"
+	pb "github.com/freddygv/droppex/app-server/servrpc"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"google.golang.org/grpc"
 )
 
 const (
-	version       string = "/api/1"
-	maxUploadSize int64  = 500 * 1024 * 1024 // 500 MB
+	controllerAddress string = "localhost"
+	ctrlRPCPort       string = ":50100"
+	ctrlSocketPort    string = ":29200"
+	version           string = "/api/1"
+	maxUploadSize     int64  = 500 * 1024 * 1024 // 500 MB
 )
 
 var signingKey = []byte("fY6k6km3Pw1txgPa7Qc73AYqUNZj6Wg8")
@@ -42,6 +47,11 @@ type jwtToken struct {
 	Token string `json:"token"`
 }
 
+type file struct {
+	Filename    string `json:"filename,omitempty"`
+	SizeInBytes int    `json:"size,omitempty"`
+}
+
 var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 	ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
 		return signingKey, nil
@@ -51,8 +61,6 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 
 // listHandler lists all files or files matching a pattern
 var listHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	// token := r.Header.Get("Authorization")
-
 	// // Send message to Storage Controller asking for files
 
 	// json.NewEncoder(w).Encode(files)
@@ -60,12 +68,36 @@ var listHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) 
 
 // searchHandler lists all files matching a pattern
 var searchHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	// token := r.Header.Get("Authorization")
-	// params := mux.Vars(r)
+	params := mux.Vars(r)
 
-	// // Send message to Storage Controller asking for files that match a pattern
+	pattern, ok := params["pattern"]
+	if !ok {
+		renderError(w, "INVALID_SEARCH", http.StatusBadRequest)
+		return
+	}
 
-	// json.NewEncoder(w).Encode(matches)
+	fmt.Println("Searching for", pattern)
+
+	// TODO: Send message to Storage Controller asking for files that match a pattern
+	// Expecting back a stream of type file
+	conn, err := grpc.Dial(controllerAddress+ctrlRPCPort, grpc.WithInsecure())
+	if err != nil {
+		renderError(w, "INTERNAL_ERROR", http.StatusInternalServerError)
+		return
+	}
+	defer conn.Close()
+
+	c := pb.NewStorageControllerClient(conn)
+
+	// TODO: Remove this dummy data
+	var matches = []file{
+		file{
+			Filename:    "Movie4.mp4",
+			SizeInBytes: 933288,
+		},
+	}
+
+	json.NewEncoder(w).Encode(matches)
 })
 
 // downloadHandler downloads a file with a given filename
@@ -78,7 +110,7 @@ var downloadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	conn, err := net.Dial("tcp", "localhost:29200")
+	conn, err := net.Dial("tcp", controllerAddress+ctrlSocketPort)
 	if err != nil {
 		renderError(w, "STORAGE_CONTROLLER_CONNECTION_FAILED", http.StatusInternalServerError)
 	}
@@ -118,7 +150,7 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 
 	log.Printf("Upload requested for %s (%s Bytes) by token: %s with hash: %s\n", filename, fileSize, token, fileHash)
 
-	conn, err := net.Dial("tcp", "localhost:29200")
+	conn, err := net.Dial("tcp", controllerAddress+ctrlSocketPort)
 	if err != nil {
 		renderError(w, "STORAGE_CONTROLLER_CONNECTION_FAILED", http.StatusInternalServerError)
 	}

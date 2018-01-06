@@ -30,9 +30,8 @@ var token jwtToken
 var client *http.Client
 
 type file struct {
-	Filename    string    `json:"filename,omitempty"`
-	SizeInBytes int       `json:"size,omitempty"`
-	Created     time.Time `json:"time,omitempty"`
+	Filename    string `json:"filename,omitempty"`
+	SizeInBytes int    `json:"size,omitempty"`
 }
 
 type jwtToken struct {
@@ -116,9 +115,12 @@ func searchFiles(pattern string) error {
 }
 
 func queryFiles(pattern string) error {
-	target := URL + "list"
-	if pattern != "" {
-		target = target + "/" + pattern
+	var target string
+
+	if pattern == "" {
+		target = URL + "list"
+	} else {
+		target = URL + "search/" + pattern
 	}
 
 	req, err := http.NewRequest("GET", target, nil)
@@ -144,7 +146,7 @@ func queryFiles(pattern string) error {
 		return err
 	}
 
-	printJSON(payload)
+	printFiles(payload)
 
 	return nil
 }
@@ -295,7 +297,7 @@ func authenticate() error {
 	return nil
 }
 
-func printJSON(payload []file) {
+func printFiles(payload []file) {
 	i := 1
 	for _, value := range payload {
 		size := float64(value.SizeInBytes) / float64(1024)
