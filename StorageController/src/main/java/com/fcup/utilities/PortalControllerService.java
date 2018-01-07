@@ -1,47 +1,71 @@
 package com.fcup.utilities;
 
+import com.fcup.DbManager;
+import com.fcup.Shard;
 import com.fcup.generated.*;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.SQLException;
+import java.util.*;
 
 public class PortalControllerService extends PortalControllerGrpc.PortalControllerImplBase {
+    private final DbManager db;
+
+    public PortalControllerService() {
+        db = new DbManager();
+    }
 
     @Override
     public void deleteFile(DeletionRequest request, StreamObserver<Empty> responseObserver) {
         String fileToDelete = request.getFilename();
 
-        // TODO: Actually delete the file
-        // TODO: Send error if there's an issue
+        try {
+            // TODO: Actually implement the file deletion, delete all shards
 
-        responseObserver.onNext(null);
-        responseObserver.onCompleted();
+            responseObserver.onNext(null);
+            responseObserver.onCompleted();
+
+        } catch (Exception e) { // TODO: Use more specific exception
+            // Sending back an error via gRPC if the shard isn't deleted
+            responseObserver.onError(Status.INTERNAL
+                    .withDescription(e.getMessage())
+                    .asRuntimeException());
+        }
+
+
     }
 
     @Override
     public void fileSearch(SearchRequest request, StreamObserver<SearchResponse> responseObserver) {
         String pattern = request.getPattern();
 
-        // TODO: Remove this fake data
-        Map<String, Long> results = new HashMap<>();
-        results.put("Billsz", 2128934L);
-        results.put("Bill", 238934L);
-        results.put("Bob", 432L);
-        results.put("Claire", 389L);
+        try {
+            db.connect();
+            List<Shard> files = db.readEntries();
 
-        for (Map.Entry<String, Long> entry : results.entrySet()) {
+            for (Shard file : files) {
+                //
+                String shardID = file.getId();
 
-            if (entry.getKey().indexOf(pattern) != -1) {
-                SearchResponse resultFile = SearchResponse.newBuilder()
-                        .setFilename(entry.getKey())
-                        .setFileSize(entry.getValue())
-                        .build();
+                if (shardID.indexOf(pattern) != -1) {
+                    SearchResponse resultFile = SearchResponse.newBuilder()
+                            .setFilename(shardID)
+                            // TODO: Remove dummy data, store actual sizes and filename in sqlite?
+                            .setFileSize(2128934L)
+                            .build();
 
-                responseObserver.onNext(resultFile);
+                    responseObserver.onNext(resultFile);
+                }
             }
-        }
 
-        responseObserver.onCompleted();
+            responseObserver.onCompleted();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            responseObserver.onError(Status.INTERNAL
+                    .withDescription(e.getMessage())
+                    .asRuntimeException());
+
+        }
     }
 }

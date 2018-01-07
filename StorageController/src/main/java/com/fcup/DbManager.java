@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class DbManager {
+public class DbManager {
     private final String dbName;
     private Connection dbConnection;
     private final String table = "shards";
