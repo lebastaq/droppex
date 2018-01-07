@@ -2,18 +2,18 @@
 // source: servrpc.proto
 
 /*
-Package main is a generated protocol buffer package.
+Package servrpc is a generated protocol buffer package.
 
 It is generated from these files:
 	servrpc.proto
 
 It has these top-level messages:
-	File
+	DeletionRequest
 	Empty
-	Query
-	FileMetadata
+	SearchRequest
+	SearchResponse
 */
-package main
+package servrpc
 
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
@@ -35,16 +35,16 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type File struct {
+type DeletionRequest struct {
 	Filename string `protobuf:"bytes,1,opt,name=filename" json:"filename,omitempty"`
 }
 
-func (m *File) Reset()                    { *m = File{} }
-func (m *File) String() string            { return proto.CompactTextString(m) }
-func (*File) ProtoMessage()               {}
-func (*File) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *DeletionRequest) Reset()                    { *m = DeletionRequest{} }
+func (m *DeletionRequest) String() string            { return proto.CompactTextString(m) }
+func (*DeletionRequest) ProtoMessage()               {}
+func (*DeletionRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
-func (m *File) GetFilename() string {
+func (m *DeletionRequest) GetFilename() string {
 	if m != nil {
 		return m.Filename
 	}
@@ -60,40 +60,40 @@ func (m *Empty) String() string            { return proto.CompactTextString(m) }
 func (*Empty) ProtoMessage()               {}
 func (*Empty) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
-type Query struct {
+type SearchRequest struct {
 	Pattern string `protobuf:"bytes,1,opt,name=pattern" json:"pattern,omitempty"`
 }
 
-func (m *Query) Reset()                    { *m = Query{} }
-func (m *Query) String() string            { return proto.CompactTextString(m) }
-func (*Query) ProtoMessage()               {}
-func (*Query) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+func (m *SearchRequest) Reset()                    { *m = SearchRequest{} }
+func (m *SearchRequest) String() string            { return proto.CompactTextString(m) }
+func (*SearchRequest) ProtoMessage()               {}
+func (*SearchRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
-func (m *Query) GetPattern() string {
+func (m *SearchRequest) GetPattern() string {
 	if m != nil {
 		return m.Pattern
 	}
 	return ""
 }
 
-type FileMetadata struct {
+type SearchResponse struct {
 	Filename string `protobuf:"bytes,1,opt,name=filename" json:"filename,omitempty"`
 	FileSize int64  `protobuf:"varint,2,opt,name=fileSize" json:"fileSize,omitempty"`
 }
 
-func (m *FileMetadata) Reset()                    { *m = FileMetadata{} }
-func (m *FileMetadata) String() string            { return proto.CompactTextString(m) }
-func (*FileMetadata) ProtoMessage()               {}
-func (*FileMetadata) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+func (m *SearchResponse) Reset()                    { *m = SearchResponse{} }
+func (m *SearchResponse) String() string            { return proto.CompactTextString(m) }
+func (*SearchResponse) ProtoMessage()               {}
+func (*SearchResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
-func (m *FileMetadata) GetFilename() string {
+func (m *SearchResponse) GetFilename() string {
 	if m != nil {
 		return m.Filename
 	}
 	return ""
 }
 
-func (m *FileMetadata) GetFileSize() int64 {
+func (m *SearchResponse) GetFileSize() int64 {
 	if m != nil {
 		return m.FileSize
 	}
@@ -101,10 +101,10 @@ func (m *FileMetadata) GetFileSize() int64 {
 }
 
 func init() {
-	proto.RegisterType((*File)(nil), "main.File")
-	proto.RegisterType((*Empty)(nil), "main.Empty")
-	proto.RegisterType((*Query)(nil), "main.Query")
-	proto.RegisterType((*FileMetadata)(nil), "main.FileMetadata")
+	proto.RegisterType((*DeletionRequest)(nil), "servrpc.DeletionRequest")
+	proto.RegisterType((*Empty)(nil), "servrpc.Empty")
+	proto.RegisterType((*SearchRequest)(nil), "servrpc.SearchRequest")
+	proto.RegisterType((*SearchResponse)(nil), "servrpc.SearchResponse")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -119,10 +119,10 @@ const _ = grpc.SupportPackageIsVersion4
 
 type PortalControllerClient interface {
 	// Forwards file deletion request from client
-	DeleteFile(ctx context.Context, in *File, opts ...grpc.CallOption) (*Empty, error)
+	DeleteFile(ctx context.Context, in *DeletionRequest, opts ...grpc.CallOption) (*Empty, error)
 	// Forwards search query from Client
 	// If there are multiple files that match the query, return them as a stream
-	FileSearch(ctx context.Context, in *Query, opts ...grpc.CallOption) (PortalController_FileSearchClient, error)
+	FileSearch(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (PortalController_FileSearchClient, error)
 }
 
 type portalControllerClient struct {
@@ -133,17 +133,17 @@ func NewPortalControllerClient(cc *grpc.ClientConn) PortalControllerClient {
 	return &portalControllerClient{cc}
 }
 
-func (c *portalControllerClient) DeleteFile(ctx context.Context, in *File, opts ...grpc.CallOption) (*Empty, error) {
+func (c *portalControllerClient) DeleteFile(ctx context.Context, in *DeletionRequest, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
-	err := grpc.Invoke(ctx, "/main.PortalController/DeleteFile", in, out, c.cc, opts...)
+	err := grpc.Invoke(ctx, "/servrpc.PortalController/DeleteFile", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *portalControllerClient) FileSearch(ctx context.Context, in *Query, opts ...grpc.CallOption) (PortalController_FileSearchClient, error) {
-	stream, err := grpc.NewClientStream(ctx, &_PortalController_serviceDesc.Streams[0], c.cc, "/main.PortalController/FileSearch", opts...)
+func (c *portalControllerClient) FileSearch(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (PortalController_FileSearchClient, error) {
+	stream, err := grpc.NewClientStream(ctx, &_PortalController_serviceDesc.Streams[0], c.cc, "/servrpc.PortalController/FileSearch", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +158,7 @@ func (c *portalControllerClient) FileSearch(ctx context.Context, in *Query, opts
 }
 
 type PortalController_FileSearchClient interface {
-	Recv() (*FileMetadata, error)
+	Recv() (*SearchResponse, error)
 	grpc.ClientStream
 }
 
@@ -166,8 +166,8 @@ type portalControllerFileSearchClient struct {
 	grpc.ClientStream
 }
 
-func (x *portalControllerFileSearchClient) Recv() (*FileMetadata, error) {
-	m := new(FileMetadata)
+func (x *portalControllerFileSearchClient) Recv() (*SearchResponse, error) {
+	m := new(SearchResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -178,10 +178,10 @@ func (x *portalControllerFileSearchClient) Recv() (*FileMetadata, error) {
 
 type PortalControllerServer interface {
 	// Forwards file deletion request from client
-	DeleteFile(context.Context, *File) (*Empty, error)
+	DeleteFile(context.Context, *DeletionRequest) (*Empty, error)
 	// Forwards search query from Client
 	// If there are multiple files that match the query, return them as a stream
-	FileSearch(*Query, PortalController_FileSearchServer) error
+	FileSearch(*SearchRequest, PortalController_FileSearchServer) error
 }
 
 func RegisterPortalControllerServer(s *grpc.Server, srv PortalControllerServer) {
@@ -189,7 +189,7 @@ func RegisterPortalControllerServer(s *grpc.Server, srv PortalControllerServer) 
 }
 
 func _PortalController_DeleteFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(File)
+	in := new(DeletionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -198,16 +198,16 @@ func _PortalController_DeleteFile_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/main.PortalController/DeleteFile",
+		FullMethod: "/servrpc.PortalController/DeleteFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PortalControllerServer).DeleteFile(ctx, req.(*File))
+		return srv.(PortalControllerServer).DeleteFile(ctx, req.(*DeletionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _PortalController_FileSearch_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(Query)
+	m := new(SearchRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
@@ -215,7 +215,7 @@ func _PortalController_FileSearch_Handler(srv interface{}, stream grpc.ServerStr
 }
 
 type PortalController_FileSearchServer interface {
-	Send(*FileMetadata) error
+	Send(*SearchResponse) error
 	grpc.ServerStream
 }
 
@@ -223,12 +223,12 @@ type portalControllerFileSearchServer struct {
 	grpc.ServerStream
 }
 
-func (x *portalControllerFileSearchServer) Send(m *FileMetadata) error {
+func (x *portalControllerFileSearchServer) Send(m *SearchResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
 var _PortalController_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "main.PortalController",
+	ServiceName: "servrpc.PortalController",
 	HandlerType: (*PortalControllerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -249,20 +249,21 @@ var _PortalController_serviceDesc = grpc.ServiceDesc{
 func init() { proto.RegisterFile("servrpc.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 236 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x90, 0xcd, 0x4e, 0xc3, 0x30,
-	0x10, 0x84, 0x6b, 0x68, 0x29, 0x5d, 0x40, 0x42, 0x3e, 0x45, 0x39, 0xb5, 0xbe, 0xd0, 0x93, 0xc5,
-	0xcf, 0x1b, 0xb4, 0xd0, 0x1b, 0x52, 0x48, 0x9f, 0x60, 0x49, 0xb7, 0x10, 0xc9, 0xb1, 0xad, 0x65,
-	0x8b, 0x54, 0x9e, 0x1e, 0x39, 0x69, 0xc2, 0x8d, 0xdb, 0x8c, 0xc7, 0x3b, 0xfa, 0x76, 0xe1, 0xe6,
-	0x8b, 0xf8, 0x9b, 0x63, 0x65, 0x23, 0x07, 0x09, 0x7a, 0xdc, 0x60, 0xed, 0x8d, 0x81, 0xf1, 0xa6,
-	0x76, 0xa4, 0x73, 0xb8, 0xdc, 0xd7, 0x8e, 0x3c, 0x36, 0x94, 0xa9, 0xb9, 0x5a, 0xce, 0xca, 0xc1,
-	0x9b, 0x29, 0x4c, 0x5e, 0x9a, 0x28, 0x47, 0xb3, 0x80, 0xc9, 0xdb, 0x81, 0xf8, 0xa8, 0x33, 0x98,
-	0x46, 0x14, 0x21, 0xf6, 0xa7, 0xcf, 0xbd, 0x35, 0x1b, 0xb8, 0x4e, 0x7d, 0xaf, 0x24, 0xb8, 0x43,
-	0xc1, 0xff, 0x7a, 0xfb, 0x6c, 0x5b, 0xff, 0x50, 0x76, 0x36, 0x57, 0xcb, 0xf3, 0x72, 0xf0, 0x8f,
-	0x1e, 0x6e, 0x8b, 0xc0, 0x82, 0x6e, 0x1d, 0xbc, 0x70, 0x70, 0x8e, 0x58, 0xdf, 0x01, 0x3c, 0x93,
-	0x23, 0xa1, 0x96, 0x18, 0x6c, 0x5a, 0xc0, 0x26, 0x9d, 0x5f, 0x75, 0xba, 0xa3, 0x1c, 0xe9, 0x07,
-	0x80, 0xf4, 0xbc, 0x25, 0xe4, 0xea, 0x53, 0x9f, 0xc2, 0x96, 0x3c, 0xd7, 0x7f, 0x53, 0x3d, 0xa3,
-	0x19, 0xdd, 0xab, 0xd5, 0x02, 0x74, 0x15, 0x1a, 0xbb, 0xaf, 0x0e, 0xd1, 0x7e, 0x90, 0x27, 0x46,
-	0xa1, 0xdd, 0x6a, 0xd6, 0x31, 0x94, 0xc5, 0xba, 0x50, 0xef, 0x17, 0xed, 0xdd, 0x9e, 0x7e, 0x03,
-	0x00, 0x00, 0xff, 0xff, 0x89, 0x3e, 0x50, 0x4f, 0x48, 0x01, 0x00, 0x00,
+	// 246 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x90, 0x41, 0x4b, 0xc3, 0x30,
+	0x1c, 0xc5, 0x17, 0x45, 0xeb, 0xfe, 0xb0, 0x29, 0x39, 0x68, 0xe9, 0x69, 0xe6, 0x34, 0x0f, 0x16,
+	0xd1, 0x8b, 0x57, 0x37, 0x15, 0x8f, 0xa5, 0xfb, 0x04, 0xb1, 0xbe, 0x69, 0x21, 0x4d, 0x62, 0xfa,
+	0x9f, 0xa0, 0x5f, 0xc2, 0xaf, 0x2c, 0xae, 0x4d, 0x41, 0x05, 0x8f, 0xbf, 0xbc, 0x3c, 0xf2, 0x7e,
+	0xa1, 0x49, 0x8b, 0xf0, 0x16, 0x7c, 0x95, 0xfb, 0xe0, 0xd8, 0xc9, 0xa4, 0x47, 0x75, 0x4e, 0x87,
+	0xb7, 0x30, 0xe0, 0xda, 0xd9, 0x12, 0xaf, 0x1b, 0xb4, 0x2c, 0x33, 0x3a, 0x58, 0xd7, 0x06, 0x56,
+	0x37, 0x48, 0xc5, 0x4c, 0xcc, 0xc7, 0xe5, 0xc0, 0x2a, 0xa1, 0xbd, 0xbb, 0xc6, 0xf3, 0xbb, 0x3a,
+	0xa3, 0xc9, 0x0a, 0x3a, 0x54, 0x2f, 0xb1, 0x95, 0x52, 0xe2, 0x35, 0x33, 0x82, 0xed, 0x4b, 0x11,
+	0xd5, 0x03, 0x4d, 0xe3, 0xd5, 0xd6, 0x3b, 0xdb, 0xe2, 0xbf, 0x17, 0x62, 0xb6, 0xaa, 0x3f, 0x90,
+	0xee, 0xcc, 0xc4, 0x7c, 0xb7, 0x1c, 0xf8, 0xf2, 0x53, 0xd0, 0x51, 0xe1, 0x02, 0x6b, 0xb3, 0x74,
+	0x96, 0x83, 0x33, 0x06, 0x41, 0x5e, 0x13, 0x6d, 0x0d, 0x70, 0x5f, 0x1b, 0xc8, 0x34, 0x8f, 0xa2,
+	0xbf, 0xb4, 0xb2, 0xe9, 0x90, 0x74, 0x06, 0x23, 0x79, 0x43, 0xf4, 0xdd, 0xe9, 0xc6, 0xc9, 0xe3,
+	0x21, 0xff, 0x21, 0x96, 0x9d, 0xfc, 0x39, 0xef, 0x2c, 0xd4, 0xe8, 0x42, 0x2c, 0x4e, 0x49, 0x56,
+	0xae, 0xc9, 0xd7, 0xd5, 0xc6, 0xe7, 0xcf, 0xb0, 0x08, 0x9a, 0xf1, 0xb4, 0x18, 0x77, 0x23, 0xcb,
+	0x62, 0x59, 0x88, 0xc7, 0xfd, 0xed, 0x8f, 0x5f, 0x7d, 0x05, 0x00, 0x00, 0xff, 0xff, 0xe0, 0x5d,
+	0x47, 0xb3, 0x82, 0x01, 0x00, 0x00,
 }

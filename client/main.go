@@ -115,12 +115,10 @@ func searchFiles(pattern string) error {
 }
 
 func queryFiles(pattern string) error {
-	var target string
+	target := URL + "search"
 
-	if pattern == "" {
-		target = URL + "list"
-	} else {
-		target = URL + "search/" + pattern
+	if pattern != "" {
+		target = target + "/" + pattern
 	}
 
 	req, err := http.NewRequest("GET", target, nil)

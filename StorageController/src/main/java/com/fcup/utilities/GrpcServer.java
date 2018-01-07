@@ -1,8 +1,7 @@
 package com.fcup.utilities;
 
 import com.fcup.StoragePoolsManager;
-import com.fcup.generated.ShardId;
-import com.fcup.generated.storageControllerInfo;
+import com.fcup.generated.*;
 import io.grpc.ServerBuilder;
 
 public class GrpcServer {
@@ -20,6 +19,7 @@ public class GrpcServer {
                 try {
                     server = ServerBuilder.forPort(port)
                             .addService(new StoragePoolRegisterer(storagePoolsManager))
+                            .addService(new PortalControllerService())
                             .build()
                             .start();
                 }

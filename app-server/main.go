@@ -15,6 +15,7 @@ import (
 	pb "github.com/freddygv/droppex/app-server/servrpc"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
 
@@ -34,7 +35,7 @@ func main() {
 	router.HandleFunc(version+"/status", statusHandler).Methods("GET")
 	router.HandleFunc(version+"/auth", authHandler).Methods("GET")
 
-	router.Handle(version+"/list", jwtMiddleware.Handler(listHandler)).Methods("GET")
+	router.Handle(version+"/search", jwtMiddleware.Handler(searchHandler)).Methods("GET")
 	router.Handle(version+"/search/{pattern}", jwtMiddleware.Handler(searchHandler)).Methods("GET")
 	router.Handle(version+"/files/{filename}", jwtMiddleware.Handler(downloadHandler)).Methods("GET")
 	router.Handle(version+"/files_post", jwtMiddleware.Handler(uploadHandler)).Methods("POST")
@@ -49,7 +50,7 @@ type jwtToken struct {
 
 type file struct {
 	Filename    string `json:"filename,omitempty"`
-	SizeInBytes int    `json:"size,omitempty"`
+	SizeInBytes int64  `json:"size,omitempty"`
 }
 
 var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
@@ -59,42 +60,46 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 	SigningMethod: jwt.SigningMethodHS256,
 })
 
-// listHandler lists all files or files matching a pattern
-var listHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	// // Send message to Storage Controller asking for files
-
-	// json.NewEncoder(w).Encode(files)
-})
-
 // searchHandler lists all files matching a pattern
 var searchHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	log.Println("in search")
 	params := mux.Vars(r)
 
-	pattern, ok := params["pattern"]
-	if !ok {
-		renderError(w, "INVALID_SEARCH", http.StatusBadRequest)
-		return
-	}
+	// If there's no pattern, we're listing all files
+	pattern, _ := params["pattern"]
 
-	fmt.Println("Searching for", pattern)
-
-	// TODO: Send message to Storage Controller asking for files that match a pattern
-	// Expecting back a stream of type file
+	// Connect to the server
 	conn, err := grpc.Dial(controllerAddress+ctrlRPCPort, grpc.WithInsecure())
 	if err != nil {
-		renderError(w, "INTERNAL_ERROR", http.StatusInternalServerError)
+		renderError(w, "STORAGE_CONTROLLER_CONNECTION_ERROR", http.StatusInternalServerError)
 		return
 	}
 	defer conn.Close()
 
-	c := pb.NewStorageControllerClient(conn)
+	c := pb.NewPortalControllerClient(conn)
 
-	// TODO: Remove this dummy data
-	var matches = []file{
-		file{
-			Filename:    "Movie4.mp4",
-			SizeInBytes: 933288,
-		},
+	stream, err := c.FileSearch(context.Background(), &pb.SearchRequest{Pattern: pattern})
+	if err != nil {
+		log.Println(err)
+		renderError(w, "STORAGE_CONTROLLER_STREAM_ERROR", http.StatusInternalServerError)
+		return
+	}
+
+	var matches []file
+
+	// Read matches from the stream until EOF err
+	for {
+		match, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Println(err)
+			renderError(w, "FILE_DELETION_ERROR", http.StatusInternalServerError)
+			return
+		}
+
+		matches = append(matches, file{Filename: match.Filename, SizeInBytes: match.FileSize})
 	}
 
 	json.NewEncoder(w).Encode(matches)
@@ -171,7 +176,24 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 // deleteHandler deletes the file associated with the input
 var deleteHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	w.Write([]byte(fmt.Sprintf("Deleting %s", params["filename"])))
+
+	conn, err := grpc.Dial(controllerAddress+ctrlRPCPort, grpc.WithInsecure())
+	if err != nil {
+		renderError(w, "STORAGE_CONTROLLER_CONNECTION_ERROR", http.StatusInternalServerError)
+		return
+	}
+	defer conn.Close()
+
+	c := pb.NewPortalControllerClient(conn)
+
+	_, err = c.DeleteFile(context.Background(), &pb.DeletionRequest{Filename: params["filename"]})
+	if err != nil {
+		log.Println(err)
+		renderError(w, "FILE_DELETION_ERROR", http.StatusInternalServerError)
+		return
+	}
+
+	w.Write([]byte(fmt.Sprintf("Deleted %s", params["filename"])))
 })
 
 // Generate token for hardcoded admin user
