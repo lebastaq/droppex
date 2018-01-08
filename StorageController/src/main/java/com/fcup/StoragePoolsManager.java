@@ -82,6 +82,8 @@ public class StoragePoolsManager extends ReceiverAdapter {
         Shard shardToDelete = new Shard();
         shardToDelete.changeKeyValue("shardID", shardId);
         shardToDelete.changeKeyValue("operationType", "DEL");
+
+        sendMessage(shardToDelete);
     }
 
     public void receive(Message msg) {
