@@ -20,11 +20,11 @@ import (
 )
 
 const (
-	controllerAddress string = "localhost"
-	ctrlRPCPort       string = ":50100"
-	ctrlSocketPort    string = ":29200"
-	version           string = "/api/1"
-	maxUploadSize     int64  = 500 * 1024 * 1024 // 500 MB
+	ctrlAddress    string = "localhost"
+	ctrlRPCPort    string = ":50100"
+	ctrlSocketPort string = ":29200"
+	version        string = "/api/1"
+	maxUploadSize  int64  = 500 * 1024 * 1024 // 500 MB
 )
 
 var signingKey = []byte("fY6k6km3Pw1txgPa7Qc73AYqUNZj6Wg8")
@@ -69,7 +69,7 @@ var searchHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 	pattern, _ := params["pattern"]
 
 	// Connect to the server
-	conn, err := grpc.Dial(controllerAddress+ctrlRPCPort, grpc.WithInsecure())
+	conn, err := grpc.Dial(ctrlAddress+ctrlRPCPort, grpc.WithInsecure())
 	if err != nil {
 		renderError(w, "STORAGE_CONTROLLER_CONNECTION_ERROR", http.StatusInternalServerError)
 		return
@@ -115,7 +115,7 @@ var downloadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	conn, err := net.Dial("tcp", controllerAddress+ctrlSocketPort)
+	conn, err := net.Dial("tcp", ctrlAddress+ctrlSocketPort)
 	if err != nil {
 		renderError(w, "STORAGE_CONTROLLER_CONNECTION_FAILED", http.StatusInternalServerError)
 	}
@@ -155,7 +155,7 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 
 	log.Printf("Upload requested for %s (%s Bytes) by token: %s with hash: %s\n", filename, fileSize, token, fileHash)
 
-	conn, err := net.Dial("tcp", controllerAddress+ctrlSocketPort)
+	conn, err := net.Dial("tcp", ctrlAddress+ctrlSocketPort)
 	if err != nil {
 		renderError(w, "STORAGE_CONTROLLER_CONNECTION_FAILED", http.StatusInternalServerError)
 	}
@@ -177,7 +177,7 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 var deleteHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
-	conn, err := grpc.Dial(controllerAddress+ctrlRPCPort, grpc.WithInsecure())
+	conn, err := grpc.Dial(ctrlAddress+ctrlRPCPort, grpc.WithInsecure())
 	if err != nil {
 		renderError(w, "STORAGE_CONTROLLER_CONNECTION_ERROR", http.StatusInternalServerError)
 		return

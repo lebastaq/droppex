@@ -4,6 +4,8 @@ import com.fcup.StoragePoolsManager;
 import com.fcup.generated.*;
 import io.grpc.ServerBuilder;
 
+import java.sql.SQLException;
+
 public class GrpcServer {
     private int port = 50100;
     private io.grpc.Server server = null;
@@ -23,7 +25,7 @@ public class GrpcServer {
                             .build()
                             .start();
                 }
-                catch(java.io.IOException e){
+                catch(java.io.IOException | SQLException | ClassNotFoundException e){
                     System.out.println("Could not start server on port " + port);
                     port ++;
                 }

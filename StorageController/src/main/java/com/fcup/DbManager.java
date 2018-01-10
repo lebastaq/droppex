@@ -60,29 +60,63 @@ public class DbManager {
         }
     }
 
-
     public List<Shard> readEntries() throws SQLException {
         Map<String, String> params = new HashMap<>();
         return readEntries(params);
+
     }
 
-
     public List<Shard> readEntries(Map<String, String> params) throws SQLException {
-        List<Shard> results = new ArrayList<>();
         StringBuilder query = new StringBuilder("SELECT * FROM " + table);
-        if(params.size() > 0)
-            query.append(" WHERE ");
+
+        if(params.size() > 0) {
+            query = appendParams(query, params);
+        }
+
+        query.append(";");
+
+        return runQuery(dbConnection.prepareStatement(query.toString()));
+
+    }
+
+    public List<Shard> searchFiles(String pattern) throws SQLException {
+        String query = "SELECT DISTINCT filename, filesize FROM " + table;
+        PreparedStatement statement;
+
+        if (pattern.length() > 0) {
+            query = query + " WHERE filename LIKE %?%;";
+            statement = dbConnection.prepareStatement(query);
+            statement.setString(1, pattern);
+
+        } else {
+            statement = dbConnection.prepareStatement(query);
+
+        }
+
+        return runQuery(statement);
+
+    }
+
+    private StringBuilder appendParams(StringBuilder query, Map<String, String> params) {
+        query.append(" WHERE ");
+
         String separator = "";
-        // TODO tidy this up
-        for(Map.Entry<String, String> param :params.entrySet()){
+        for(Map.Entry<String, String> param : params.entrySet()){
             query.append(separator);
             query.append(param.getKey()).append("=");
             query.append("'").append(param.getValue()).append("'");
             separator = " AND ";
+
         }
-        query.append(";");
-        Statement statement = dbConnection.createStatement();
-        ResultSet rs = statement.executeQuery(query.toString());
+
+        return query;
+
+    }
+
+    private List<Shard> runQuery(PreparedStatement statement) throws SQLException {
+        List<Shard> results = new ArrayList<>();
+
+        ResultSet rs = statement.executeQuery();
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnCount = rsmd.getColumnCount();
 
@@ -150,8 +184,13 @@ public class DbManager {
         createDBFileIfNotExists();
     }
 
-    // TODO...
-    public void removeShard(String shard) {
-//        String sql = "DELETE FROM " + table
+    public void deleteFileShards(String file) throws SQLException {
+        PreparedStatement statement = dbConnection.prepareStatement(
+                "DELETE FROM " + table + " WHERE filename = ?;");
+
+        statement.setString(1, file);
+
+        statement.executeUpdate();
+
     }
 }

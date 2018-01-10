@@ -110,7 +110,7 @@ class ShardManager {
     }
 
     public void deleteShard(List<StoragePool> storagePools, String shardId) {
-        dbManager.removeShard(shardId);
+        dbManager.deleteFileShards(shardId);
 
         // also delete from local storage pool
         for (Shard shard : shards) {

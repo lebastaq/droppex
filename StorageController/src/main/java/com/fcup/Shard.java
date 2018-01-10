@@ -19,6 +19,8 @@ public class Shard {
         String dummy = "dummy";
         changeKeyValue("operationType", dummy);
         changeKeyValue("shardID", dummy);
+        changeKeyValue("filename", dummy);
+        changeKeyValue("filesize", Integer.toString(0));
         changeKeyValue("storagePoolIP", dummy);
         changeKeyValue("storagePoolPort", Integer.toString(0));
     }
@@ -89,5 +91,13 @@ public class Shard {
 
     public String getId() {
         return params.get("shardID");
+    }
+
+    public String getFilename() {
+        return params.get("filename");
+    }
+
+    public Long getFilesize() {
+        return Long.parseLong(params.get("filesize"));
     }
 }
