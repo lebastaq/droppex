@@ -1,9 +1,10 @@
 package com.fcup.utilities;
 
 import com.fcup.StoragePoolsManager;
-import com.fcup.generated.ShardId;
-import com.fcup.generated.storageControllerInfo;
+import com.fcup.generated.*;
 import io.grpc.ServerBuilder;
+
+import java.sql.SQLException;
 
 public class GrpcServer {
     private int port = 50100;
@@ -20,10 +21,11 @@ public class GrpcServer {
                 try {
                     server = ServerBuilder.forPort(port)
                             .addService(new StoragePoolRegisterer(storagePoolsManager))
+                            .addService(new PortalControllerService())
                             .build()
                             .start();
                 }
-                catch(java.io.IOException e){
+                catch(java.io.IOException | SQLException | ClassNotFoundException e){
                     System.out.println("Could not start server on port " + port);
                     port ++;
                 }

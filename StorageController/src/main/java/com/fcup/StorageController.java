@@ -13,15 +13,22 @@ public class StorageController extends StoragePoolsManager {
     private GrpcServer grpcServer;
     private PortalServer portalServer;
 
+    static StorageController storageController;
+
     public static void main(String[] args) {
         try {
-            StorageController storageController = new StorageController();
+            storageController = new StorageController();
             storageController.connectToChannel();
             storageController.sync();
             storageController.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static StorageController getController() {
+        return storageController;
+
     }
 
     public StorageController() throws Exception {
@@ -37,11 +44,10 @@ public class StorageController extends StoragePoolsManager {
     }
 
     public void start() throws Exception {
-        Thread psThread = new Thread(portalServer, "AppServer File Transfer Thread");
+        Thread psThread = new Thread(portalServer, "AppServer StoredFile Transfer Thread");
         psThread.start();
     }
 
-    // TODO add grpc call from app server (freddy)
     public void sendGroupMessageToDeleteShard(String shardId) {
         super.sendGroupMessageToDeleteShard(shardId);
         if (isLeader) {

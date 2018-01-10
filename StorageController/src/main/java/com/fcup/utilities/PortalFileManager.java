@@ -35,7 +35,6 @@ public class PortalFileManager implements Runnable {
                     FileEncoder uh = new FileEncoder(TEMP_FILE_DIR, filename, token);
                     File shardDirectory = uh.run();
 
-                    // TODO: Handle this output on the App server side
                     String output = (shardDirectory != null) ? "SUCCESS"
                                                              : "FAILED";
 

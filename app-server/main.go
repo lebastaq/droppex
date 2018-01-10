@@ -12,13 +12,19 @@ import (
 
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	jwt "github.com/dgrijalva/jwt-go"
+	pb "github.com/freddygv/droppex/app-server/servrpc"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
 )
 
 const (
-	version       string = "/api/1"
-	maxUploadSize int64  = 500 * 1024 * 1024 // 500 MB
+	ctrlAddress    string = "localhost"
+	ctrlRPCPort    string = ":50100"
+	ctrlSocketPort string = ":29200"
+	version        string = "/api/1"
+	maxUploadSize  int64  = 500 * 1024 * 1024 // 500 MB
 )
 
 var signingKey = []byte("fY6k6km3Pw1txgPa7Qc73AYqUNZj6Wg8")
@@ -29,7 +35,7 @@ func main() {
 	router.HandleFunc(version+"/status", statusHandler).Methods("GET")
 	router.HandleFunc(version+"/auth", authHandler).Methods("GET")
 
-	router.Handle(version+"/list", jwtMiddleware.Handler(listHandler)).Methods("GET")
+	router.Handle(version+"/search", jwtMiddleware.Handler(searchHandler)).Methods("GET")
 	router.Handle(version+"/search/{pattern}", jwtMiddleware.Handler(searchHandler)).Methods("GET")
 	router.Handle(version+"/files/{filename}", jwtMiddleware.Handler(downloadHandler)).Methods("GET")
 	router.Handle(version+"/files_post", jwtMiddleware.Handler(uploadHandler)).Methods("POST")
@@ -42,6 +48,11 @@ type jwtToken struct {
 	Token string `json:"token"`
 }
 
+type file struct {
+	Filename    string `json:"filename,omitempty"`
+	SizeInBytes int64  `json:"size,omitempty"`
+}
+
 var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 	ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
 		return signingKey, nil
@@ -49,23 +60,49 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 	SigningMethod: jwt.SigningMethodHS256,
 })
 
-// listHandler lists all files or files matching a pattern
-var listHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	// token := r.Header.Get("Authorization")
-
-	// // Send message to Storage Controller asking for files
-
-	// json.NewEncoder(w).Encode(files)
-})
-
 // searchHandler lists all files matching a pattern
 var searchHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	// token := r.Header.Get("Authorization")
-	// params := mux.Vars(r)
+	log.Println("in search")
+	params := mux.Vars(r)
 
-	// // Send message to Storage Controller asking for files that match a pattern
+	// If there's no pattern, we're listing all files
+	pattern, _ := params["pattern"]
 
-	// json.NewEncoder(w).Encode(matches)
+	// Connect to the server
+	conn, err := grpc.Dial(ctrlAddress+ctrlRPCPort, grpc.WithInsecure())
+	if err != nil {
+		renderError(w, "STORAGE_CONTROLLER_CONNECTION_ERROR", http.StatusInternalServerError)
+		return
+	}
+	defer conn.Close()
+
+	c := pb.NewPortalControllerClient(conn)
+
+	stream, err := c.FileSearch(context.Background(), &pb.SearchRequest{Pattern: pattern})
+	if err != nil {
+		log.Println(err)
+		renderError(w, "STORAGE_CONTROLLER_STREAM_ERROR", http.StatusInternalServerError)
+		return
+	}
+
+	var matches []file
+
+	// Read matches from the stream until EOF err
+	for {
+		match, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Println(err)
+			renderError(w, "FILE_DELETION_ERROR", http.StatusInternalServerError)
+			return
+		}
+
+		matches = append(matches, file{Filename: match.Filename, SizeInBytes: match.FileSize})
+	}
+
+	json.NewEncoder(w).Encode(matches)
 })
 
 // downloadHandler downloads a file with a given filename
@@ -78,7 +115,7 @@ var downloadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	conn, err := net.Dial("tcp", "localhost:29200")
+	conn, err := net.Dial("tcp", ctrlAddress+ctrlSocketPort)
 	if err != nil {
 		renderError(w, "STORAGE_CONTROLLER_CONNECTION_FAILED", http.StatusInternalServerError)
 	}
@@ -118,7 +155,7 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 
 	log.Printf("Upload requested for %s (%s Bytes) by token: %s with hash: %s\n", filename, fileSize, token, fileHash)
 
-	conn, err := net.Dial("tcp", "localhost:29200")
+	conn, err := net.Dial("tcp", ctrlAddress+ctrlSocketPort)
 	if err != nil {
 		renderError(w, "STORAGE_CONTROLLER_CONNECTION_FAILED", http.StatusInternalServerError)
 	}
@@ -139,7 +176,24 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 // deleteHandler deletes the file associated with the input
 var deleteHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	w.Write([]byte(fmt.Sprintf("Deleting %s", params["filename"])))
+
+	conn, err := grpc.Dial(ctrlAddress+ctrlRPCPort, grpc.WithInsecure())
+	if err != nil {
+		renderError(w, "STORAGE_CONTROLLER_CONNECTION_ERROR", http.StatusInternalServerError)
+		return
+	}
+	defer conn.Close()
+
+	c := pb.NewPortalControllerClient(conn)
+
+	_, err = c.DeleteFile(context.Background(), &pb.DeletionRequest{Filename: params["filename"]})
+	if err != nil {
+		log.Println(err)
+		renderError(w, "FILE_DELETION_ERROR", http.StatusInternalServerError)
+		return
+	}
+
+	w.Write([]byte(fmt.Sprintf("Deleted %s", params["filename"])))
 })
 
 // Generate token for hardcoded admin user
