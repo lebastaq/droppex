@@ -110,7 +110,12 @@ class ShardManager {
     }
 
     public void deleteShard(List<StoragePool> storagePools, String shardId) {
-        dbManager.deleteFileShards(shardId);
+        try {
+            dbManager.deleteFileShards(shardId);
+        } catch (SQLException e) {
+            System.err.println("Could not delete shard from local database: ");
+            e.printStackTrace();
+        }
 
         // also delete from local storage pool
         for (Shard shard : shards) {
