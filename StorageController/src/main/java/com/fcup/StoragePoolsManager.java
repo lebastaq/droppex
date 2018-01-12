@@ -13,6 +13,8 @@ import java.util.Scanner;
 import com.fcup.utilities.*;
 import org.json.JSONObject;
 
+import static java.lang.Math.ceil;
+
 public class StoragePoolsManager extends ReceiverAdapter {
 
     JChannel jgroupsChannel;
@@ -22,6 +24,9 @@ public class StoragePoolsManager extends ReceiverAdapter {
     private static String JGROUPS_CONFIG = "config.xml";
     private String CONFIG_FILE = "networkconf.json";
     String localIP = null;
+
+    private int totalManagersThatJoined = 0;
+    private int managersOnline = 0;
 
     // todo pattern ?
     StoragePoolsManager() throws Exception {
@@ -42,12 +47,11 @@ public class StoragePoolsManager extends ReceiverAdapter {
         jgroupsChannel = new JChannel(JGROUPS_CONFIG).setReceiver(this);
         shardManager = new ShardManager();
         storagePools = new ArrayList<>();
-
     }
 
     public void connectToChannel() throws Exception {
         jgroupsChannel.connect("ChatCluster");
-        electNewLeader();
+        //electNewLeader();
     }
 
     public void disconnectFromChannel() {
@@ -68,13 +72,22 @@ public class StoragePoolsManager extends ReceiverAdapter {
     void electNewLeader() {
         View view = jgroupsChannel.getView();
         Address address = view.getMembers().get(0);
+        updateNumberOfKnownManagersOnline(view);
         if (address.equals(jgroupsChannel.getAddress())) {
             System.out.println("I'm (" + jgroupsChannel.getAddress() + ") the leader");
+            System.out.println("There are now " + totalManagersThatJoined + " managers that joined in total - "
+            + managersOnline + " of which are connected right now");
             isLeader = true;
         } else {
             System.out.println("I'm (" + jgroupsChannel.getAddress() + ") not the leader");
             isLeader = false;
         }
+    }
+
+    private void updateNumberOfKnownManagersOnline(View view) {
+        managersOnline = view.getMembers().size();
+        if(managersOnline > totalManagersThatJoined)
+            totalManagersThatJoined = managersOnline;
     }
 
 
@@ -91,13 +104,20 @@ public class StoragePoolsManager extends ReceiverAdapter {
         System.out.println("Received: " + message);
         Shard shard = Shard.fromJSON(message);
 
-        if (shard.isDeletionOperation()) {
+        if (!enoughGroupMembersOnlineToAnswer()) {
+            System.err.println("There are less than half the controllers online, could not process message");
+        }
+        else if (shard.isDeletionOperation()) {
             shardManager.deleteShard(storagePools, shard.getId());
         } else{
             shardManager.storeOperation(shard);
             shardManager.syncOperation(message);
             shardManager.syncLocalStoragePools(storagePools);
         }
+    }
+
+    public boolean enoughGroupMembersOnlineToAnswer() {
+        return managersOnline >= ceil((float)totalManagersThatJoined / 2);
     }
 
     public void setState(InputStream input) {

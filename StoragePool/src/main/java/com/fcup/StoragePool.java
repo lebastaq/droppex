@@ -133,12 +133,12 @@ public class StoragePool {
                 connected = tryToRegisterInStorageController();
             } catch (StatusRuntimeException e) {
                 System.out.println("Failed registering, will now try again...");
-                attempts ++;
-                totalAttempts++;
-                if(attempts > 5){
-                    remoteControllerPort++;
-                    attempts = 0;
-                }
+            }
+            attempts ++;
+            totalAttempts++;
+            if(attempts > 5){
+                remoteControllerPort++;
+                attempts = 0;
             }
         }
 
@@ -157,7 +157,7 @@ public class StoragePool {
         blockingStub = registererGrpc.newBlockingStub(grpcChannel);
         PoolRegistrationStatus status = blockingStub.register(request);
         System.out.println("Answer: " + status.getOk());
-        return true;
+        return status.getOk();
     }
 
     public void getParameters() {

@@ -16,8 +16,18 @@ class StoragePoolRegisterer extends registererGrpc.registererImplBase {
     @Override
     public void register(PoolInfo request, StreamObserver<PoolRegistrationStatus> responseObserver) {
         System.out.println("Received new Registration message from pool...");
-        responseObserver.onNext(registerPool(request));
-        responseObserver.onCompleted();
+        if (storagePoolsManager.enoughGroupMembersOnlineToAnswer()) {
+            responseObserver.onNext(registerPool(request));
+            responseObserver.onCompleted();
+        }
+        else{
+            responseObserver.onNext(failToRegisterPool(request));
+            responseObserver.onCompleted();
+        }
+    }
+
+    private PoolRegistrationStatus failToRegisterPool(PoolInfo request) {
+        return PoolRegistrationStatus.newBuilder().setOk(false).build();
     }
 
     private PoolRegistrationStatus registerPool(PoolInfo request) {
