@@ -13,12 +13,10 @@ import java.util.*;
 
 public class PortalControllerService extends PortalControllerGrpc.PortalControllerImplBase {
     private final DbManager db;
-    private StoragePoolsManager storagePoolsManager;
 
-    public PortalControllerService(StoragePoolsManager storagePoolsManager) throws SQLException, ClassNotFoundException {
+    public PortalControllerService() throws SQLException, ClassNotFoundException {
         db = new DbManager();
         db.connect();
-        this.storagePoolsManager = storagePoolsManager;
     }
 
     @Override
@@ -26,8 +24,11 @@ public class PortalControllerService extends PortalControllerGrpc.PortalControll
         String fileToDelete = request.getFilename();
 
         try {
-            if(!storagePoolsManager.enoughGroupMembersOnlineToAnswer())
+            StorageController sc = StorageController.getController();
+
+            if(!sc.enoughGroupMembersOnlineToAnswer())
                 throw new Exception("Not enough storage controllers online!");
+
             // First get all the shards for the file
             Map<String, String> params = new HashMap<>();
             params.put("filename", fileToDelete);
@@ -37,7 +38,6 @@ public class PortalControllerService extends PortalControllerGrpc.PortalControll
 
             // Only take action if the file is in the DB, makes RPC call idempotent
             if (shards.size() > 0) {
-                StorageController sc = StorageController.getController();
 
                 // For each resulting shard, send a message to delete it
                 for (Shard shard : shards) {
@@ -72,7 +72,7 @@ public class PortalControllerService extends PortalControllerGrpc.PortalControll
         String pattern = request.getPattern();
 
         try {
-            if(!storagePoolsManager.enoughGroupMembersOnlineToAnswer())
+            if(!StorageController.getController().enoughGroupMembersOnlineToAnswer())
                 throw new Exception("Not enough storage controllers online!");
 
             List<Shard> files = db.searchFiles(pattern);
