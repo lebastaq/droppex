@@ -26,7 +26,7 @@ public class PortalControllerService extends PortalControllerGrpc.PortalControll
         String fileToDelete = request.getFilename();
 
         try {
-            if(storagePoolsManager.enoughGroupMembersOnlineToAnswer())
+            if(!storagePoolsManager.enoughGroupMembersOnlineToAnswer())
                 throw new Exception("Not enough storage controllers online!");
             // First get all the shards for the file
             Map<String, String> params = new HashMap<>();
