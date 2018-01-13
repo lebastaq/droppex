@@ -3,6 +3,7 @@ package com.fcup.utilities;
 import com.fcup.DbManager;
 import com.fcup.Shard;
 import com.fcup.StorageController;
+import com.fcup.StoragePoolsManager;
 import com.fcup.generated.*;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
@@ -12,10 +13,12 @@ import java.util.*;
 
 public class PortalControllerService extends PortalControllerGrpc.PortalControllerImplBase {
     private final DbManager db;
+    private StoragePoolsManager storagePoolsManager;
 
-    public PortalControllerService() throws SQLException, ClassNotFoundException {
+    public PortalControllerService(StoragePoolsManager storagePoolsManager) throws SQLException, ClassNotFoundException {
         db = new DbManager();
         db.connect();
+        this.storagePoolsManager = storagePoolsManager;
     }
 
     @Override
@@ -23,6 +26,8 @@ public class PortalControllerService extends PortalControllerGrpc.PortalControll
         String fileToDelete = request.getFilename();
 
         try {
+            if(storagePoolsManager.enoughGroupMembersOnlineToAnswer())
+                throw new Exception("Not enough storage controllers online!");
             // First get all the shards for the file
             Map<String, String> params = new HashMap<>();
             params.put("filename", fileToDelete);
@@ -51,7 +56,7 @@ public class PortalControllerService extends PortalControllerGrpc.PortalControll
             responseObserver.onNext(null);
             responseObserver.onCompleted();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             // Sending back an error via gRPC if the shard isn't deleted
             responseObserver.onError(Status.INTERNAL
                     .withDescription(e.getMessage())
