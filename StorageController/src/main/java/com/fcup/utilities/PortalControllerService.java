@@ -72,6 +72,9 @@ public class PortalControllerService extends PortalControllerGrpc.PortalControll
         String pattern = request.getPattern();
 
         try {
+            if(!storagePoolsManager.enoughGroupMembersOnlineToAnswer())
+                throw new Exception("Not enough storage controllers online!");
+
             List<Shard> files = db.searchFiles(pattern);
 
             for (Shard file : files) {
@@ -85,7 +88,7 @@ public class PortalControllerService extends PortalControllerGrpc.PortalControll
 
             responseObserver.onCompleted();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             responseObserver.onError(Status.INTERNAL
                     .withDescription(e.getMessage())
                     .asRuntimeException());
