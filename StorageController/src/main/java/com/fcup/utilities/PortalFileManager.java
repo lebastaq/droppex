@@ -105,8 +105,9 @@ public class PortalFileManager implements Runnable {
 
         } catch (IOException e) {
             throw e;
-
         }
+
+        System.out.println("Received " + filename);
 
     }
 
@@ -129,8 +130,9 @@ public class PortalFileManager implements Runnable {
 
         } catch (IOException e) {
             throw e;
-
         }
+
+        System.out.println("Finished seeding file " + filename);
 
         outgoingFile.delete();
     }
@@ -152,6 +154,8 @@ public class PortalFileManager implements Runnable {
             String shardID = shardFile.getName();
             int poolID = ShardDispatcher.idToIndex(shardID, NUM_POOLS);
             StoragePool targetPool = sc.storagePools.get(poolID);
+
+            System.out.println("Sending " + shardID + " to pool " + targetPool.getIp());
 
             try (Socket clientSocket = new Socket(targetPool.getIp(), POOL_SENDING_PORT);
                  OutputStream os = clientSocket.getOutputStream();
@@ -176,6 +180,8 @@ public class PortalFileManager implements Runnable {
                 throw e;
 
             }
+
+            System.out.println("Done sending " + shardID + " to pool " + targetPool.getIp());
 
             // Notify other controllers of operation after successful transfer to pool
             Shard currentShard = buildShard(shardFile.getName(), targetPool);

@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.fcup</groupId>
-    <artifactId>storage-container</artifactId>
+    <artifactId>storage-controller</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
     <name>simple-client</name>
 
     <build>
-        <finalName>simple-client</finalName>
+        <finalName>storage-controller</finalName>
         <resources>
             <!-- TODO THIS IS NOT WORKING-->
             <resource>

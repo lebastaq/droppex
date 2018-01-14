@@ -24,6 +24,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
     private static String JGROUPS_CONFIG = "config.xml";
     private String CONFIG_FILE = "networkconf.json";
     String localIP = null;
+    String externalIP;
 
     private int totalManagersThatJoined = 0;
     private int managersOnline = 0;
@@ -160,19 +161,32 @@ public class StoragePoolsManager extends ReceiverAdapter {
             System.out.println("Jgroups config file: " + JGROUPS_CONFIG);
         }
 
-        if(parameters.has("IP")) {
-            localIP = parameters.getString("IP");
+        if(parameters.has("internalIP")) {
+            localIP = parameters.getString("internalIP");
             System.out.println("Local IP: " + localIP);
         }
         else{
             askAdminForLocalIP(sc);
         }
 
+        if(parameters.has("externalIP")) {
+            externalIP = parameters.getString("externalIP");
+            System.out.println("External IP: " + externalIP);
+        }
+        else{
+            askAdminForExternalIP(sc);
+        }
+
     }
 
     private void askAdminForLocalIP(Scanner sc) {
-            System.out.println("Please enter local IP:");
-            localIP = sc.nextLine();
+        System.out.println("Please enter local IP:");
+        localIP = sc.nextLine();
+    }
+
+    private void askAdminForExternalIP(Scanner sc) {
+        System.out.println("Please enter external IP:");
+        externalIP = sc.nextLine();
     }
 
 }

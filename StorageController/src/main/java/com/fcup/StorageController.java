@@ -106,7 +106,7 @@ public class StorageController extends StoragePoolsManager {
     }
 
     private void sendMasterIPToAppServer() {
-        // TODO buid
+        // TODO build
     }
 
     private void sendMasterIPToStoragePools() {
