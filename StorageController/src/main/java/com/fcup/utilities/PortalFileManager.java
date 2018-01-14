@@ -15,8 +15,6 @@ import java.util.List;
 public class PortalFileManager implements Runnable {
     private final String TEMP_FILE_DIR = "tmp/";
 
-    // TODO: Edit to real value
-    private final int NUM_POOLS = 1;
     private final int POOL_RECEIVING_PORT = 26001;
     private final int POOL_SENDING_PORT = 26002;
 
@@ -152,7 +150,7 @@ public class PortalFileManager implements Runnable {
 
             // Get target pool id from hash function
             String shardID = shardFile.getName();
-            int poolID = ShardDispatcher.idToIndex(shardID, NUM_POOLS);
+            int poolID = ShardDispatcher.idToIndex(shardID, sc.storagePools.size());
             StoragePool targetPool = sc.storagePools.get(poolID);
 
             System.out.println("Sending " + shardID + " to pool " + targetPool.getIp());
