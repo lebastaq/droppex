@@ -112,7 +112,7 @@
         <dependency>
             <groupId>backblaze</groupId>
             <artifactId>JavaReedSolomon</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
             <!--<scope>system</scope>-->
             <!--<systemPath>${basedir}/repo/JavaReedSolomon.jar</systemPath>-->
         </dependency>
