@@ -20,7 +20,7 @@ import (
 )
 
 const (
-	ctrlAddress    string = "localhost"
+	ctrlAddress    string = "104.198.48.195" // "localhost"
 	ctrlRPCPort    string = ":50100"
 	ctrlSocketPort string = ":29200"
 	version        string = "/api/1"
@@ -155,6 +155,7 @@ var uploadHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request
 
 	log.Printf("Upload requested for %s (%s Bytes) by token: %s with hash: %s\n", filename, fileSize, token, fileHash)
 
+	log.Println(ctrlAddress + ctrlSocketPort)
 	conn, err := net.Dial("tcp", ctrlAddress+ctrlSocketPort)
 	if err != nil {
 		renderError(w, "STORAGE_CONTROLLER_CONNECTION_FAILED", http.StatusInternalServerError)

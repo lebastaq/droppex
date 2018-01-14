@@ -1,5 +1,7 @@
 package com.fcup.utilities;
 
+import com.fcup.Shard;
+
 import java.io.*;
 import java.net.Socket;
 import java.nio.ByteBuffer;
@@ -9,6 +11,9 @@ import java.security.NoSuchAlgorithmException;
 public class PortalFileManager implements Runnable {
     private final String TEMP_FILE_DIR = "tmp/";
     private String POOL_IP = "10.132.0.8";
+
+    private final int POOL_RECEIVING_PORT = 26001;
+    private final int POOL_SENDING_PORT = 26002;
 
     private String filename;
     private String fileHash;
@@ -116,12 +121,13 @@ public class PortalFileManager implements Runnable {
     }
 
     private void distributeShards(File shardDirectory) {
+        System.out.println("Uploading " + filename + " shards to pools.");
 
         // Loop through each shard and send it over
         for (File shard : shardDirectory.listFiles()) {
 
-            // TODO: Remove hard-coded address/port
-            try (Socket clientSocket = new Socket(POOL_IP, 26002);
+            // TODO: Remove hard-coded address
+            try (Socket clientSocket = new Socket(POOL_IP, POOL_SENDING_PORT);
                  OutputStream os = clientSocket.getOutputStream();
                  PrintWriter out = new PrintWriter(os, true);
                  FileInputStream fis = new FileInputStream(shard);
@@ -131,7 +137,6 @@ public class PortalFileManager implements Runnable {
                 out.println(shard.getName());
 
                 long fileLength = shard.length();
-                System.out.println("len: " + fileLength);
                 int bytesRead;
                 ByteBuffer buffer = ByteBuffer.allocate((int)fileLength);
 
@@ -149,14 +154,16 @@ public class PortalFileManager implements Runnable {
     }
 
     private void receiveShards() {
+        System.out.println("Receiving " + filename + " shards from pools.");
 
-        // TODO: Remove these hardcoded shardID generator loop
-        int i = 0;
-        for (int j = 0; j < 6; j++) {
-            String shardID = filename + "." + i + "." + j;
+        // TODO: Query unique list of shards
+        Shard[] shards = new Shard[];
 
-            // TODO: Remove hard-coded address/port
-            try (Socket clientSocket = new Socket(POOL_IP, 26001);
+        for (Shard shard : shards) {
+            String shardID = shard.getId();
+
+            // TODO: Remove hard-coded address
+            try (Socket clientSocket = new Socket(POOL_IP, POOL_RECEIVING_PORT);
                  OutputStream os = clientSocket.getOutputStream();
                  PrintWriter out = new PrintWriter(os, true);
                  DataInputStream dis = new DataInputStream(clientSocket.getInputStream());

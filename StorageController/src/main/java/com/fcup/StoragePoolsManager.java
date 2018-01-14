@@ -147,7 +147,6 @@ public class StoragePoolsManager extends ReceiverAdapter {
         }
     }
 
-
     private void getParameters(Scanner sc) {
         ParametersReader parametersReader = new ParametersReader(CONFIG_FILE);
         JSONObject parameters = parametersReader.readParameters();
