@@ -19,9 +19,9 @@ public class PortalServer implements Runnable {
 
         try {
             while (listening) {
+                System.out.println("Listening on port " + port);
                 PortalFileManager fh = new PortalFileManager(serverSocket.accept());
                 executor.execute(fh);
-
 
             }
         } catch (IOException e) {
