@@ -6,7 +6,7 @@ option java_outer_classname = "LeaderRPC";
 
 package leader;
 
-// protoc servrpc.proto --go_out=plugins=grpc:.
+// protoc leader.proto --go_out=plugins=grpc:.
 
 service LeaderService {
     // Forwards new leader IP after election
