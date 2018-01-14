@@ -148,8 +148,7 @@ public class StorageController extends StoragePoolsManager {
                 blockingStub.setAddress(request);
                 System.out.println("Sent new address to storage pool !");
             } catch (Exception e) {
-                System.err.println("Could not connect to storage pool:");
-                e.printStackTrace();
+                System.err.println("Could not connect to storage pool - removing it from the known list");
                 storagePoolsUnavailable.add(storagePool);
             }
         }
