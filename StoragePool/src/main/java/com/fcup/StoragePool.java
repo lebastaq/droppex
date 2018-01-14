@@ -26,8 +26,8 @@ public class StoragePool {
     private ManagedChannel grpcChannel;
     private registererGrpc.registererBlockingStub blockingStub;
     private String remoteControllerAddress;
-    SeederPool seederPool;
-    DownloaderPool downloaderPool;
+    Thread seederPool;
+    Thread downloaderPool;
     private String CONFIG_FILE = "networkconf.json";
 
     public static void main(String[] args) throws Exception {
@@ -40,15 +40,15 @@ public class StoragePool {
         getParameters();
         createStorageFolderIfNotExists();
         startGrpcServer();
-        seederPool = new SeederPool(STORAGE_FOLDER);
-        downloaderPool = new DownloaderPool(STORAGE_FOLDER);
+        seederPool = new Thread(new SeederPool(STORAGE_FOLDER));
+        downloaderPool = new Thread(new DownloaderPool(STORAGE_FOLDER));
 
         registerInStorageController();
     }
 
     public void run() throws IOException {
-        seederPool.run();
-        downloaderPool.run();
+        seederPool.start();
+        downloaderPool.start();
 
         // exit when any key is pressed
         System.in.read();

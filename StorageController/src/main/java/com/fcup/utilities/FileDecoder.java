@@ -38,6 +38,8 @@ public class FileDecoder {
              BufferedOutputStream mergingStream = new BufferedOutputStream(fos)) {
 
             for (File block : directoryFiles) {
+                if (block.isDirectory()) continue;
+
                 Files.copy(block.toPath(), mergingStream);
                 block.delete();
 
@@ -73,6 +75,7 @@ public class FileDecoder {
 
             File shardFile = new File(shardsDir,blockName + "." + i);
             if (shardFile.exists()) {
+                System.out.println(String.format("%s (%d)", shardFile.getName(), (int) shardFile.length()));
 
                 // Store the size of the first shard
                 if (i == 0)  {

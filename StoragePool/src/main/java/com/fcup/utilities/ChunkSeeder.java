@@ -18,7 +18,7 @@ public class ChunkSeeder extends Thread{
         try {
             readChunkId();
             openChunkFile();
-            writeFileIntoBuffer();
+            writeToSocket();
             closeSocket();
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,22 +40,23 @@ public class ChunkSeeder extends Thread{
         }
     }
 
-    private void writeFileIntoBuffer() throws IOException {
-        OutputStream os = socket.getOutputStream();
-        FileInputStream fis = new FileInputStream(file);
-        BufferedInputStream bis = new BufferedInputStream(fis);
+    private void writeToSocket() throws IOException {
+        try(OutputStream os = socket.getOutputStream();
+            FileInputStream fis = new FileInputStream(file);
+            BufferedInputStream bis = new BufferedInputStream(fis)) {
 
-        long fileLength = file.length();
+            long fileLength = file.length();
 
-        byte[] contents = new byte[(int)fileLength];
-        int bytesRead;
+            byte[] contents = new byte[(int)fileLength];
+            int bytesRead;
 
-        while((bytesRead = bis.read(contents)) > 0){
-            os.write(contents, 0, bytesRead);
+            while((bytesRead = bis.read(contents)) > 0){
+                os.write(contents, 0, bytesRead);
+            }
+
+            os.flush();
+
         }
-        os.flush();
-        fis.close();
-        bis.close();
         System.out.println("ChunkSeeder: finished seeding file");
     }
 

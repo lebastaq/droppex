@@ -20,8 +20,8 @@ public class GrpcServer {
             do {
                 try {
                     server = ServerBuilder.forPort(port)
-                            .addService(new StoragePoolRegisterer(storagePoolsManager))
-                            .addService(new PortalControllerService(storagePoolsManager))
+                            .addService(new StoragePoolRegisterer())
+                            .addService(new PortalControllerService())
                             .build()
                             .start();
                 }

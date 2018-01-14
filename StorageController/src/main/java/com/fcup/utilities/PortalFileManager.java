@@ -29,11 +29,13 @@ public class PortalFileManager implements Runnable {
             filename = dis.readLine();
 
             if (action.equals("upload")) {
-                receiveUpload(dis);
+                receivePortalUpload(dis);
 
                 if (validUpload()) {
                     FileEncoder uh = new FileEncoder(TEMP_FILE_DIR, filename, token);
                     File shardDirectory = uh.run();
+
+                    distributeShards(shardDirectory);
 
                     String output = (shardDirectory != null) ? "SUCCESS"
                                                              : "FAILED";
@@ -43,11 +45,13 @@ public class PortalFileManager implements Runnable {
                 }
 
             } else if (action.equals("download")) {
-                // TODO: This needs a real directory path rather than "." (Where we receive shards from pools)
-                FileDecoder dh = new FileDecoder(filename, new File ("."));
+                receiveShards();
+
+                FileDecoder dh = new FileDecoder(filename, new File (TEMP_FILE_DIR));
                 dh.run();
 
-                sendDownload(os);
+                System.out.println(filename + " decoded in StorageController");
+                sendPortalDownload(os);
 
             }
 
@@ -57,7 +61,7 @@ public class PortalFileManager implements Runnable {
         }
     }
 
-    private void receiveUpload(DataInputStream dis) throws IOException {
+    private void receivePortalUpload(DataInputStream dis) throws IOException {
         fileHash = dis.readLine();
         token = dis.readLine();
 
@@ -76,15 +80,9 @@ public class PortalFileManager implements Runnable {
 
         }
 
-
     }
 
-    private void sendDownload(OutputStream os) throws IOException {
-        /*
-        TODO:
-        Get the shards from the Storage Pools and encode them before continuing
-        Save the encoded file to TEMP_FILE_DIR
-         */
+    private void sendPortalDownload(OutputStream os) throws IOException {
 
         File outgoingFile = new File(TEMP_FILE_DIR + filename);
 
@@ -106,11 +104,76 @@ public class PortalFileManager implements Runnable {
             throw e;
 
         }
+
+        outgoingFile.delete();
     }
 
     private boolean validUpload() throws IOException, NoSuchAlgorithmException {
         String downloadedHash = FileHasher.hashFile(TEMP_FILE_DIR + filename);
 
         return downloadedHash.equals(fileHash);
+    }
+
+    private void distributeShards(File shardDirectory) {
+
+        // Loop through each shard and send it over
+        for (File shard : shardDirectory.listFiles()) {
+
+            // TODO: Remove hard-coded address
+            try (Socket clientSocket = new Socket("localhost", 26002);
+                 OutputStream os = clientSocket.getOutputStream();
+                 PrintWriter out = new PrintWriter(os, true);
+                 FileInputStream fis = new FileInputStream(shard);
+                 FileChannel ch = fis.getChannel()) {
+
+                // Send shardID to upload
+                out.println(shard.getName());
+
+                long fileLength = shard.length();
+                System.out.println("len: " + fileLength);
+                int bytesRead;
+                ByteBuffer buffer = ByteBuffer.allocate((int)fileLength);
+
+                while ((bytesRead = ch.read(buffer)) > 0){
+                    os.write(buffer.array(), 0, bytesRead);
+                }
+
+                os.flush();
+
+            } catch(IOException  e) {
+                e.printStackTrace();
+
+            }
+        }
+    }
+
+    private void receiveShards() {
+
+        // TODO: Remove these hardcoded shardID generator loop
+        int i = 0;
+        for (int j = 0; j < 6; j++) {
+            String shardID = filename + "." + i + "." + j;
+
+            // TODO: Remove hard-coded address
+            try (Socket clientSocket = new Socket("localhost", 26001);
+                 OutputStream os = clientSocket.getOutputStream();
+                 PrintWriter out = new PrintWriter(os, true);
+                 DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
+                 FileOutputStream fos = new FileOutputStream(TEMP_FILE_DIR + "/" + shardID)) {
+
+                out.println(shardID);
+
+                byte[] contents = new byte[1024*1024]; // 1MB
+                int bytesRead;
+
+                while ((bytesRead = dis.read(contents)) > 0) {
+                    fos.write(contents, 0, bytesRead);
+
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
