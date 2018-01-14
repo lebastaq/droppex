@@ -48,8 +48,8 @@ com/fcup/generated/PoolRegisterProto.class
 com/fcup/utilities/GrpcControllerAddressGetter.class
 com/fcup/generated/deleterGrpc$deleterImplBase.class
 com/fcup/generated/ShardId$Builder.class
-com/fcup/generated/addressgetterGrpc$addressgetterBaseDescriptorSupplier.class
 com/fcup/generated/addressgetterGrpc.class
+com/fcup/generated/addressgetterGrpc$addressgetterBaseDescriptorSupplier.class
 com/fcup/generated/ShardDeletionStatusOrBuilder.class
 com/fcup/generated/deleterGrpc$deleterBlockingStub.class
 com/fcup/generated/ShardId$1.class

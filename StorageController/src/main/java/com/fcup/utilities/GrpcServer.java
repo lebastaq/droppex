@@ -15,13 +15,13 @@ public class GrpcServer {
         isStarted = false;
     }
 
-    public void startGrpcServer(StoragePoolsManager storagePoolsManager) {
+    public void startGrpcServer() {
         if(!isStarted){
             do {
                 try {
                     server = ServerBuilder.forPort(port)
-                            .addService(new StoragePoolRegisterer(storagePoolsManager))
-                            .addService(new PortalControllerService(storagePoolsManager))
+                            .addService(new StoragePoolRegisterer())
+                            .addService(new PortalControllerService())
                             .build()
                             .start();
                 }
