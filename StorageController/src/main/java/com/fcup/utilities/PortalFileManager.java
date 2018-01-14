@@ -10,7 +10,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PortalFileManager implements Runnable {
     private final String TEMP_FILE_DIR = "tmp/";
@@ -208,7 +210,11 @@ public class PortalFileManager implements Runnable {
 
         DbManager db = new DbManager();
         db.connect();
-        List<Shard> shards = db.readEntries();
+
+        Map<String, String> params = new HashMap<>();
+        params.put("filename", filename);
+
+        List<Shard> shards = db.readEntries(params);
 
         for (Shard shard : shards) {
             String shardID = shard.getId();
