@@ -20,7 +20,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
     JChannel jgroupsChannel;
     ShardManager shardManager;
     boolean isLeader = false;
-    List<StoragePool> storagePools;
+    public List<StoragePool> storagePools;
     private static String JGROUPS_CONFIG = "config.xml";
     private String CONFIG_FILE = "networkconf.json";
     String localIP = null;

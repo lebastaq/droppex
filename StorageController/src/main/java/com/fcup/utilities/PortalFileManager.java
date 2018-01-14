@@ -1,23 +1,29 @@
 package com.fcup.utilities;
 
+import com.fcup.DbManager;
 import com.fcup.Shard;
+import com.fcup.StorageController;
 
 import java.io.*;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.List;
 
 public class PortalFileManager implements Runnable {
     private final String TEMP_FILE_DIR = "tmp/";
-    private String POOL_IP = "10.132.0.8";
 
+    // TODO: Edit to real value
+    private final int NUM_POOLS = 1;
     private final int POOL_RECEIVING_PORT = 26001;
     private final int POOL_SENDING_PORT = 26002;
 
     private String filename;
     private String fileHash;
     private String token;
+    private int fileSize;
 
     private final Socket socket;
 
@@ -28,6 +34,8 @@ public class PortalFileManager implements Runnable {
     @Override
     public void run() {
         System.out.println("A connection was made");
+        verifyTempDir();
+
         try(DataInputStream dis = new DataInputStream(socket.getInputStream());
             OutputStream os = socket.getOutputStream();
             PrintWriter out = new PrintWriter(os, true)) {
@@ -39,6 +47,7 @@ public class PortalFileManager implements Runnable {
                 receivePortalUpload(dis);
 
                 if (validUpload()) {
+                    storeSize();
                     FileEncoder uh = new FileEncoder(TEMP_FILE_DIR, filename, token);
                     File shardDirectory = uh.run();
 
@@ -62,9 +71,21 @@ public class PortalFileManager implements Runnable {
 
             }
 
-        } catch (IOException | NoSuchAlgorithmException e) {
+        } catch (IOException | NoSuchAlgorithmException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
 
+        }
+    }
+
+    private void storeSize() {
+        File uploaded = new File(TEMP_FILE_DIR + "/" + filename);
+        fileSize = (int)uploaded.length();
+    }
+
+    private void verifyTempDir() {
+        File tempDir = new File(TEMP_FILE_DIR);
+        if (!tempDir.exists()) {
+            tempDir.mkdir();
         }
     }
 
@@ -90,7 +111,6 @@ public class PortalFileManager implements Runnable {
     }
 
     private void sendPortalDownload(OutputStream os) throws IOException {
-
         File outgoingFile = new File(TEMP_FILE_DIR + filename);
 
         try(FileInputStream fis = new FileInputStream(outgoingFile);
@@ -121,23 +141,28 @@ public class PortalFileManager implements Runnable {
         return downloadedHash.equals(fileHash);
     }
 
-    private void distributeShards(File shardDirectory) {
+    private void distributeShards(File shardDirectory) throws IOException {
         System.out.println("Uploading " + filename + " shards to pools.");
+        StorageController sc = StorageController.getController();
 
         // Loop through each shard and send it over
-        for (File shard : shardDirectory.listFiles()) {
+        for (File shardFile : shardDirectory.listFiles()) {
 
-            // TODO: Remove hard-coded address
-            try (Socket clientSocket = new Socket(POOL_IP, POOL_SENDING_PORT);
+            // Get target pool id from hash function
+            String shardID = shardFile.getName();
+            int poolID = ShardDispatcher.idToIndex(shardID, NUM_POOLS);
+            StoragePool targetPool = sc.storagePools.get(poolID);
+
+            try (Socket clientSocket = new Socket(targetPool.getIp(), POOL_SENDING_PORT);
                  OutputStream os = clientSocket.getOutputStream();
                  PrintWriter out = new PrintWriter(os, true);
-                 FileInputStream fis = new FileInputStream(shard);
+                 FileInputStream fis = new FileInputStream(shardFile);
                  FileChannel ch = fis.getChannel()) {
 
                 // Send shardID to upload
-                out.println(shard.getName());
+                out.println(shardID);
 
-                long fileLength = shard.length();
+                long fileLength = shardFile.length();
                 int bytesRead;
                 ByteBuffer buffer = ByteBuffer.allocate((int)fileLength);
 
@@ -147,24 +172,39 @@ public class PortalFileManager implements Runnable {
 
                 os.flush();
 
-            } catch(IOException  e) {
-                e.printStackTrace();
+            } catch(IOException e) {
+                throw e;
 
             }
+
+            // Notify other controllers of operation after successful transfer to pool
+            Shard currentShard = buildShard(shardFile.getName(), targetPool);
+            sc.sendMessage(currentShard);
+
         }
     }
 
-    private void receiveShards() {
+    private Shard buildShard(String shardID, StoragePool targetPool) {
+        Shard currentShard = new Shard();
+        currentShard.changeKeyValue("shardID", shardID);
+        currentShard.changeKeyValue("filename", filename);
+        currentShard.changeKeyValue("fileSize", Integer.toString(fileSize));
+        currentShard.changeKeyValue("ip", targetPool.getIp());
+
+        return currentShard;
+    }
+
+    private void receiveShards() throws SQLException, ClassNotFoundException {
         System.out.println("Receiving " + filename + " shards from pools.");
 
-        // TODO: Query unique list of shards
-        Shard[] shards = new Shard[];
+        DbManager db = new DbManager();
+        db.connect();
+        List<Shard> shards = db.readEntries();
 
         for (Shard shard : shards) {
             String shardID = shard.getId();
 
-            // TODO: Remove hard-coded address
-            try (Socket clientSocket = new Socket(POOL_IP, POOL_RECEIVING_PORT);
+            try (Socket clientSocket = new Socket(shard.getIP(), POOL_RECEIVING_PORT);
                  OutputStream os = clientSocket.getOutputStream();
                  PrintWriter out = new PrintWriter(os, true);
                  DataInputStream dis = new DataInputStream(clientSocket.getInputStream());

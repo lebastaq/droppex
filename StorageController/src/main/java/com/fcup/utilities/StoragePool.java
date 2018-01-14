@@ -26,6 +26,10 @@ public class StoragePool {
         shards = new ArrayList<>();
     }
 
+    public String getIp() {
+        return ip;
+    }
+
     public void addShard(String shardID) {
         if(!shardID.equals("0"))
             addShardNotNull(shardID);

@@ -93,6 +93,10 @@ public class Shard {
         return params.get("shardID");
     }
 
+    public String getIP() {
+        return params.get("storagePoolIP");
+    }
+
     public String getFilename() {
         return params.get("filename");
     }
