@@ -176,8 +176,10 @@ public class PortalFileManager implements Runnable {
 
                 os.flush();
 
-            } catch(IOException e) {
-                throw e;
+            } catch(Exception e) {
+                System.err.println("Exception when sending file: ");
+                e.printStackTrace();
+                sc.removeUnavailableStoragePool(targetPool);
 
             } finally {
                 // TODO: Cleanup

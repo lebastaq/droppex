@@ -157,4 +157,9 @@ public class StorageController extends StoragePoolsManager {
         storagePools.removeAll(storagePoolsUnavailable);
     }
 
+    public void removeUnavailableStoragePool(StoragePool storagePool) {
+        System.out.println("Removing unavailable storage pool: " + storagePool.getIp());
+        storagePools.remove(storagePool);
+    }
+
 }
