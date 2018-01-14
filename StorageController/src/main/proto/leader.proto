@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.fcup.generated";
+option java_outer_classname = "LeaderRPC";
+
+package leader;
+
+// protoc leader.proto --go_out=plugins=grpc:.
+
+service LeaderService {
+    // Forwards new leader IP after election
+    rpc AnnounceLeader(LeaderIP) returns (EmptyReply) {}
+}
+
+message LeaderIP {
+    string ip = 1;
+}
+
+// Return an error from controller if something went wrong
+message EmptyReply {
+
+}
+
