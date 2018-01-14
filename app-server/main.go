@@ -67,7 +67,7 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 	SigningMethod: jwt.SigningMethodHS256,
 })
 
-func (s *server) AnnounceLeader(ctx context.Context, in *pbl.LeaderIP) (*pbl.Empty, error) {
+func (s *server) AnnounceLeader(ctx context.Context, in *pbl.LeaderIP) (*pbl.EmptyReply, error) {
 	ctrlAddress = in.Ip
 	return nil, nil
 }
