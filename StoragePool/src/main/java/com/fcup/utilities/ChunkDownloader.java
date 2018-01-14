@@ -17,7 +17,6 @@ public class ChunkDownloader extends Thread{
 
     public void run() {
         try {
-            readChunkId();
             createDownloadsDirIfNotExists();
             readFileFromBuffer();
             closeSocket();
@@ -25,13 +24,6 @@ public class ChunkDownloader extends Thread{
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    void readChunkId() throws IOException {
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(socket.getInputStream()));
-        chunkID = in.readLine();
-        System.out.println("ChunkDownloading: Downloading chunkID: " + chunkID);
     }
 
     // TODO move this to main class StoragePool
@@ -45,6 +37,10 @@ public class ChunkDownloader extends Thread{
     private void readFileFromBuffer() throws IOException {
         try{
             DataInputStream dis = new DataInputStream(socket.getInputStream());
+
+            chunkID = dis.readLine();
+            System.out.println("ChunkDownloading: Downloading chunkID: " + chunkID);
+
             FileOutputStream fos = new FileOutputStream(STORAGE_FOLDER + "/" + chunkID);
 
             byte[] contents = new byte[1024*1024]; // TODO change this ?
@@ -57,9 +53,7 @@ public class ChunkDownloader extends Thread{
             fos.close();
             dis.close();
 
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             System.out.println("Unexpected exception: ");
             e.printStackTrace();
         }
