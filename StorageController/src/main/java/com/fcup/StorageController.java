@@ -10,6 +10,7 @@ import org.jgroups.View;
 
 public class StorageController extends StoragePoolsManager {
     private final int PORTAL_PORT = 50100;
+    private final String PORTAL_IP = "35.187.1.114";
 
     private GrpcServer grpcServer;
     private PortalServer portalServer;
@@ -107,7 +108,7 @@ public class StorageController extends StoragePoolsManager {
     }
 
     private void sendMasterIPToAppServer() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", PORTAL_PORT)
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(PORTAL_IP, PORTAL_PORT)
                                                       .usePlaintext(true)
                                                       .build();
 
