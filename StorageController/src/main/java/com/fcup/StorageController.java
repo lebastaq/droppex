@@ -97,19 +97,19 @@ public class StorageController extends StoragePoolsManager {
 
         if(isLeader) {
             grpcServer.startGrpcServer();
-            sendMasterIPAndPortToStoragePools();
-            sendMasterIPAndPortToAppServer();
+            sendMasterIPToStoragePools();
+            sendMasterIPToAppServer();
         }
         else{
             grpcServer.stopServer();
         }
     }
 
-    private void sendMasterIPAndPortToAppServer() {
+    private void sendMasterIPToAppServer() {
         // TODO buid
     }
 
-    private void sendMasterIPAndPortToStoragePools() {
+    private void sendMasterIPToStoragePools() {
         System.out.println("Contacting storage pools to update master controller ip and port");
         for (StoragePool storagePool : storagePools) {
             storageControllerInfo request = grpcServer.buildSetIPAndPortRequest(localIP);
