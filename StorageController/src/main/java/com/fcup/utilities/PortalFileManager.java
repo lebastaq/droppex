@@ -27,6 +27,7 @@ public class PortalFileManager implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("A connection was made");
         try(DataInputStream dis = new DataInputStream(socket.getInputStream());
             OutputStream os = socket.getOutputStream();
             PrintWriter out = new PrintWriter(os, true)) {
