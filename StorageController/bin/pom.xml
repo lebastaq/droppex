@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.fcup</groupId>
-    <artifactId>storage-container</artifactId>
+    <artifactId>storage-controller</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
     <name>simple-client</name>
 
     <build>
-        <finalName>simple-client</finalName>
+        <finalName>storage-controller</finalName>
         <resources>
             <!-- TODO THIS IS NOT WORKING-->
             <resource>
@@ -95,18 +95,21 @@
                 </configuration>
             </plugin>
         </plugins>
-
-
-
     </build>
+
+    <repositories>
+        <repository>
+            <id>data-local</id>
+            <name>data</name>
+            <url>file://${project.basedir}/repo</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
-            <groupId>com.backblaze</groupId>
-            <artifactId>java-reedsolomon</artifactId>
-            <version>1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/repo/JavaReedSolomon.jar</systemPath>
+            <groupId>backblaze</groupId>
+            <artifactId>JavaReedSolomon</artifactId>
+            <version>1.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jgroups/jgroups -->
         <dependency>
@@ -163,19 +166,7 @@
             <artifactId>commons-io</artifactId>
             <version>1.3.2</version>
         </dependency>
-
-
-
     </dependencies>
-
-
-    <repositories>
-        <repository>
-            <id>data-local</id>
-            <name>data</name>
-            <url>file://${project.basedir}/repo</url>
-        </repository>
-    </repositories>
 
     <properties>
         <jersey.version>2.26</jersey.version>

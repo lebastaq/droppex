@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.fcup.generated";
+option java_outer_classname = "PortalRPC";
+
+package servrpc;
+
+// protoc servrpc.proto --go_out=plugins=grpc:.
+
+service PortalController {
+    // Forwards file deletion request from client
+    rpc DeleteFile(DeletionRequest) returns (Empty) {}
+
+    // Forwards search query from Client
+    // If there are multiple files that match the query, return them as a stream
+    rpc FileSearch(SearchRequest) returns (stream SearchResponse) {}
+}
+
+message DeletionRequest {
+    string filename = 1;
+}
+
+// Return an error from controller if something went wrong
+message Empty {
+
+}
+
+message SearchRequest {
+    string pattern = 1;
+}
+
+message SearchResponse {
+    string filename = 1;
+    int64 fileSize = 2;
+}
+

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="2" failures="0" name="com.fcup.utilities.StoragePoolTest" time="0.001" errors="0" skipped="0">
+<testsuite tests="2" failures="0" name="com.fcup.utilities.StoragePoolTest" time="0" errors="0" skipped="0">
   <properties>
     <property name="os.detected.version" value="10.13"/>
     <property name="idea.version" value="2017.2.5"/>
@@ -67,6 +67,6 @@
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.fcup.utilities.StoragePoolTest" name="addChunk" time="0.001"/>
+  <testcase classname="com.fcup.utilities.StoragePoolTest" name="addChunk" time="0"/>
   <testcase classname="com.fcup.utilities.StoragePoolTest" name="removeChunk" time="0"/>
 </testsuite>

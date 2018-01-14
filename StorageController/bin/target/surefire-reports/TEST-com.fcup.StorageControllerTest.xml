@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="2" failures="2" name="com.fcup.StorageControllerTest" time="8.692" errors="0" skipped="0">
+<testsuite tests="2" failures="1" name="com.fcup.StorageControllerTest" time="12.479" errors="1" skipped="0">
   <properties>
     <property name="os.detected.version" value="10.13"/>
     <property name="idea.version" value="2017.2.5"/>
@@ -67,10 +67,13 @@
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.fcup.StorageControllerTest" name="doOperationIntoDBAndThenLoadIt" time="2.093">
-    <failure message="Stored 196 shards from dbName instead of 196" type="java.lang.AssertionError">java.lang.AssertionError: Stored 196 shards from dbName instead of 196
-	at org.junit.Assert.fail(Assert.java:88)
-	at com.fcup.StorageControllerTest.doOperationIntoDBAndThenLoadIt(StorageControllerTest.java:101)
+  <testcase classname="com.fcup.StorageControllerTest" name="doOperationIntoDBAndThenLoadIt" time="5.398">
+    <error message="connecting to channel ChatCluster failed" type="java.lang.Exception">java.lang.Exception: connecting to channel ChatCluster failed
+	at org.jgroups.JChannel._connect(JChannel.java:880)
+	at org.jgroups.JChannel.connect(JChannel.java:369)
+	at org.jgroups.JChannel.connect(JChannel.java:360)
+	at com.fcup.StoragePoolsManager.connectToChannel(StoragePoolsManager.java:53)
+	at com.fcup.StorageControllerTest.doOperationIntoDBAndThenLoadIt(StorageControllerTest.java:91)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -102,74 +105,81 @@
 	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
-</failure>
-    <system-out>Please enter local IP:
-OK
+Caused by: io.grpc.StatusRuntimeException: UNIMPLEMENTED: Method not found: leader.LeaderService/AnnounceLeader
+	at io.grpc.stub.ClientCalls.toStatusRuntimeException(ClientCalls.java:221)
+	at io.grpc.stub.ClientCalls.getUnchecked(ClientCalls.java:202)
+	at io.grpc.stub.ClientCalls.blockingUnaryCall(ClientCalls.java:131)
+	at com.fcup.generated.LeaderServiceGrpc$LeaderServiceBlockingStub.announceLeader(LeaderServiceGrpc.java:167)
+	at com.fcup.StorageController.sendMasterIPToAppServer(StorageController.java:116)
+	at com.fcup.StorageController.viewAccepted(StorageController.java:102)
+	at org.jgroups.JChannel.invokeCallback(JChannel.java:932)
+	at org.jgroups.JChannel.up(JChannel.java:776)
+	at org.jgroups.stack.ProtocolStack.up(ProtocolStack.java:891)
+	at org.jgroups.protocols.pbcast.STATE_TRANSFER.up(STATE_TRANSFER.java:122)
+	at org.jgroups.protocols.FRAG2.up(FRAG2.java:163)
+	at org.jgroups.protocols.SEQUENCER.up(SEQUENCER.java:173)
+	at org.jgroups.protocols.FlowControl.up(FlowControl.java:340)
+	at org.jgroups.protocols.pbcast.GMS.installView(GMS.java:715)
+	at org.jgroups.protocols.pbcast.ClientGmsImpl.becomeSingletonMember(ClientGmsImpl.java:278)
+	at org.jgroups.protocols.pbcast.ClientGmsImpl.joinInternal(ClientGmsImpl.java:87)
+	at org.jgroups.protocols.pbcast.ClientGmsImpl.join(ClientGmsImpl.java:41)
+	at org.jgroups.protocols.pbcast.GMS.down(GMS.java:1066)
+	at org.jgroups.protocols.FlowControl.down(FlowControl.java:302)
+	at org.jgroups.protocols.SEQUENCER.down(SEQUENCER.java:132)
+	at org.jgroups.protocols.FRAG2.down(FRAG2.java:141)
+	at org.jgroups.protocols.pbcast.STATE_TRANSFER.down(STATE_TRANSFER.java:206)
+	at org.jgroups.stack.ProtocolStack.down(ProtocolStack.java:901)
+	at org.jgroups.JChannel.down(JChannel.java:644)
+	at org.jgroups.JChannel._connect(JChannel.java:873)
+	... 35 more
+</error>
+    <system-out>Reading from defaults file....
+Jgroups config file: google_config.xml
+Local IP: 127.0.0.1
+Created database table
+Connected to db
+Created database table
+Connected to db
+Created database table
+Connected to db
 
 -------------------------------------------------------------------
-GMS: address=Freddys-MBP-10085, cluster=ChatCluster, physical address=fe80:0:0:0:840f:efcd:3e37:36a7%utun1:7803
+GMS: address=Freddys-MBP-61579, cluster=ChatCluster, physical address=fe80:0:0:0:fbca:c861:5207:b562%utun1:7803
 -------------------------------------------------------------------
-Joined View: [Freddys-MBP-10085|0] (1) [Freddys-MBP-10085]
-I&apos;m (Freddys-MBP-10085) the leader
-... will now contact storage pools
-I&apos;m (Freddys-MBP-10085) the leader
-Connected to channel
-Received: {&quot;storagePoolIP&quot;:&quot;dummy&quot;,&quot;shardID&quot;:&quot;dummy&quot;,&quot;storagePoolPort&quot;:&quot;0&quot;}
-Registering new storage pool...
-Saving shard 6 to local storage - pool dummy 2:0
+Joined View: [Freddys-MBP-61579|0] (1) [Freddys-MBP-61579]
+I&apos;m (Freddys-MBP-61579) the leader
+There are now 1 managers that joined in total - 1 of which are connected right now
+Created database table
+Connected to db
+Grpc server started, listening on 50100
+Contacting storage pools to update master controller ip and port
 </system-out>
-    <system-err>Dec 22, 2017 2:13:33 PM org.jgroups.stack.DiagnosticsHandler bindToInterfaces
+    <system-err>Jan 14, 2018 7:34:59 PM org.jgroups.stack.DiagnosticsHandler bindToInterfaces
 WARNING: failed to join /ff0e:0:0:0:0:0:75:75:7500 on en1: java.net.SocketException: Address family not supported by protocol family
-Dec 22, 2017 2:13:34 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-55109: failed sending message to Freddys-MBP-10085 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:34 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-52275: failed sending message to Freddys-MBP-10085 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:34 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-4659: failed sending message to Freddys-MBP-10085 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:35 PM org.jgroups.protocols.SEQUENCER unwrapAndDeliver
-SEVERE: JGRP000240: failure unmarshalling buffer
-java.util.ConcurrentModificationException
-	at java.util.LinkedList$ListItr.checkForComodification(LinkedList.java:966)
-	at java.util.LinkedList$ListItr.next(LinkedList.java:888)
-	at com.fcup.ShardManager.syncLocalStoragePools(ShardManager.java:86)
-	at com.fcup.StoragePoolsManager.receive(StoragePoolsManager.java:86)
-	at org.jgroups.JChannel.up(JChannel.java:795)
-	at org.jgroups.stack.ProtocolStack.up(ProtocolStack.java:893)
-	at org.jgroups.protocols.pbcast.STATE_TRANSFER.up(STATE_TRANSFER.java:128)
-	at org.jgroups.protocols.FRAG2.up(FRAG2.java:177)
-	at org.jgroups.protocols.SEQUENCER.deliver(SEQUENCER.java:496)
-	at org.jgroups.protocols.SEQUENCER.unwrapAndDeliver(SEQUENCER.java:463)
-	at org.jgroups.protocols.SEQUENCER.up(SEQUENCER.java:218)
-	at org.jgroups.protocols.SEQUENCER.up(SEQUENCER.java:233)
-	at org.jgroups.protocols.FlowControl.up(FlowControl.java:418)
-	at org.jgroups.stack.Protocol.up(Protocol.java:344)
-	at org.jgroups.protocols.pbcast.STABLE.up(STABLE.java:293)
-	at org.jgroups.protocols.UNICAST3.up(UNICAST3.java:485)
-	at org.jgroups.protocols.pbcast.NAKACK2.deliverBatch(NAKACK2.java:960)
-	at org.jgroups.protocols.pbcast.NAKACK2.removeAndDeliver(NAKACK2.java:894)
-	at org.jgroups.protocols.pbcast.NAKACK2.handleMessages(NAKACK2.java:868)
-	at org.jgroups.protocols.pbcast.NAKACK2.up(NAKACK2.java:688)
-	at org.jgroups.protocols.BARRIER.up(BARRIER.java:195)
-	at org.jgroups.stack.Protocol.up(Protocol.java:344)
-	at org.jgroups.protocols.FD_ALL.up(FD_ALL.java:210)
-	at org.jgroups.stack.Protocol.up(Protocol.java:344)
-	at org.jgroups.stack.Protocol.up(Protocol.java:344)
-	at org.jgroups.stack.Protocol.up(Protocol.java:344)
-	at org.jgroups.stack.Protocol.up(Protocol.java:344)
-	at org.jgroups.protocols.TP.passBatchUp(TP.java:1227)
-	at org.jgroups.util.MaxOneThreadPerSender$BatchHandlerLoop.passBatchUp(MaxOneThreadPerSender.java:277)
-	at org.jgroups.util.SubmitToThreadPool$BatchHandler.run(SubmitToThreadPool.java:136)
-	at org.jgroups.util.MaxOneThreadPerSender$BatchHandlerLoop.run(MaxOneThreadPerSender.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-
+Jan 14, 2018 7:35:00 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-54959: failed sending message to Freddys-MBP-61579 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:00 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-16811: failed sending message to Freddys-MBP-61579 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:00 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-63500: failed sending message to Freddys-MBP-61579 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:00 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-61579: failed sending message to Freddys-MBP-63500 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:00 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-16811: failed sending message to Freddys-MBP-63500 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:00 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-54959: failed sending message to Freddys-MBP-63500 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:02 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-54959: failed sending message to Freddys-MBP-61579 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:02 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-63500: failed sending message to Freddys-MBP-61579 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:02 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-16811: failed sending message to Freddys-MBP-61579 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
 </system-err>
   </testcase>
-  <testcase classname="com.fcup.StorageControllerTest" name="testElectionOfLeader" time="6.599">
-    <failure message="Did not assign leader correctly" type="java.lang.AssertionError">java.lang.AssertionError: Did not assign leader correctly
+  <testcase classname="com.fcup.StorageControllerTest" name="testElectionOfLeader" time="7.081">
+    <failure message="Unexpected exception" type="java.lang.AssertionError">java.lang.AssertionError: Unexpected exception
 	at org.junit.Assert.fail(Assert.java:88)
-	at com.fcup.StorageControllerTest.testElectionOfLeader(StorageControllerTest.java:69)
+	at com.fcup.StorageControllerTest.testElectionOfLeader(StorageControllerTest.java:80)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -202,81 +212,135 @@ java.util.ConcurrentModificationException
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
 </failure>
-    <system-out>Please enter local IP:
-OK
-Please enter local IP:
-OK
+    <system-out>Reading from defaults file....
+Jgroups config file: google_config.xml
+Local IP: 127.0.0.1
+Created database table
+Connected to db
+Created database table
+Connected to db
+Reading from defaults file....
+Jgroups config file: google_config.xml
+Local IP: 127.0.0.1
+Created database table
+Connected to db
+Created database table
+Connected to db
 
 -------------------------------------------------------------------
-GMS: address=Freddys-MBP-1714, cluster=ChatCluster, physical address=fe80:0:0:0:840f:efcd:3e37:36a7%utun1:7803
+GMS: address=Freddys-MBP-42316, cluster=ChatCluster, physical address=fe80:0:0:0:fbca:c861:5207:b562%utun1:7803
 -------------------------------------------------------------------
-Joined View: [Freddys-MBP-1714|0] (1) [Freddys-MBP-1714]
-I&apos;m (Freddys-MBP-1714) the leader
-... will now contact storage pools
-I&apos;m (Freddys-MBP-1714) the leader
-Connected to channel
-Synced!
-
--------------------------------------------------------------------
-GMS: address=Freddys-MBP-26731, cluster=ChatCluster, physical address=fe80:0:0:0:840f:efcd:3e37:36a7%utun1:7804
--------------------------------------------------------------------
-Joined View: [Freddys-MBP-26731|0] (1) [Freddys-MBP-26731]
-I&apos;m (Freddys-MBP-26731) the leader
-... will now contact storage pools
-I&apos;m (Freddys-MBP-26731) the leader
-Connected to channel
-Synced!
+Joined View: [Freddys-MBP-42316|0] (1) [Freddys-MBP-42316]
+I&apos;m (Freddys-MBP-42316) the leader
+There are now 1 managers that joined in total - 1 of which are connected right now
+Created database table
+Connected to db
+Could not start server on port 50100
+Created database table
+Connected to db
+Grpc server started, listening on 50101
+Contacting storage pools to update master controller ip and port
 </system-out>
-    <system-err>Dec 22, 2017 2:13:36 PM org.jgroups.stack.DiagnosticsHandler bindToInterfaces
+    <system-err>Jan 14, 2018 7:35:05 PM org.jgroups.stack.DiagnosticsHandler bindToInterfaces
 WARNING: failed to join /ff0e:0:0:0:0:0:75:75:7500 on en1: java.net.SocketException: Address family not supported by protocol family
-Dec 22, 2017 2:13:36 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-52275: failed sending message to Freddys-MBP-1714 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:36 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-55109: failed sending message to Freddys-MBP-1714 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:36 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-4659: failed sending message to Freddys-MBP-1714 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:38 PM org.jgroups.stack.DiagnosticsHandler bindToInterfaces
-WARNING: failed to join /ff0e:0:0:0:0:0:75:75:7500 on en1: java.net.SocketException: Address family not supported by protocol family
-Dec 22, 2017 2:13:38 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-52275: failed sending message to Freddys-MBP-26731 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:38 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-55109: failed sending message to Freddys-MBP-26731 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:38 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-4659: failed sending message to Freddys-MBP-26731 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:38 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-1714: failed sending message to Freddys-MBP-26731 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:39 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-26731: failed sending message to Freddys-MBP-52275 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:39 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-4659: failed sending message to Freddys-MBP-52275 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:39 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-1714: failed sending message to Freddys-MBP-52275 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:39 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-55109: failed sending message to Freddys-MBP-52275 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:40 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-55109: failed sending message to Freddys-MBP-26731 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:40 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-52275: failed sending message to Freddys-MBP-26731 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:40 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-4659: failed sending message to Freddys-MBP-26731 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:40 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-1714: failed sending message to Freddys-MBP-26731 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:41 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-52275: failed sending message to Freddys-MBP-55109 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:41 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-26731: failed sending message to Freddys-MBP-55109 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:41 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-4659: failed sending message to Freddys-MBP-55109 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:41 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-1714: failed sending message to Freddys-MBP-55109 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:42 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-1714: failed sending message to Freddys-MBP-4659 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:42 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-55109: failed sending message to Freddys-MBP-4659 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:42 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-26731: failed sending message to Freddys-MBP-4659 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
-Dec 22, 2017 2:13:42 PM org.jgroups.protocols.BaseBundler sendSingleMessage
-SEVERE: JGRP000029: Freddys-MBP-52275: failed sending message to Freddys-MBP-4659 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:05 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-54959: failed sending message to Freddys-MBP-42316 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:05 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-63500: failed sending message to Freddys-MBP-42316 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:05 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-16811: failed sending message to Freddys-MBP-42316 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:05 PM org.jgroups.protocols.BaseBundler sendMessageList
+SEVERE: JGRP000036: Freddys-MBP-63500: exception sending bundled msgs: java.net.SocketTimeoutException: connect timed out
+Jan 14, 2018 7:35:06 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-42316: failed sending message to Freddys-MBP-54959 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:06 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-16811: failed sending message to Freddys-MBP-54959 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:06 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-63500: failed sending message to Freddys-MBP-54959 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:07 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-16811: failed sending message to Freddys-MBP-42316 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:07 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-54959: failed sending message to Freddys-MBP-42316 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:07 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-63500: failed sending message to Freddys-MBP-42316 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:09 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-42316: failed sending message to Freddys-MBP-16811 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:09 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-54959: failed sending message to Freddys-MBP-16811 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:09 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-63500: failed sending message to Freddys-MBP-16811 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:10 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-63500: failed sending message to Freddys-MBP-42316 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:10 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-16811: failed sending message to Freddys-MBP-42316 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:10 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-54959: failed sending message to Freddys-MBP-42316 (132 bytes): java.net.SocketTimeoutException: connect timed out, headers: MPING: [GET_MBRS_RSP cluster=null initial_discovery=false], TP: [cluster_name=ChatCluster]
+Jan 14, 2018 7:35:12 PM org.jgroups.protocols.BaseBundler sendSingleMessage
+SEVERE: JGRP000029: Freddys-MBP-54959: failed sending message to fe80:0:0:0:fbca:c861:5207:b562%15:7802 (131 bytes): java.net.SocketTimeoutException: connect timed out, headers: MERGE3: INFO: view_id=[Freddys-MBP-54959|0], logical_name=Freddys-MBP-54959, physical_addr=fe80:0:0:0:fbca:c861:5207:b562%utun1:7801, TP: [cluster_name=ChatCluster]
+java.lang.Exception: connecting to channel ChatCluster failed
+	at org.jgroups.JChannel._connect(JChannel.java:880)
+	at org.jgroups.JChannel.connect(JChannel.java:369)
+	at org.jgroups.JChannel.connect(JChannel.java:360)
+	at com.fcup.StoragePoolsManager.connectToChannel(StoragePoolsManager.java:53)
+	at com.fcup.StorageControllerTest.testElectionOfLeader(StorageControllerTest.java:66)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+Caused by: io.grpc.StatusRuntimeException: UNIMPLEMENTED: Method not found: leader.LeaderService/AnnounceLeader
+	at io.grpc.stub.ClientCalls.toStatusRuntimeException(ClientCalls.java:221)
+	at io.grpc.stub.ClientCalls.getUnchecked(ClientCalls.java:202)
+	at io.grpc.stub.ClientCalls.blockingUnaryCall(ClientCalls.java:131)
+	at com.fcup.generated.LeaderServiceGrpc$LeaderServiceBlockingStub.announceLeader(LeaderServiceGrpc.java:167)
+	at com.fcup.StorageController.sendMasterIPToAppServer(StorageController.java:116)
+	at com.fcup.StorageController.viewAccepted(StorageController.java:102)
+	at org.jgroups.JChannel.invokeCallback(JChannel.java:932)
+	at org.jgroups.JChannel.up(JChannel.java:776)
+	at org.jgroups.stack.ProtocolStack.up(ProtocolStack.java:891)
+	at org.jgroups.protocols.pbcast.STATE_TRANSFER.up(STATE_TRANSFER.java:122)
+	at org.jgroups.protocols.FRAG2.up(FRAG2.java:163)
+	at org.jgroups.protocols.SEQUENCER.up(SEQUENCER.java:173)
+	at org.jgroups.protocols.FlowControl.up(FlowControl.java:340)
+	at org.jgroups.protocols.pbcast.GMS.installView(GMS.java:715)
+	at org.jgroups.protocols.pbcast.ClientGmsImpl.becomeSingletonMember(ClientGmsImpl.java:278)
+	at org.jgroups.protocols.pbcast.ClientGmsImpl.joinInternal(ClientGmsImpl.java:87)
+	at org.jgroups.protocols.pbcast.ClientGmsImpl.join(ClientGmsImpl.java:41)
+	at org.jgroups.protocols.pbcast.GMS.down(GMS.java:1066)
+	at org.jgroups.protocols.FlowControl.down(FlowControl.java:302)
+	at org.jgroups.protocols.SEQUENCER.down(SEQUENCER.java:132)
+	at org.jgroups.protocols.FRAG2.down(FRAG2.java:141)
+	at org.jgroups.protocols.pbcast.STATE_TRANSFER.down(STATE_TRANSFER.java:206)
+	at org.jgroups.stack.ProtocolStack.down(ProtocolStack.java:901)
+	at org.jgroups.JChannel.down(JChannel.java:644)
+	at org.jgroups.JChannel._connect(JChannel.java:873)
+	... 35 more
 </system-err>
   </testcase>
 </testsuite>

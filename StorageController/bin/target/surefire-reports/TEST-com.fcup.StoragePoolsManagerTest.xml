@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="4" failures="0" name="com.fcup.StoragePoolsManagerTest" time="9.206" errors="0" skipped="0">
+<testsuite tests="4" failures="0" name="com.fcup.StoragePoolsManagerTest" time="9.074" errors="0" skipped="0">
   <properties>
     <property name="os.detected.version" value="10.13"/>
     <property name="idea.version" value="2017.2.5"/>
@@ -67,8 +67,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.fcup.StoragePoolsManagerTest" name="syncOperations" time="2.994"/>
-  <testcase classname="com.fcup.StoragePoolsManagerTest" name="retrieveStateWithoutException" time="4.134"/>
-  <testcase classname="com.fcup.StoragePoolsManagerTest" name="viewAccepted" time="2.052"/>
-  <testcase classname="com.fcup.StoragePoolsManagerTest" name="syncLocalStoragePools" time="0.026"/>
+  <testcase classname="com.fcup.StoragePoolsManagerTest" name="syncOperations" time="2.917"/>
+  <testcase classname="com.fcup.StoragePoolsManagerTest" name="retrieveStateWithoutException" time="4.088"/>
+  <testcase classname="com.fcup.StoragePoolsManagerTest" name="viewAccepted" time="2.044"/>
+  <testcase classname="com.fcup.StoragePoolsManagerTest" name="syncLocalStoragePools" time="0.025"/>
 </testsuite>
