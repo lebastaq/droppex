@@ -197,7 +197,7 @@ public class PortalFileManager implements Runnable {
         currentShard.changeKeyValue("shardID", shardID);
         currentShard.changeKeyValue("filename", filename);
         currentShard.changeKeyValue("fileSize", Integer.toString(fileSize));
-        currentShard.changeKeyValue("ip", targetPool.getIp());
+        currentShard.changeKeyValue("storagePoolIP", targetPool.getIp());
 
         return currentShard;
     }
