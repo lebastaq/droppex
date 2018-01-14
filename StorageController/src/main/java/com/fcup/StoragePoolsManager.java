@@ -21,7 +21,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
     ShardManager shardManager;
     boolean isLeader = false;
     public List<StoragePool> storagePools;
-    private static String JGROUPS_CONFIG = "config.xml";
+    private static String JGROUPS_CONFIG;
     protected String CONFIG_FILE = "networkconf.json";
     String localIP = null;
     String externalIP;
@@ -29,22 +29,12 @@ public class StoragePoolsManager extends ReceiverAdapter {
     private int totalManagersThatJoined = 0;
     private int managersOnline = 0;
 
-    // todo pattern ?
-    StoragePoolsManager() throws Exception {
-        this(JGROUPS_CONFIG);
+    public StoragePoolsManager() throws Exception {
+        this(new Scanner(System.in));
     }
 
     public StoragePoolsManager(Scanner sc) throws Exception {
-        this(JGROUPS_CONFIG, sc);
-    }
-
-    private StoragePoolsManager(String JGROUPS_CONFIG) throws Exception {
-        this(JGROUPS_CONFIG, new Scanner(System.in));
-    }
-
-    private StoragePoolsManager(String JGROUPS_CONFIG, Scanner sc) throws Exception {
         getParameters(sc);
-        StoragePoolsManager.JGROUPS_CONFIG = JGROUPS_CONFIG;
         jgroupsChannel = new JChannel(JGROUPS_CONFIG).setReceiver(this);
         shardManager = new ShardManager();
         storagePools = new ArrayList<>();
@@ -52,7 +42,6 @@ public class StoragePoolsManager extends ReceiverAdapter {
 
     public void connectToChannel() throws Exception {
         jgroupsChannel.connect("ChatCluster");
-        //electNewLeader();
     }
 
     public void disconnectFromChannel() {

@@ -104,7 +104,7 @@ public class StorageController extends StoragePoolsManager {
         JSONObject parameters = parametersReader.readParameters();
 
         if(parameters.has("appServerIP")) {
-            PORTAL_IP = parameters.getString("Config-file");
+            PORTAL_IP = parameters.getString("appServerIP");
         }
 
         System.out.println("App server IP: " + PORTAL_IP);
