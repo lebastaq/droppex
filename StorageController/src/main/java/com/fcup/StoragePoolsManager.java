@@ -141,6 +141,9 @@ public class StoragePoolsManager extends ReceiverAdapter {
         try {
             jgroupsChannel.send(null, shard.asJSONString());
             shardManager.storeOperation(shard);
+            // TODO are these 2 lines necessary ?
+            shardManager.syncOperation(shard.toString());
+            shardManager.syncLocalStoragePools(storagePools);
         } catch (Exception e) {
             System.err.println("Could not send shard " + shard.toString() + ":");
             e.printStackTrace();

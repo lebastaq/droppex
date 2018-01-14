@@ -14,15 +14,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library name="Maven: com.backblaze:java-reedsolomon:1">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/repo/JavaReedSolomon.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="Maven: backblaze:JavaReedSolomon:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.jgroups:jgroups:4.0.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20171018" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />

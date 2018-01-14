@@ -98,10 +98,15 @@ public class StorageController extends StoragePoolsManager {
         if(isLeader) {
             grpcServer.startGrpcServer();
             sendMasterIPAndPortToStoragePools();
+            sendMasterIPAndPortToAppServer();
         }
         else{
             grpcServer.stopServer();
         }
+    }
+
+    private void sendMasterIPAndPortToAppServer() {
+        // TODO buid
     }
 
     private void sendMasterIPAndPortToStoragePools() {
