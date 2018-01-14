@@ -1,15 +1,16 @@
 package com.fcup;
 
-import com.fcup.generated.ShardId;
-import com.fcup.generated.addressgetterGrpc;
-import com.fcup.generated.deleterGrpc;
-import com.fcup.generated.storageControllerInfo;
+import com.fcup.generated.*;
 import com.fcup.utilities.*;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import java.util.Scanner;
 import org.jgroups.View;
 
 public class StorageController extends StoragePoolsManager {
+    private final int PORTAL_PORT = 50100;
+
     private GrpcServer grpcServer;
     private PortalServer portalServer;
 
@@ -106,7 +107,15 @@ public class StorageController extends StoragePoolsManager {
     }
 
     private void sendMasterIPToAppServer() {
-        // TODO build
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", PORTAL_PORT)
+                                                      .usePlaintext(true)
+                                                      .build();
+
+        LeaderServiceGrpc.LeaderServiceBlockingStub stub = LeaderServiceGrpc.newBlockingStub(channel);
+
+        stub.announceLeader(LeaderIP.newBuilder().setIp(localIP).build());
+
+        channel.shutdown();
     }
 
     private void sendMasterIPToStoragePools() {

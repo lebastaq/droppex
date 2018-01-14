@@ -179,6 +179,8 @@ public class PortalFileManager implements Runnable {
             } catch(IOException e) {
                 throw e;
 
+            } finally {
+                // TODO: Cleanup
             }
 
             System.out.println("Done sending " + shardID + " to pool " + targetPool.getIp());
