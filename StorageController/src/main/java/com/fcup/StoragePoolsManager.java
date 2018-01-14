@@ -22,7 +22,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
     boolean isLeader = false;
     public List<StoragePool> storagePools;
     private static String JGROUPS_CONFIG = "config.xml";
-    private String CONFIG_FILE = "networkconf.json";
+    protected String CONFIG_FILE = "networkconf.json";
     String localIP = null;
     String externalIP;
 
@@ -151,7 +151,7 @@ public class StoragePoolsManager extends ReceiverAdapter {
         }
     }
 
-    private void getParameters(Scanner sc) {
+    protected void getParameters(Scanner sc) {
         ParametersReader parametersReader = new ParametersReader(CONFIG_FILE);
         JSONObject parameters = parametersReader.readParameters();
 
@@ -176,8 +176,8 @@ public class StoragePoolsManager extends ReceiverAdapter {
         else{
             askAdminForExternalIP(sc);
         }
-
     }
+
 
     private void askAdminForLocalIP(Scanner sc) {
         System.out.println("Please enter local IP:");

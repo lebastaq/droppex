@@ -1,5 +1,6 @@
 {
   "internalIP": "127.0.0.1",
   "externalIP": "127.0.0.1",
+  "appServerIP": "10.132.0.10",
   "Config-file": "google_config.xml"
 }

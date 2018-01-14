@@ -5,12 +5,16 @@ import com.fcup.utilities.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import org.jgroups.View;
+import org.json.JSONObject;
 
 public class StorageController extends StoragePoolsManager {
     private final int PORTAL_PORT = 50100;
-    private final String PORTAL_IP = "35.187.1.114";
+    private String PORTAL_IP = "35.187.1.114";
 
     private GrpcServer grpcServer;
     private PortalServer portalServer;
@@ -94,6 +98,19 @@ public class StorageController extends StoragePoolsManager {
     }
 
     @Override
+    protected void getParameters(Scanner sc) {
+        super.getParameters(sc);
+        ParametersReader parametersReader = new ParametersReader(CONFIG_FILE);
+        JSONObject parameters = parametersReader.readParameters();
+
+        if(parameters.has("appServerIP")) {
+            PORTAL_IP = parameters.getString("Config-file");
+        }
+
+        System.out.println("App server IP: " + PORTAL_IP);
+    }
+
+    @Override
     public void viewAccepted(View new_view) {
         super.viewAccepted(new_view);
 
@@ -121,21 +138,23 @@ public class StorageController extends StoragePoolsManager {
 
     private void sendMasterIPToStoragePools() {
         System.out.println("Contacting storage pools to update master controller ip and port");
+
+        List<StoragePool> storagePoolsUnavailable = new ArrayList<>();
+
         for (StoragePool storagePool : storagePools) {
             storageControllerInfo request = grpcServer.buildSetIPAndPortRequest(localIP);
             try {
                 addressgetterGrpc.addressgetterBlockingStub blockingStub = storagePool.buildMasterSetterBlockingStubAndConnect();
-
                 blockingStub.setAddress(request);
-                System.err.println("Sent new address to storage pool !");
-            } catch (IllegalArgumentException e) {
-                System.err.println("Could not connect: Invalid storage pool name");
-            } catch (StatusRuntimeException e) {
-                System.err.println("Could not connect: pool unavailable");
+                System.out.println("Sent new address to storage pool !");
             } catch (Exception e) {
-                System.err.println("Unhandled exception");
+                System.err.println("Could not connect to storage pool:");
                 e.printStackTrace();
+                storagePoolsUnavailable.add(storagePool);
             }
         }
+
+        storagePools.removeAll(storagePoolsUnavailable);
     }
+
 }
