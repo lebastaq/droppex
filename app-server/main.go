@@ -70,7 +70,7 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 
 func (s *server) AnnounceLeader(ctx context.Context, in *pbl.LeaderIP) (*pbl.EmptyReply, error) {
 	ctrlAddress = in.Ip
-	return nil, nil
+	return &pbl.EmptyReply{}, nil
 }
 
 func startRPCServer() {
