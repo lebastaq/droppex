@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class PortalFileManager implements Runnable {
     private final String TEMP_FILE_DIR = "tmp/";
+    private String POOL_IP = "10.132.0.8";
 
     private String filename;
     private String fileHash;
@@ -119,8 +120,8 @@ public class PortalFileManager implements Runnable {
         // Loop through each shard and send it over
         for (File shard : shardDirectory.listFiles()) {
 
-            // TODO: Remove hard-coded address
-            try (Socket clientSocket = new Socket("localhost", 26002);
+            // TODO: Remove hard-coded address/port
+            try (Socket clientSocket = new Socket(POOL_IP, 26002);
                  OutputStream os = clientSocket.getOutputStream();
                  PrintWriter out = new PrintWriter(os, true);
                  FileInputStream fis = new FileInputStream(shard);
@@ -154,8 +155,8 @@ public class PortalFileManager implements Runnable {
         for (int j = 0; j < 6; j++) {
             String shardID = filename + "." + i + "." + j;
 
-            // TODO: Remove hard-coded address
-            try (Socket clientSocket = new Socket("localhost", 26001);
+            // TODO: Remove hard-coded address/port
+            try (Socket clientSocket = new Socket(POOL_IP, 26001);
                  OutputStream os = clientSocket.getOutputStream();
                  PrintWriter out = new PrintWriter(os, true);
                  DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
