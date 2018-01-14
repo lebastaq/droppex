@@ -45,6 +45,7 @@ func main() {
 	router.Handle(version+"/files_post", jwtMiddleware.Handler(uploadHandler)).Methods("POST")
 	router.Handle(version+"/delete/{filename}", jwtMiddleware.Handler(deleteHandler)).Methods("POST")
 
+	log.Println("Starting HTTP server on port:", 8000)
 	log.Fatal(http.ListenAndServeTLS(":8000", "domain.crt", "domain.key", handlers.LoggingHandler(os.Stdout, router)))
 }
 
@@ -77,6 +78,7 @@ func startRPCServer() {
 	if err != nil {
 		panic(err)
 	}
+	log.Println("Started gRPC server on port", ctrlRPCPort)
 
 	s := grpc.NewServer()
 	pbl.RegisterLeaderServiceServer(s, &server{})

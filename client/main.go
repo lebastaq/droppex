@@ -21,7 +21,7 @@ import (
 )
 
 // URL for app-server
-const URL string = "https://localhost:8000/api/1/"
+const URL string = "https://35.187.1.114:8000/api/1/"
 
 // DEBUGGING mode shows HTTP req details
 const DEBUGGING bool = true
@@ -287,7 +287,7 @@ func authenticate() error {
 
 	resp, err := client.Get(target)
 	if err != nil {
-		return err
+		panic(err)
 	}
 	defer resp.Body.Close()
 
