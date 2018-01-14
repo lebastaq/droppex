@@ -18,7 +18,7 @@
 
 # Package Files #
 *.jar
-!JavaReedSolomon.jar
+!JavaReedSolomon-1.0.jar
 *.war
 *.ear
 *.zip

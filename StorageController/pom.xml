@@ -100,13 +100,21 @@
 
     </build>
 
+    <repositories>
+        <repository>
+            <id>data-local</id>
+            <name>data</name>
+            <url>file://${project.basedir}/repo</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
-            <groupId>com.backblaze</groupId>
-            <artifactId>java-reedsolomon</artifactId>
-            <version>1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/repo/JavaReedSolomon.jar</systemPath>
+            <groupId>backblaze</groupId>
+            <artifactId>JavaReedSolomon</artifactId>
+            <version>1.0</version>
+            <!--<scope>system</scope>-->
+            <!--<systemPath>${basedir}/repo/JavaReedSolomon.jar</systemPath>-->
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jgroups/jgroups -->
         <dependency>
@@ -167,15 +175,6 @@
 
 
     </dependencies>
-
-
-    <repositories>
-        <repository>
-            <id>data-local</id>
-            <name>data</name>
-            <url>file://${project.basedir}/repo</url>
-        </repository>
-    </repositories>
 
     <properties>
         <jersey.version>2.26</jersey.version>
