@@ -194,6 +194,7 @@ public class PortalFileManager implements Runnable {
 
     private Shard buildShard(String shardID, StoragePool targetPool) {
         Shard currentShard = new Shard();
+        System.out.println("Storing shardID: " + shardID);
         currentShard.changeKeyValue("shardID", shardID);
         currentShard.changeKeyValue("filename", filename);
         currentShard.changeKeyValue("fileSize", Integer.toString(fileSize));
@@ -211,6 +212,7 @@ public class PortalFileManager implements Runnable {
 
         for (Shard shard : shards) {
             String shardID = shard.getId();
+            System.out.println("Requesting shardID: " + shardID);
 
             try (Socket clientSocket = new Socket(shard.getIP(), POOL_RECEIVING_PORT);
                  OutputStream os = clientSocket.getOutputStream();
