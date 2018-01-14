@@ -15,7 +15,7 @@ public class GrpcServer {
         isStarted = false;
     }
 
-    public void startGrpcServer(StoragePoolsManager storagePoolsManager) {
+    public void startGrpcServer() {
         if(!isStarted){
             do {
                 try {

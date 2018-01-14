@@ -96,7 +96,7 @@ public class StorageController extends StoragePoolsManager {
         super.viewAccepted(new_view);
 
         if(isLeader) {
-            grpcServer.startGrpcServer(this);
+            grpcServer.startGrpcServer();
             sendMasterIPAndPortToStoragePools();
         }
         else{
