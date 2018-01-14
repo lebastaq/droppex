@@ -12,24 +12,28 @@ import (
 
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	jwt "github.com/dgrijalva/jwt-go"
+	pbl "github.com/freddygv/droppex/app-server/leader"
 	pb "github.com/freddygv/droppex/app-server/servrpc"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 const (
-	ctrlAddress    string = "104.198.48.195" // "localhost"
 	ctrlRPCPort    string = ":50100"
 	ctrlSocketPort string = ":29200"
 	version        string = "/api/1"
 	maxUploadSize  int64  = 500 * 1024 * 1024 // 500 MB
 )
 
+var ctrlAddress = "104.198.48.195" // initial value
 var signingKey = []byte("fY6k6km3Pw1txgPa7Qc73AYqUNZj6Wg8")
 
 func main() {
+	go startRPCServer()
+
 	router := mux.NewRouter()
 
 	router.HandleFunc(version+"/status", statusHandler).Methods("GET")
@@ -43,6 +47,9 @@ func main() {
 
 	log.Fatal(http.ListenAndServeTLS(":8000", "domain.crt", "domain.key", handlers.LoggingHandler(os.Stdout, router)))
 }
+
+// server is used to implement helloworld.GreeterServer.
+type server struct{}
 
 type jwtToken struct {
 	Token string `json:"token"`
@@ -59,6 +66,27 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 	},
 	SigningMethod: jwt.SigningMethodHS256,
 })
+
+func (s *server) AnnounceLeader(ctx context.Context, in *pbl.LeaderIP) (*pbl.Empty, error) {
+	ctrlAddress = in.Ip
+	return nil, nil
+}
+
+func startRPCServer() {
+	lis, err := net.Listen("tcp", ctrlRPCPort)
+	if err != nil {
+		panic(err)
+	}
+
+	s := grpc.NewServer()
+	pbl.RegisterLeaderServiceServer(s, &server{})
+
+	// Register reflection service on gRPC server.
+	reflection.Register(s)
+	if err := s.Serve(lis); err != nil {
+		panic(err)
+	}
+}
 
 // searchHandler lists all files matching a pattern
 var searchHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

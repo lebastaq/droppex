@@ -175,6 +175,8 @@ public class PortalFileManager implements Runnable {
             } catch(IOException e) {
                 throw e;
 
+            } finally {
+                // TODO: Cleanup
             }
 
             // Notify other controllers of operation after successful transfer to pool
