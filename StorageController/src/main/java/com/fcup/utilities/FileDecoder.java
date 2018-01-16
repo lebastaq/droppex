@@ -75,7 +75,7 @@ public class FileDecoder {
 
             File shardFile = new File(shardsDir,blockName + "." + i);
             if (shardFile.exists()) {
-                System.out.println(String.format("%s (%d)", shardFile.getName(), (int) shardFile.length()));
+                System.out.println(String.format("Shard: %s exists. (%d bytes)", shardFile.getName(), (int) shardFile.length()));
 
                 // Store the size of the first shard
                 if (i == 0)  {
@@ -95,6 +95,8 @@ public class FileDecoder {
                 }
 
                 shardCount++;
+
+                System.out.println("Blockname: " + blockName + " shardCount: " + shardCount);
                 shardFile.delete();
             }
         }

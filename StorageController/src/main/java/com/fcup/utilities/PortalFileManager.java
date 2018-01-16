@@ -183,10 +183,10 @@ public class PortalFileManager implements Runnable {
                 // TODO: Cleanup
             }
 
-            System.out.println("Done sending " + shardID + " to pool " + targetPool.getIp());
-
             // Notify other controllers of operation after successful transfer to pool
             Shard currentShard = buildShard(shardFile.getName(), targetPool);
+
+            System.out.println("Done sending " + currentShard.getId() + " to pool " + targetPool.getIp());
             sc.sendMessage(currentShard);
 
         }
