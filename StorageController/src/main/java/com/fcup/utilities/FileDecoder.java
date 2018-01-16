@@ -4,6 +4,9 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import com.backblaze.erasure.*;
 
@@ -51,11 +54,18 @@ public class FileDecoder {
     }
 
     private void assembleBlocks() throws IOException {
-        int numBlocks = shardsDir.list().length / (DATA_SHARDS + PARITY_SHARDS);
+        String[] shards = shardsDir.list();
 
-        for (int i = 0; i < numBlocks; i++) {
-            assembleSublocks(filename + "." + Integer.toString(i));
+        Set<String> blocks = new HashSet<>();
 
+        for (String shard : shards) {
+            if (shard.indexOf(filename) != -1) {
+                blocks.add(shard.substring(0, shard.lastIndexOf('.')));
+            }
+        }
+
+        for (String block : blocks) {
+            assembleSublocks(block);
         }
     }
 
@@ -81,7 +91,7 @@ public class FileDecoder {
                 if (i == 0)  {
                     shardSize = (int) shardFile.length();
 
-                    // Verify that the sizes of all shards match
+                // Verify that the sizes of all shards match
                 } else if (shardSize != (int) shardFile.length()) {
                     throw new RuntimeException("Shards are not of equal sizes.");
 
@@ -96,10 +106,11 @@ public class FileDecoder {
 
                 shardCount++;
 
-                System.out.println("Blockname: " + blockName + " shardCount: " + shardCount);
                 shardFile.delete();
             }
         }
+
+        System.out.println("shardCount: " + shardCount + " DATA_SHARDS: " + DATA_SHARDS);
 
         // We need at least DATA_SHARDS to be able to reconstruct the file.
         checkShardCount(shardCount);
