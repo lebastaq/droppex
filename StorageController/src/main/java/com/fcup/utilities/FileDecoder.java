@@ -60,12 +60,17 @@ public class FileDecoder {
 
         for (String shard : shards) {
             if (shard.indexOf(filename) != -1) {
-                blocks.add(shard.substring(0, shard.lastIndexOf('.')));
+                String block = shard.substring(0, shard.lastIndexOf('.'));
+
+                System.out.println("Block identified: " + block);
+
+                blocks.add(block);
             }
         }
 
         for (String block : blocks) {
             assembleSublocks(block);
+
         }
     }
 
