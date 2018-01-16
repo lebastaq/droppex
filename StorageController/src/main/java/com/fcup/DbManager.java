@@ -153,6 +153,8 @@ public class DbManager {
         request.append(")");
         Statement statement = dbConnection.createStatement();
         statement.executeUpdate(request.toString());
+
+        System.out.println("Executed statement " + request.toString());
     }
 
     void createOperationsTableIfNotExists() throws SQLException {
